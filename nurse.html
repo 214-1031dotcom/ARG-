@@ -34,6 +34,7 @@
         }
         .back-link { margin-bottom: 20px; }
         .back-link a { color: #005f8a; text-decoration: none; }
+        .back-link a:hover { text-decoration: underline; }
         
         /* PDFリンクボックスのスタイル */
         .pdf-list { margin-top: 20px; }
@@ -57,11 +58,11 @@
         .pdf-box-sep a { color: #d35400; font-weight: bold; text-decoration: none; }
         .pdf-box-sep a:hover { text-decoration: underline; }
 
-        /* ★何もない不穏な灰色ゾーン ＆ パスワード入力エリア */
+        /* なんにもない灰色ゾーン ＆ パスワード認証エリア */
         .secret-zone {
             margin-top: 50px;
             padding: 30px;
-            background: #e0e0e0; /* 寂しい灰色 */
+            background: #e0e0e0;
             text-align: center;
             border-radius: 4px;
         }
@@ -86,10 +87,9 @@
         .secret-zone button:hover {
             background: #333;
         }
-        /* 最初は隠れているリンクのボックス */
         #hidden-result {
             margin-top: 20px;
-            display: none; /* 最初は非表示 */
+            display: none;
             background: #fff;
             padding: 15px;
             border: 1px solid #c0392b;
@@ -107,6 +107,14 @@
             color: #c0392b;
             font-size: 12px;
             margin-top: 5px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #777;
+            border-top: 1px solid #eee;
+            margin-top: 30px;
         }
     </style>
 </head>
@@ -149,14 +157,13 @@
         </div>
     </div>
 
-    <!-- ★ここが「なんにもない灰色だけのゾーン」＋パスワード認証！ -->
+    <!-- なんにもない灰色ゾーン ＋ パスワード認証 -->
     <div class="secret-zone">
         <p style="font-size: 13px; color: #555; margin-bottom: 10px;">関係者確認用端末</p>
         <input type="text" id="pass-input" placeholder="氏名を入力してください">
         <button onclick="checkPassword()">認証</button>
         <div id="error-area" class="error-msg"></div>
 
-        <!-- 正解したときだけ出現するエリア -->
         <div id="hidden-result">
             <p>⚠️ <strong>【認証成功：職員権限を確認しました】</strong></p>
             <p><a href="https://contribution.usercontent.google.com/download?c=CgxiYXJkX3N0b3JhZ2USUBINcmVzcG9uc2VfZGF0YRo_CjA3YTMxNTg2NmFlN2Y5NDI2MDAwNjU5OTE5MzM2ZDJhNzA3ZjU2M2Y4ZTgwOWQ4OTcSCxIHEIz1g5GVFRgB&filename=emergency_notice_20171101.pdf&opi=103135050" target="_blank">📄 [非公開] 緊急報告書（2017年11月1日発出）を開く</a></p>
@@ -165,16 +172,19 @@
 
 </div>
 
-<!-- パスワードを判定するプログラム -->
+<footer>
+    <p>※当サイトはフィクションです。実在の人物・団体・学校とは一切関係ありません。</p>
+    <p>&copy; 2026 Hinoshiritsu Tsukigaboshi Elementary School. All Rights Reserved.</p>
+</footer>
+
 <script>
     function checkPassword() {
         const inputVal = document.getElementById("pass-input").value.trim();
         const resultArea = document.getElementById("hidden-result");
         const errorArea = document.getElementById("error-area");
 
-        // 「ルコ」と一致するかどうか（「ルコ」「るこ」どちらでも通るようにする優しさも込めて）
         if (inputVal === "ルコ・ソティス" || inputVal === "るこ・そてぃす") {
-            resultArea.style.display = "block"; // リンクを出現させる！
+            resultArea.style.display = "block";
             errorArea.innerHTML = "";
         } else {
             resultArea.style.display = "none";
