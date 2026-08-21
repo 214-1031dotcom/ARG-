@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行事予定 - 日乃市立月々星小学校</title>
+    <style>
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+        .content {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        header {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #005f8a;
+            color: white;
+        }
+        h2 {
+            color: #005f8a;
+            border-bottom: 2px solid #005f8a;
+            padding-bottom: 10px;
+        }
+        .back-link { margin-bottom: 20px; }
+        .back-link a { color: #005f8a; text-decoration: none; }
+        .back-link a:hover { text-decoration: underline; }
+
+        /* カレンダーのデザイン */
+        .calendar-container {
+            margin-top: 20px;
+        }
+        .calendar-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        table.calendar {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        table.calendar th, table.calendar td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            vertical-align: top;
+            height: 70px;
+        }
+        table.calendar th {
+            background-color: #f8f9fa;
+            color: #555;
+            font-size: 14px;
+        }
+        table.calendar th.sun { color: #c0392b; }
+        table.calendar th.sat { color: #2980b9; }
+
+        .day-num {
+            font-weight: bold;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .event-text {
+            font-size: 11px;
+            color: #555;
+            text-align: left;
+        }
+
+        /* 不穏な10月31日の特別スタイル */
+        .creepy-day {
+            background-color: #fdeed9 !important;
+        }
+        .creepy-text {
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        /* 注意書きのスタイル */
+        .note-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 3px solid #e67e22;
+            font-size: 13px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>日乃市立月々星小学校 - 学校行事</h1>
+    <p>〜年間行事予定・今月の予定〜</p>
+</header>
+
+<div class="content">
+    <div class="back-link"><a href="index.html">← トップページに戻る</a></div>
+
+    <h2>2017年度 10月行事予定</h2>
+    <p>今月の主な学校行事および下校予定時刻をお知らせします。</p>
+
+    <div class="calendar-container">
+        <div class="calendar-title">2017年 10月</div>
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th class="sun">日</th>
+                    <th>月</th>
+                    <th>火</th>
+                    <th>水</th>
+                    <th>木</th>
+                    <th>金</th>
+                    <th class="sat">土</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 1週目 -->
+                <tr>
+                    <td><span class="day-num">1</span></td>
+                    <td><span class="day-num">2</span><div class="event-text">全校朝会</div></td>
+                    <td><span class="day-num">3</span></td>
+                    <td><span class="day-num">4</span></td>
+                    <td><span class="day-num">5</span></td>
+                    <td><span class="day-num">6</span></td>
+                    <td><span class="day-num">7</span></td>
+                </tr>
+                <!-- 2週目 -->
+                <tr>
+                    <td><span class="day-num">8</span></td>
+                    <td><span class="day-num">9</span><div class="event-text">体育の日</div></td>
+                    <td><span class="day-num">10</span><div class="event-text">耳鼻科検診</div></td>
+                    <td><span class="day-num">11</span></td>
+                    <td><span class="day-num">12</span></td>
+                    <td><span class="day-num">13</span></td>
+                    <td><span class="day-num">14</span></td>
+                </tr>
+                <!-- 3週目 -->
+                <tr>
+                    <td><span class="day-num">15</span></td>
+                    <td><span class="day-num">16</span></td>
+                    <td><span class="day-num">17</span></td>
+                    <td><span class="day-num">18</span><div class="event-text">クラブ活動</div></td>
+                    <td><span class="day-num">19</span></td>
+                    <td><span class="day-num">20</span></td>
+                    <td><span class="day-num">21</span></td>
+                </tr>
+                <!-- 4週目 -->
+                <tr>
+                    <td><span class="day-num">22</span></td>
+                    <td><span class="day-num">23</span></td>
+                    <td><span class="day-num">24</span></td>
+                    <td><span class="day-num">25</span></td>
+                    <td><span class="day-num">26</span></td>
+                    <td><span class="day-num">27</span></td>
+                    <td><span class="day-num">28</span></td>
+                </tr>
+                <!-- 5週目（星の日） -->
+                <tr>
+                    <td><span class="day-num">29</span></td>
+                    <td><span class="day-num">30</span></td>
+                    <td class="creepy-day">
+                        <span class="day-num">31</span>
+                        <div class="event-text creepy-text">星の日<br>（校内立入禁止）</div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 不穏な注釈 -->
+    <div class="note-box">
+        <p><strong>※行事に関する特記事項</strong><br>
+        10月31日の「星の日」は、当校の創立にちなむ伝統的な行事日となっております。<strong>児童の登校および校内への立ち入りは一切禁止</strong>となります。</p>
+    </div>
+
+</div>
+
+</body>
+</html>
