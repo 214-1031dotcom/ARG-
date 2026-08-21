@@ -47,7 +47,6 @@
         .pdf-box a { color: #27ae60; font-weight: bold; text-decoration: none; }
         .pdf-box a:hover { text-decoration: underline; }
 
-        /* 9月号の不穏なボックス */
         .pdf-box-sep {
             background: #fdf2e9;
             border: 1px dashed #e67e22;
@@ -58,22 +57,56 @@
         .pdf-box-sep a { color: #d35400; font-weight: bold; text-decoration: none; }
         .pdf-box-sep a:hover { text-decoration: underline; }
 
-        /* ★ここがポイント：隠しリンクのエリア（一見するとただの注意書きっぽくする） */
-        .hidden-danger-zone {
-            margin-top: 40px;
-            padding: 15px;
-            background: #f9f9f9;
-            border-left: 3px solid #ccc;
-            font-size: 12px;
-            color: #777;
+        /* ★何もない不穏な灰色ゾーン ＆ パスワード入力エリア */
+        .secret-zone {
+            margin-top: 50px;
+            padding: 30px;
+            background: #e0e0e0; /* 寂しい灰色 */
+            text-align: center;
+            border-radius: 4px;
         }
-        .hidden-danger-zone a {
-            color: #999;
+        .secret-zone input[type="text"] {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #bbb;
+            border-radius: 3px;
+            width: 200px;
+            background: #fff;
+        }
+        .secret-zone button {
+            padding: 8px 15px;
+            font-size: 14px;
+            background: #555;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        .secret-zone button:hover {
+            background: #333;
+        }
+        /* 最初は隠れているリンクのボックス */
+        #hidden-result {
+            margin-top: 20px;
+            display: none; /* 最初は非表示 */
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #c0392b;
+            border-radius: 4px;
+        }
+        #hidden-result a {
+            color: #c0392b;
+            font-weight: bold;
             text-decoration: none;
         }
-        .hidden-danger-zone a:hover {
-            color: #c0392b;
+        #hidden-result a:hover {
             text-decoration: underline;
+        }
+        .error-msg {
+            color: #c0392b;
+            font-size: 12px;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -116,11 +149,39 @@
         </div>
     </div>
 
-    <!-- ★ここに、あの恐ろしい緊急報告への隠しリンクを配置！ -->
-    <div class="hidden-danger-zone">
-        <p>※過年度の記録・緊急時対応ログについて： <a href="https://contribution.usercontent.google.com/download?c=CgxiYXJkX3N0b3JhZ2USUBINcmVzcG9uc2VfZGF0YRo_CjA3YTMxNTg2NmFlN2Y5NDI2MDAwNjU5OTE5MzM2ZDJhNzA3ZjU2M2Y4ZTgwOWQ4OTcSCxIHEIz1g5GVFRgB&filename=emergency_notice_20171101.pdf&opi=103135050" target="_blank">[非公開ログ#1101]</a></p>
+    <!-- ★ここが「なんにもない灰色だけのゾーン」＋パスワード認証！ -->
+    <div class="secret-zone">
+        <p style="font-size: 13px; color: #555; margin-bottom: 10px;">関係者確認用端末</p>
+        <input type="text" id="pass-input" placeholder="氏名を入力してください">
+        <button onclick="checkPassword()">認証</button>
+        <div id="error-area" class="error-msg"></div>
+
+        <!-- 正解したときだけ出現するエリア -->
+        <div id="hidden-result">
+            <p>⚠️ <strong>【認証成功：職員権限を確認しました】</strong></p>
+            <p><a href="https://contribution.usercontent.google.com/download?c=CgxiYXJkX3N0b3JhZ2USUBINcmVzcG9uc2VfZGF0YRo_CjA3YTMxNTg2NmFlN2Y5NDI2MDAwNjU5OTE5MzM2ZDJhNzA3ZjU2M2Y4ZTgwOWQ4OTcSCxIHEIz1g5GVFRgB&filename=emergency_notice_20171101.pdf&opi=103135050" target="_blank">📄 [非公開] 緊急報告書（2017年11月1日発出）を開く</a></p>
+        </div>
     </div>
+
 </div>
+
+<!-- パスワードを判定するプログラム -->
+<script>
+    function checkPassword() {
+        const inputVal = document.getElementById("pass-input").value.trim();
+        const resultArea = document.getElementById("hidden-result");
+        const errorArea = document.getElementById("error-area");
+
+        // 「ルコ」と一致するかどうか（「ルコ」「るこ」どちらでも通るようにする優しさも込めて）
+        if (inputVal === "ルコ・ソティス" || inputVal === "るこ・そてぃす") {
+            resultArea.style.display = "block"; // リンクを出現させる！
+            errorArea.innerHTML = "";
+        } else {
+            resultArea.style.display = "none";
+            errorArea.innerHTML = "※認証に失敗しました。無効な入力です。";
+        }
+    }
+</script>
 
 </body>
 </html>
