@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>行事予定 - 日乃市立月々星小学校</title>
+    <title>日乃市立月々星小学校</title>
     <style>
         body {
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
@@ -13,7 +13,22 @@
             color: #333;
             line-height: 1.6;
         }
-        .content {
+        header {
+            background-color: #005f8a;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        header p {
+            margin: 5px 0 0;
+            font-size: 14px;
+            color: #e0f2fe;
+        }
+        .container {
             max-width: 800px;
             margin: 20px auto;
             background: #fff;
@@ -21,28 +36,13 @@
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        header {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #005f8a;
-            color: white;
-        }
-        h2 {
-            color: #005f8a;
-            border-bottom: 2px solid #005f8a;
-            padding-bottom: 10px;
-        }
-        .back-link { margin-bottom: 20px; }
-        .back-link a { color: #005f8a; text-decoration: none; }
-        .back-link a:hover { text-decoration: underline; }
-
-        /* 学校概要・校風ボックス */
+        /* 学校紹介・校風ボックス（一番上） */
         .school-info-box {
             background: #f8f9fa;
             border: 1px solid #e2e8f0;
             padding: 15px;
             border-radius: 5px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             font-size: 13px;
         }
         .school-info-box h3 {
@@ -50,180 +50,203 @@
             color: #005f8a;
             font-size: 15px;
         }
-
-        /* カレンダーのデザイン */
-        .calendar-container {
-            margin-top: 20px;
-        }
-        .calendar-title {
+        /* 校舎の写真のスタイル */
+        .school-image {
             text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #333;
+            margin: 20px 0;
         }
-        table.calendar {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
-        table.calendar th, table.calendar td {
+        .school-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
             border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-            vertical-align: top;
-            height: 70px;
         }
-        table.calendar th {
-            background-color: #f8f9fa;
-            color: #555;
+        h2 {
+            color: #005f8a;
+            border-bottom: 2px solid #005f8a;
+            padding-bottom: 5px;
+            font-size: 18px;
+            margin-top: 30px;
+        }
+        /* 新着情報・お知らせのリスト */
+        .news-list {
+            list-style: none;
+            padding: 0;
+        }
+        .news-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
             font-size: 14px;
         }
-        table.calendar th.sun { color: #c0392b; }
-        table.calendar th.sat { color: #2980b9; }
-
-        .day-num {
+        .news-date {
+            color: #777;
             font-weight: bold;
-            font-size: 14px;
-            display: block;
-            margin-bottom: 5px;
+            margin-right: 15px;
         }
-        .event-text {
-            font-size: 11px;
-            color: #555;
+        /* ページ内リンクのボタンスタイル */
+        .link-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .link-btn {
+            flex: 1;
+            min-width: 200px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #005f8a;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .link-btn:hover {
+            background: #e2e8f0;
+        }
+
+        /* 一番下のセクション（パスワード ＆ 住所電話番号） */
+        .bottom-section {
+            margin-top: 40px;
+            border-top: 2px dashed #ccc;
+            padding-top: 30px;
+        }
+
+        /* パスワード認証の灰色ゾーン */
+        .secret-zone {
+            padding: 30px;
+            background: #e0e0e0;
+            text-align: center;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+        .secret-zone input[type="text"] {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #bbb;
+            border-radius: 3px;
+            width: 200px;
+            background: #fff;
+        }
+        .secret-zone button {
+            padding: 8px 15px;
+            font-size: 14px;
+            background: #555;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        .secret-zone button:hover {
+            background: #333;
+        }
+        #hidden-result {
+            margin-top: 20px;
+            display: none;
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #c0392b;
+            border-radius: 4px;
             text-align: left;
         }
-
-        /* 不穏な10月31日の特別スタイル */
-        .creepy-day {
-            background-color: #fdeed9 !important;
-        }
-        .creepy-text {
+        #hidden-result a {
             color: #c0392b;
             font-weight: bold;
+            text-decoration: none;
+        }
+        #hidden-result a:hover {
+            text-decoration: underline;
+        }
+        .error-msg {
+            color: #c0392b;
+            font-size: 12px;
+            margin-top: 5px;
         }
 
-        /* 注意書きのスタイル */
-        .note-box {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f9f9f9;
-            border-left: 3px solid #e67e22;
+        /* 学校の住所・連絡先（一番下） */
+        .school-address-box {
             font-size: 13px;
-            color: #666;
+            color: #555;
+            text-align: center;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
         }
 
-        /* フッターの架空サイト注意書き */
         footer {
             text-align: center;
             padding: 20px;
             font-size: 12px;
             color: #777;
             border-top: 1px solid #eee;
-            margin-top: 30px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>日乃市立月々星小学校 - 学校行事</h1>
-    <p>〜年間行事予定・今月の予定〜</p>
+    <h1>日乃市立月々星小学校</h1>
+    <p>公式サイト</p>
 </header>
 
-<div class="content">
-    <div class="back-link"><a href="index.html">← トップページに戻る</a></div>
+<div class="container">
 
-    <!-- 校風・基本情報エリア -->
+    <!-- 1. 一番上：学校紹介・校風エリア -->
     <div class="school-info-box">
         <h3>🏫 学校紹介・校風</h3>
-        <p><strong>教育目標：</strong>「星のように美しく、個々に輝ける」<br>
+        <p><strong>教育目標：</strong>「星のように美しく、個々に輝く」<br>
         自然豊かな月々星山のふもとに位置し、地域とともにある温かい学校づくりを目指しています。</p>
-        <p style="margin-bottom: 0; color: #555;">
-        <strong>所在地：</strong> 〒000-0000 日乃市月々星町 1-2-3<br>
-        <strong>電話番号：</strong> 03-XXXX-XXXX
-        </p>
     </div>
 
-    <h2>2018年度 10月行事予定</h2>
-    <p>今月の主な学校行事および下校予定時刻をお知らせします。</p>
-
-    <div class="calendar-container">
-        <div class="calendar-title">2018年 10月</div>
-        <table class="calendar">
-            <thead>
-                <tr>
-                    <th class="sun">日</th>
-                    <th>月</th>
-                    <th>火</th>
-                    <th>水</th>
-                    <th>木</th>
-                    <th>金</th>
-                    <th class="sat">土</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- 1週目 -->
-                <tr>
-                    <td><span class="day-num">1</span></td>
-                    <td><span class="day-num">2</span><div class="event-text">全校朝会</div></td>
-                    <td><span class="day-num">3</span></td>
-                    <td><span class="day-num">4</span></td>
-                    <td><span class="day-num">5</span></td>
-                    <td><span class="day-num">6</span></td>
-                    <td><span class="day-num">7</span></td>
-                </tr>
-                <!-- 2週目 -->
-                <tr>
-                    <td><span class="day-num">8</span></td>
-                    <td><span class="day-num">9</span><div class="event-text">体育の日</div></td>
-                    <td><span class="day-num">10</span><div class="event-text">耳鼻科検診</div></td>
-                    <td><span class="day-num">11</span></td>
-                    <td><span class="day-num">12</span></td>
-                    <td><span class="day-num">13</span></td>
-                    <td><span class="day-num">14</span></td>
-                </tr>
-                <!-- 3週目 -->
-                <tr>
-                    <td><span class="day-num">15</span></td>
-                    <td><span class="day-num">16</span></td>
-                    <td><span class="day-num">17</span></td>
-                    <td><span class="day-num">18</span><div class="event-text">クラブ活動</div></td>
-                    <td><span class="day-num">19</span></td>
-                    <td><span class="day-num">20</span></td>
-                    <td><span class="day-num">21</span></td>
-                </tr>
-                <!-- 4週目 -->
-                <tr>
-                    <td><span class="day-num">22</span></td>
-                    <td><span class="day-num">23</span></td>
-                    <td><span class="day-num">24</span></td>
-                    <td><span class="day-num">25</span></td>
-                    <td><span class="day-num">26</span></td>
-                    <td><span class="day-num">27</span></td>
-                    <td><span class="day-num">28</span></td>
-                </tr>
-                <!-- 5週目（星の日・2018年） -->
-                <tr>
-                    <td><span class="day-num">29</span></td>
-                    <td><span class="day-num">30</span></td>
-                    <td class="creepy-day">
-                        <span class="day-num">31</span>
-                        <div class="event-text creepy-text">星の日<br>（校内立入禁止）</div>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- 校舎の写真エリア -->
+    <div class="school-image">
+        <!-- ※もし画像ファイル名が違う場合は「school.jpg」を書き換えてね -->
+        <img src="school.jpg" alt="日乃市立月々星小学校 校舎">
     </div>
 
-    <!-- 不穏な注釈 -->
-    <div class="note-box">
-        <p><strong>※行事に関する特記事項</strong><br>
-        10月31日の「星の日」は、当校の創立にちなむ伝統的な行事日となっております。なお、<strong>当日の児童の登校および校内への立ち入りは一切禁止</strong>といたします。</p>
+    <h2>新着情報・お知らせ</h2>
+    <ul class="news-list">
+        <li><span class="news-date">2018.10.15</span>10月の行事予定を更新しました。</li>
+        <li><span class="news-date">2017.09.01</span>保健室より「2017年度 9月号」を公開しました。</li>
+        <li><span class="news-date">2017.07.10</span>夏期休業前の全校集会についてのお知らせ</li>
+    </ul>
+
+    <h2>校内各ページへのご案内</h2>
+    <div class="link-buttons">
+        <!-- 行事予定ページへのリンク -->
+        <a href="calendar.html" class="link-btn">📅 学校行事予定を見る</a>
+        <!-- 保健室ページへのリンク -->
+        <a href="nurse.html" class="link-btn">🌿 保健室より（おたより）</a>
+    </div>
+
+    <!-- 一番下のセクション（パスワード ＆ 住所） -->
+    <div class="bottom-section">
+
+        <!-- パスワード認証の灰色ゾーン -->
+        <div class="secret-zone">
+            <p style="font-size: 13px; color: #555; margin-bottom: 10px;">関係者確認用端末</p>
+            <input type="text" id="pass-input" placeholder="氏名を入力してください">
+            <button onclick="checkPassword()">認証</button>
+            <div id="error-area" class="error-msg"></div>
+
+            <div id="hidden-result">
+                <p>⚠️ <strong>【認証成功：職員権限を確認しました】</strong></p>
+                <p><a href="https://contribution.usercontent.google.com/download?c=CgxiYXJkX3N0b3JhZ2USUBINcmVzcG9uc2VfZGF0YRo_CjA3YTMxNTg2NmFlN2Y5NDI2MDAwNjU5OTE5MzM2ZDJhNzA3ZjU2M2Y4ZTgwOWQ4OTcSCxIHEIz1g5GVFRgB&filename=emergency_notice_20171101.pdf&opi=103135050" target="_blank">📄 [非公開] 緊急報告書（2017年11月1日発出）を開く</a></p>
+            </div>
+        </div>
+
+        <!-- 住所・電話番号（一番下） -->
+        <div class="school-address-box">
+            <p style="margin: 0;">
+            <strong>日乃市立月々星小学校</strong><br>
+            所在地：〒0928-190 日乃市月々星町 1-9-0 ｜ 電話番号：29-XXXX-XXXX
+            </p>
+        </div>
+
     </div>
 
 </div>
@@ -232,6 +255,23 @@
     <p>※当サイトはフィクションです。実在の人物・団体・学校とは一切関係ありません。</p>
     <p>&copy; 2026 Hinoshiritsu Tsukigaboshi Elementary School. All Rights Reserved.</p>
 </footer>
+
+<!-- パスワードを判定するプログラム -->
+<script>
+    function checkPassword() {
+        const inputVal = document.getElementById("pass-input").value.trim();
+        const resultArea = document.getElementById("hidden-result");
+        const errorArea = document.getElementById("error-area");
+
+        if (inputVal === "ルコ" || inputVal === "るこ") {
+            resultArea.style.display = "block";
+            errorArea.innerHTML = "";
+        } else {
+            resultArea.style.display = "none";
+            errorArea.innerHTML = "※認証に失敗しました。無効な入力です。";
+        }
+    }
+</script>
 
 </body>
 </html>
