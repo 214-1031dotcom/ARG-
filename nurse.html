@@ -46,6 +46,35 @@
         }
         .pdf-box a { color: #27ae60; font-weight: bold; text-decoration: none; }
         .pdf-box a:hover { text-decoration: underline; }
+
+        /* 9月号の不穏なボックス */
+        .pdf-box-sep {
+            background: #fdf2e9;
+            border: 1px dashed #e67e22;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        .pdf-box-sep a { color: #d35400; font-weight: bold; text-decoration: none; }
+        .pdf-box-sep a:hover { text-decoration: underline; }
+
+        /* ★ここがポイント：隠しリンクのエリア（一見するとただの注意書きっぽくする） */
+        .hidden-danger-zone {
+            margin-top: 40px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 3px solid #ccc;
+            font-size: 12px;
+            color: #777;
+        }
+        .hidden-danger-zone a {
+            color: #999;
+            text-decoration: none;
+        }
+        .hidden-danger-zone a:hover {
+            color: #c0392b;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -62,6 +91,12 @@
     <p>過去に発行した保健だよりをアーカイブしています。</p>
 
     <div class="pdf-list">
+        <!-- 9月号 -->
+        <div class="pdf-box-sep">
+            <p>🍂 <strong>2017年度 9月号</strong></p>
+            <p><a href="https://contribution.usercontent.google.com/download?c=CgxiYXJkX3N0b3JhZ2USUBINcmVzcG9uc2VfZGF0YRo_CjAwMGU3OTY2MTQ3NzkyZWIwMDAwNjU5OTFjYzc5NGVhZTA3MzRlMTY2MTExNTFiM2ISCxIHEIz1g5GVFRgB&filename=hokendayori_09_revised.pdf&opi=103135050" target="_blank">📄 保健だより 9月号を読む（PDF）</a></p>
+        </div>
+
         <!-- 7月号 -->
         <div class="pdf-box">
             <p>🌿 <strong>2017年度 7月号</strong></p>
@@ -80,9 +115,12 @@
             <p><a href="https://contribution.usercontent.google.com/download?c=CgxiYXJkX3N0b3JhZ2USUBINcmVzcG9uc2VfZGF0YRo_CjA1MDdlMGE0YjExYTk3NWEyMDAwNjU5OTFjYzc5MDFiOTA3MzRlMTY2MTExNTFiM2ISCxIHEIz1g5GVFRgB&filename=hokendayori_05.pdf&opi=103135050" target="_blank">📄 保健だより 5月号を読む（PDF）</a></p>
         </div>
     </div>
+
+    <!-- ★ここに、あの恐ろしい緊急報告への隠しリンクを配置！ -->
+    <div class="hidden-danger-zone">
+        <p>※過年度の記録・緊急時対応ログについて： <a href="https://contribution.usercontent.google.com/download?c=CgxiYXJkX3N0b3JhZ2USUBINcmVzcG9uc2VfZGF0YRo_CjA3YTMxNTg2NmFlN2Y5NDI2MDAwNjU5OTE5MzM2ZDJhNzA3ZjU2M2Y4ZTgwOWQ4OTcSCxIHEIz1g5GVFRgB&filename=emergency_notice_20171101.pdf&opi=103135050" target="_blank">[非公開ログ#1101]</a></p>
+    </div>
 </div>
 
 </body>
 </html>
-
-            
