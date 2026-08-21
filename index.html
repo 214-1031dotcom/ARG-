@@ -127,7 +127,7 @@
             font-size: 14px;
             border: 1px solid #bbb;
             border-radius: 3px;
-            width: 200px;
+            width: 220px;
             background: #fff;
         }
         .secret-zone button {
@@ -190,7 +190,7 @@
 
 <header>
     <h1>日乃市立月々星小学校</h1>
-    <p>公式サイト</p>
+    <p>公式サイトへようこそ</p>
 </header>
 
 <div class="container">
@@ -198,7 +198,7 @@
     <!-- 1. 一番上：学校紹介・校風エリア -->
     <div class="school-info-box">
         <h3>🏫 学校紹介・校風</h3>
-        <p><strong>教育目標：</strong>「星のように美しく、個々に輝く」<br>
+        <p><strong>教育目標：</strong>「豊な心を持ち、星のように輝く子」<br>
         自然豊かな月々星山のふもとに位置し、地域とともにある温かい学校づくりを目指しています。</p>
     </div>
 
@@ -211,7 +211,7 @@
     <h2>新着情報・お知らせ</h2>
     <ul class="news-list">
         <li><span class="news-date">2018.10.15</span>10月の行事予定を更新しました。</li>
-        <li><span class="news-date">2017.09.01</span>保健室より「2017年度 9月号」を公開しました。</li>
+        <li><span class="news-date">2017.09.01</span>保健室より<a href="nurse.html" style="color: #005f8a; text-decoration: underline;">「2017年度 9月号」</a>を公開しました。</li>
         <li><span class="news-date">2017.07.10</span>夏期休業前の全校集会についてのお知らせ</li>
     </ul>
 
@@ -220,13 +220,13 @@
         <!-- 行事予定ページへのリンク -->
         <a href="calendar.html" class="link-btn">📅 学校行事予定を見る</a>
         <!-- 保健室ページへのリンク -->
-        <a href="nurse.html" class="link-btn">🌿 保健室より（おたより）</a>
+        <a href="nurse.html" class="link-btn">🌿 流れ星号（おたより）</a>
     </div>
 
     <!-- 一番下のセクション（パスワード ＆ 住所） -->
     <div class="bottom-section">
 
-        <!-- パスワード認証の灰色ゾーン -->
+        <!-- パスワード認証の灰色ゾーン（ルコ・ソティス対応） -->
         <div class="secret-zone">
             <p style="font-size: 13px; color: #555; margin-bottom: 10px;">関係者確認用端末</p>
             <input type="text" id="pass-input" placeholder="氏名を入力してください">
@@ -243,7 +243,8 @@
         <div class="school-address-box">
             <p style="margin: 0;">
             <strong>日乃市立月々星小学校</strong><br>
-            所在地：〒0928-190 日乃市月々星町 1-9-0 ｜ 電話番号：29-XXXX-XXXX
+            所在地：〒190-0000 日乃市月々星町 1-9-0
+                電話番号：09-28XX-XXXX
             </p>
         </div>
 
@@ -253,17 +254,28 @@
 
 <footer>
     <p>※当サイトはフィクションです。実在の人物・団体・学校とは一切関係ありません。</p>
-    <p>&copy; 2026 Hinoshiritsu Tsukigaboshi Elementary School. All Rights Reserved.</p>
+    <p>&copy; 2018 Hinoshiritsu Tsukigaboshi Elementary School. All Rights Reserved.</p>
 </footer>
 
-<!-- パスワードを判定するプログラム -->
+<!-- パスワード判定プログラム（ルコ・ソティス対応） -->
 <script>
     function checkPassword() {
+        // 入力された文字の前後にある余分なスペースを消す
         const inputVal = document.getElementById("pass-input").value.trim();
         const resultArea = document.getElementById("hidden-result");
         const errorArea = document.getElementById("error-area");
 
-        if (inputVal === "ルコ" || inputVal === "るこ") {
+        // 「ルコ・ソティス」「ルコマキ」「ルコ」など、どのパターンでも通るように設定
+        // （「ルコ・ソティス」「るこ・そてぃす」のほか、スペースの有無なども考慮）
+        if (
+            inputVal === "ルコ・ソティス" || 
+            inputVal === "るこ・そてぃす" || 
+            inputVal === "ルコソティス" || 
+            inputVal === "ルコマキ" || 
+            inputVal === "るこまき" || 
+            inputVal === "ルコ" || 
+            inputVal === "るこ"
+        ) {
             resultArea.style.display = "block";
             errorArea.innerHTML = "";
         } else {
