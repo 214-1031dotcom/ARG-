@@ -7,57 +7,37 @@
     <style>
         body {
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-            line-height: 1.6;
+            margin: 0; padding: 0; background-color: #f4f4f4; color: #333; line-height: 1.6;
         }
-        header {
-            background-color: #005f8a;
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-        }
-        header h1 { margin: 0; font-size: 24px; }
-        header p { margin: 5px 0 0; font-size: 14px; color: #e0f2fe; }
+        header { background-color: #005f8a; color: white; text-align: center; padding: 20px 20px; }
+        header h1 { margin: 0; font-size: 22px; }
         .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 800px; margin: 20px auto; background: #fff; padding: 20px;
+            border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        /* 学校紹介 */
+        /* 一番上の写真エリア */
+        .school-image { text-align: center; margin-bottom: 20px; }
+        .school-image img { 
+            max-width: 100%; height: auto; border-radius: 5px; 
+            display: block; margin: 0 auto;
+        }
         .school-info-box {
-            background: #f8f9fa;
-            border: 1px solid #e2e8f0;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            font-size: 13px;
+            background: #f8f9fa; border: 1px solid #e2e8f0; padding: 15px;
+            border-radius: 5px; margin-bottom: 20px; font-size: 13px;
         }
-        .school-info-box h3 { margin-top: 0; color: #005f8a; font-size: 15px; }
-        
-
-        
-        /* 一番下の住所・連絡先エリア */
-        .bottom-section {
-            margin-top: 50px;
-            border-top: 2px solid #ddd;
-            padding-top: 20px;
-            text-align: center;
+        h2 { color: #005f8a; border-bottom: 2px solid #005f8a; padding-bottom: 5px; font-size: 18px; margin-top: 30px; }
+        .news-list { list-style: none; padding: 0; }
+        .news-list li { padding: 10px 0; border-bottom: 1px solid #eee; font-size: 14px; }
+        .news-date { color: #777; font-weight: bold; margin-right: 15px; }
+        .link-buttons { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
+        .link-btn {
+            flex: 1; min-width: 200px; background: #f8f9fa; border: 1px solid #ddd;
+            padding: 15px; text-align: center; border-radius: 5px; text-decoration: none;
+            color: #005f8a; font-weight: bold;
         }
-        .school-address-box {
-            font-size: 13px;
-            color: #555;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-        footer { text-align: center; padding: 20px; font-size: 12px; color: #777; margin-top: 20px; }
+        .bottom-section { margin-top: 50px; border-top: 2px solid #ddd; padding-top: 20px; text-align: center; }
+        .school-address-box { font-size: 13px; color: #555; padding: 15px; }
+        footer { text-align: center; padding: 20px; font-size: 12px; color: #777; }
     </style>
 </head>
 <body>
@@ -68,8 +48,15 @@
 
 <div class="container">
 
+    <!-- 一番上に写真を配置（URLを直接指定する形にしました！） -->
     <div class="school-image">
-        <img src="IMG_7418_6b90e7.jpg" alt="日乃市立月々星小学校 校舎">
+        <img src="https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7407.jpeg" alt="日乃市立月々星小学校 校舎">
+    </div>
+
+    <div class="school-info-box">
+        <h3>🏫 学校紹介・校風</h3>
+        <p><strong>教育目標：</strong>「星のように、美しく輝く」<br>
+        自然豊かな月々星山のふもとに位置し、地域とともにある温かい学校づくりを目指しています。</p>
     </div>
 
     <h2>新着情報・お知らせ</h2>
@@ -85,21 +72,17 @@
         <a href="nurse.html" class="link-btn">🌿 流れ星号(保健室)</a>
     </div>
 
-    <!-- 一番下：住所と電話番号のみ -->
     <div class="bottom-section">
         <div class="school-address-box">
-            <p style="margin: 0;">
-            <strong>日乃市立月々星小学校</strong><br>
-            所在地：〒190-0000 日乃市月々星町 1-9-0 ｜ 電話番号：09-28XX-XXXX
-            </p>
+            <p><strong>日乃市立月々星小学校</strong><br>
+            所在地：〒190-0000 日乃市月々星町 1-9-0 ｜ 電話番号：09-28XX-XXXX</p>
         </div>
     </div>
 
 </div>
 
 <footer>
-    <p>※当サイトはフィクションです。
-        実在の人物・団体・学校とは一切関係ありません。
+    <p>※当サイトはフィクションです。実在の人物・団体・学校とは一切関係ありません。<br>
     2026 aot製作委員会</p>
 </footer>
 
