@@ -27,41 +27,25 @@
             background-color: #27ae60;
             color: white;
         }
-        header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
         h2 {
             color: #27ae60;
             border-bottom: 2px solid #27ae60;
             padding-bottom: 10px;
         }
-        .back-link {
-            margin-bottom: 20px;
-        }
-        .back-link a {
-            color: #005f8a;
-            text-decoration: none;
-        }
-        .back-link a:hover {
-            text-decoration: underline;
-        }
-        /* PDFリンクのボックスデザイン */
+        .back-link { margin-bottom: 20px; }
+        .back-link a { color: #005f8a; text-decoration: none; }
+        
+        /* PDFリンクボックスのスタイル */
+        .pdf-list { margin-top: 20px; }
         .pdf-box {
             background: #e8f8f5;
             border: 1px dashed #27ae60;
             padding: 15px;
-            margin: 15px 0;
+            margin-bottom: 15px;
             border-radius: 5px;
         }
-        .pdf-box a {
-            color: #27ae60;
-            font-weight: bold;
-            text-decoration: none;
-        }
-        .pdf-box a:hover {
-            text-decoration: underline;
-        }
+        .pdf-box a { color: #27ae60; font-weight: bold; text-decoration: none; }
+        .pdf-box a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -72,29 +56,33 @@
 </header>
 
 <div class="content">
-    <div class="back-link">
-        <a href="index.html">← トップページに戻る</a>
-    </div>
+    <div class="back-link"><a href="index.html">← トップページに戻る</a></div>
 
     <h2>保健室からのご案内・おたより</h2>
-    <p>ここでは、保健室から発行している「保健だより」や、健康管理に関するお知らせを掲載しています。</p>
+    <p>過去に発行した保健だよりをアーカイブしています。</p>
 
-    <h3>発行物一覧</h3>
-    
-    <!-- 5月号のPDFリンク -->
-    <div class="pdf-box">
-        <p>🌿 <strong>2017年度 5月号</strong></p>
-        <p><a href="https://contribution.usercontent.google.com/download?c=CgxiYXJkX3N0b3JhZ2USUBINcmVzcG9uc2VfZGF0YRo_CjA1MDdlMGE0YjExYTk3NWEyMDAwNjU5OTFjYzc5MDFiOTA3MzRlMTY2MTExNTFiM2ISCxIHEIz1g5GVFRgB&filename=hokendayori_05.pdf&opi=103135050" target="_blank">📄 保健だより 5月号を読む（PDF）</a></p>
+    <div class="pdf-list">
+        <!-- 7月号 -->
+        <div class="pdf-box">
+            <p>🌿 <strong>2017年度 7月号</strong></p>
+            <p><a href="https://contribution.usercontent.google.com/download?c=CgxiYXJkX3N0b3JhZ2USUBINcmVzcG9uc2VfZGF0YRo_CjA4MDUxMTUzODQxYzlhMWU3MDAwNjU5OTFjYzdiZDFkMjA3MzRlMTY2MTExNTFiM2ISCxIHEIz1g5GVFRgB&filename=hokendayori_07_revised.pdf&opi=103135050" target="_blank">📄 保健だより 7月号を読む（PDF）</a></p>
+        </div>
+
+        <!-- 6月号 -->
+        <div class="pdf-box">
+            <p>🌿 <strong>2017年度 6月号</strong></p>
+            <p><a href="https://contribution.usercontent.google.com/download?c=CgxiYXJkX3N0b3JhZ2USUBINcmVzcG9uc2VfZGF0YRo_CjBiZTM4NDgzODE3NTcxOGJiMDAwNjU5OTFjYzc5MDdjNjA3MzRlMTY2MTExNTFiM2ISCxIHEIz1g5GVFRgB&filename=hokendayori_06.pdf&opi=103135050" target="_blank">📄 保健だより 6月号を読む（PDF）</a></p>
+        </div>
+
+        <!-- 5月号 -->
+        <div class="pdf-box">
+            <p>🌿 <strong>2017年度 5月号</strong></p>
+            <p><a href="https://contribution.usercontent.google.com/download?c=CgxiYXJkX3N0b3JhZ2USUBINcmVzcG9uc2VfZGF0YRo_CjA1MDdlMGE0YjExYTk3NWEyMDAwNjU5OTFjYzc5MDFiOTA3MzRlMTY2MTExNTFiM2ISCxIHEIz1g5GVFRgB&filename=hokendayori_05.pdf&opi=103135050" target="_blank">📄 保健だより 5月号を読む（PDF）</a></p>
+        </div>
     </div>
-
-    <!-- 今後、ここに10月号や事件の不穏なリンクを追加していく予定！ -->
-
 </div>
-
-<footer style="margin-top: 50px; padding: 20px; background-color: #ecf0f1; border-top: 1px solid #bdc3c7; text-align: center; font-size: 0.8em; color: #7f8c8d;">
-    <p>日乃市立月々星小学校 保健室</p>
-    <p>© 2026 Hinoshiritsu Tsukigaboshi Elementary School. All Rights Reserved.</p>
-</footer>
 
 </body>
 </html>
+
+            
