@@ -13,19 +13,11 @@
             color: #333;
             line-height: 1.6;
         }
-        .container, .content {
-            max-width: 800px;
-            margin: 20px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
         header {
-            text-align: center;
-            padding: 20px 0;
             background-color: #005f8a;
             color: white;
+            text-align: center;
+            padding: 30px 20px;
         }
         header h1 {
             margin: 0;
@@ -34,54 +26,93 @@
         header p {
             margin: 5px 0 0;
             font-size: 14px;
+            color: #e0f2fe;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         h2 {
             color: #005f8a;
             border-bottom: 2px solid #005f8a;
-            padding-bottom: 10px;
+            padding-bottom: 5px;
+            font-size: 18px;
+            margin-top: 30px;
         }
-        .news {
-            color: #c0392b;
+        /* 新着情報・お知らせのリスト */
+        .news-list {
+            list-style: none;
+            padding: 0;
+        }
+        .news-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+        .news-date {
+            color: #777;
             font-weight: bold;
+            margin-right: 15px;
         }
-        /* 新着情報のリンクを見やすくするデザイン */
-        .content ul li a {
-            color: #005f8a;
+        /* ページ内リンクのボタンスタイル */
+        .link-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .link-btn {
+            flex: 1;
+            min-width: 200px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px;
             text-decoration: none;
+            color: #005f8a;
+            font-weight: bold;
+            transition: background 0.2s;
         }
-        .content ul li a:hover {
-            text-decoration: underline;
+        .link-btn:hover {
+            background: #e2e8f0;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #777;
         }
     </style>
 </head>
 <body>
 
-<img src="https://github.com/214-1031dotcom/ARG-/blob/main/IMG_7407.jpeg?raw=true" alt="校舎" style="width:100%; display:block; margin:0 auto;">
-
 <header>
     <h1>日乃市立月々星小学校</h1>
-    <p>〜星のように美しく、個々で輝く〜</p>
+    <p>公式サイトへようこそ</p>
 </header>
 
-<div class="content">
-    <h2>新着情報 / お知らせ</h2>
-    <ul>
-        <li><span class="news">【重要】</span>ホームページをリニューアルしました。</li>
-        <li>運動会のお知らせ</li>
-        <li>月々星小の歴史</li>
-        <!-- ★ここに保健室のおたよりへのリンクを追加したよ！ -->
-        <li> <a href="nurse.html">保健室だより『流れ星号』</a></li>
+<div class="container">
+    <h2>新着情報・お知らせ</h2>
+    <ul class="news-list">
+        <li><span class="news-date">2017.10.15</span>10月・11月の行事予定を更新しました。</li>
+        <li><span class="news-date">2017.09.01</span>保健室より「2017年度 9月号」を公開しました。</li>
+        <li><span class="news-date">2017.07.10</span>夏期休業前の全校集会についてのお知らせ</li>
     </ul>
-    <p>本校は豊かな自然に囲まれた、歴史ある小学校です。</p>
+
+    <h2>校内各ページへのご案内</h2>
+    <div class="link-buttons">
+        <a href="calendar.html" class="link-btn">📅 学校行事予定を見る</a>
+        <a href="nurse.html" class="link-btn">🌿 保健室より（おたより）</a>
+    </div>
 </div>
 
-<footer style="margin-top: 50px; padding: 20px; background-color: #ecf0f1; border-top: 1px solid #bdc3c7; text-align: center; font-size: 0.8em; color: #7f8c8d;">
-    <p>日乃市立月々星小学校</p>
-    <p>〒000-0928 日乃市月々星町 1-90</p>
-    <p>TEL：086-000-0928 / FAX：086-000-1900</p>
-    <p>© 2026 Hinoshiritsu Tsukigaboshi Elementary School. All Rights Reserved.</p>
-    <p>このホームページは、にーよ8号にて制作されたものです。
-        実際に存在する学校や事象は一切ございません。</p>
+<footer>
+    <p>&copy; 2017 Hinoshiritsu Tsukigaboshi Elementary School. All Rights Reserved.</p>
 </footer>
 
 </body>
