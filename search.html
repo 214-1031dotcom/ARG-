@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>検索結果</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .result-item { margin-bottom: 20px; }
+        .result-title { color: #1a0dab; font-size: 18px; text-decoration: none; display: block; }
+        .result-url { color: #006621; font-size: 14px; }
+        .result-desc { color: #4d5156; font-size: 14px; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div id="results"></div>
 
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const query = params.get('q');
+        const resultsDiv = document.getElementById('results');
+
+        // 結果リストのデータ（ここに増やしていけばOK！）
+        const data = [
+            { title: "にーよ8号", url: "https://x.com/YingDou21485", desc: "にーよ8号さんの公式Xアカウントです。" },
+            { title: "日乃市立月々星小学校", url: "school.html", desc: "日乃市立月々星小学校についての詳細情報。" },
+            { title: "月の落石事件 ", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の詳細。" },
+            { title: "ひなあられさん", url: "https://x.com/hina_arare1211", desc: "ひなあられさんの公式Xアカウントです。" }
+        ];
+
+        // 検索ワードが含まれるものだけ抽出
+        const filtered = data.filter(item => item.title.includes(query) || item.desc.includes(query));
+
+        if (filtered.length > 0) {
+            filtered.forEach(item => {
+                resultsDiv.innerHTML += `
+                    <div class="result-item">
+                        <a href="${item.url}" class="result-title">${item.title}</a>
+                        <div class="result-url">${item.url}</div>
+                        <div class="result-desc">${item.desc}</div>
+                    </div>
+                `;
+            });
+        } else {
+            resultsDiv.innerHTML = '<h1>「' + query + '」は見つかりませんでした。</h1>';
+        }
+    </script>
+</body>
+</html>
