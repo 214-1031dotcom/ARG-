@@ -22,7 +22,7 @@
             letter-spacing: -2px;
             margin-bottom: 30px;
         }
-        /* Googleっぽいカラフルな文字遊びにするならこれでもOK */
+        /* Google風のカラフルな文字デザイン */
         .logo span:nth-child(1) { color: #4285F4; }
         .logo span:nth-child(2) { color: #EA4335; }
         .logo span:nth-child(3) { color: #FBBC05; }
@@ -91,44 +91,43 @@
     </div>
 
     <div class="search-buttons">
-        <button class="btn" onclick="alert('検索結果はありません。')">Mariage 検索</button>
-        <button class="btn" onclick="alert('直感で進め。')">I'm Feeling Lucky</button>
+        <button class="btn">Mariage 検索</button>
+        <button class="btn">I'm Feeling Lucky</button>
     </div>
 
     <div class="footer">
         Mariage Search Engine (v2.0.4)
     </div>
-<!-- 検索ボタンと入力欄にイベントを追加するスクリプト -->
+
+    <!-- 正しく整理された検索・ジャンプ用のプログラム -->
     <script>
         function executeSearch() {
             const query = document.querySelector('.search-input').value.trim();
 
-            // 「月々星小学校」や「実緒」「事件」「ニュース」などのワードが入っていたらニュースページへ飛ばす
+            // 「月々星小学校」「実緒」「事件」「ニュース」などのワードが入っていたらニュースページへ
             if (query.includes('月々星小学校') || query.includes('実緒') || query.includes('事件') || query.includes('ニュース')) {
                 window.location.href = 'news_20171031.html';
-            } else if (query !== "") {
-                // それ以外の文字が検索されたとき
-                alert('「' + query + '」に一致する情報は見つかりませんでした。');
             } else {
-                // 何も入力されていないとき
-                alert('検索キーワードを入力してください。');
+                // 関係ない言葉や空欄のときはアラートだけ出して、勝手にページ移動させない
+                alert('「' + (query || '（空欄）') + '」に一致する検索結果は見つかりませんでした。');
             }
         }
 
-        // 検索ボタン（Mariage 検索）が押されたときのイベント
+        // 1つ目のボタン（Mariage 検索）が押されたとき
         document.querySelectorAll('.btn')[0].addEventListener('click', executeSearch);
 
-        // 「I'm Feeling Lucky」が押されたときのちょっとしたお遊び
+        // 2つ目のボタン（I'm Feeling Lucky）が押されたとき(気楽に直行！）
         document.querySelectorAll('.btn')[1].addEventListener('click', function() {
-            window.location.href = 'news_20171031.html'; // 運試しでいきなり闇のニュースへ直行
+            window.location.href = 'news_20171031.html';
         });
 
-        // 検索窓でEnterキーを押したときも検索を実行する
+        // 検索窓でEnterキーを押したときも検索を実行
         document.querySelector('.search-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 executeSearch();
             }
         });
     </script>
+
 </body>
 </html>
