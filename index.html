@@ -55,7 +55,8 @@
             // 5. それ以外の言葉のとき
             else {
                 alert('「' + (query || '（空欄）') + '」に一致する検索結果はありません。');
-                
+            }   
+            
         // Enterキー対応
         document.getElementById('searchInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') { checkSearch(); }
