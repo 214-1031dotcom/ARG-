@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -6,12 +6,16 @@
     <title>検索結果 - Mariage</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 20px; color: #222; background-color: #fff; }
-        .header-area { display: flex; align-items: center; margin-bottom: 30px; border-bottom: 1px solid #ebebeb; padding-bottom: 15px; }
+        .header-area { display: flex; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 15px; }
         .mini-logo { font-size: 28px; font-weight: bold; letter-spacing: -1px; margin-right: 20px; text-decoration: none; }
         .mini-logo span:nth-child(1) { color: #4285F4; } .mini-logo span:nth-child(2) { color: #EA4335; } .mini-logo span:nth-child(3) { color: #FBBC05; } .mini-logo span:nth-child(4) { color: #4285F4; } .mini-logo span:nth-child(5) { color: #34A853; } .mini-logo span:nth-child(6) { color: #EA4335; } .mini-logo span:nth-child(7) { color: #FBBC05; } .mini-logo span:nth-child(8) { color: #4285F4; }
         
         .mini-search-input { width: 100%; max-width: 500px; padding: 8px 15px; font-size: 15px; border: 1px solid #dfe1e5; border-radius: 24px; outline: none; }
         
+        /* 検索窓の下のタブとヒット件数エリア（寂しさ解消！） */
+        .sub-header { max-width: 650px; margin-left: 120px; margin-bottom: 20px; font-size: 13px; color: #70757a; display: flex; gap: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 8px; }
+        .sub-header .active { color: #1a0dab; font-weight: bold; border-bottom: 2px solid #1a0dab; padding-bottom: 6px; }
+
         .results-container { max-width: 650px; margin-left: 120px; }
         .result-item { margin-bottom: 25px; }
         .result-url { color: #202124; font-size: 12px; margin-bottom: 2px; }
@@ -22,7 +26,7 @@
         
         @media (max-width: 768px) {
             .header-area { flex-direction: column; align-items: flex-start; }
-            .results-container { margin-left: 0; }
+            .results-container, .sub-header { margin-left: 0; }
             .mini-search-input { max-width: 100%; margin-top: 10px; }
         }
     </style>
@@ -34,6 +38,14 @@
             <span>M</span><span>a</span><span>r</span><span>i</span><span>a</span><span>g</span><span>e</span>
         </a>
         <input type="text" id="miniSearchInput" class="mini-search-input" placeholder="キーワードを入力">
+    </div>
+
+    <!-- 検索窓の下のタブ＆ヒット件数表示 -->
+    <div class="sub-header">
+        <span class="active">すべて</span>
+        <span>画像</span>
+        <span>ニュース</span>
+        <span id="hitCount" style="margin-left: auto; color: #70757a;"></span>
     </div>
 
     <div class="results-container" id="results">
@@ -57,7 +69,7 @@
             }
         });
 
-        // 検索データのデータベース（ここにどんどん追加できるよ！）
+        // 検索データのデータベース（君が書いてくれた内容をそのまま採用！）
         const data = [
             { 
                 title: "にーよ8号", 
@@ -84,6 +96,10 @@
         // あいまい検索・キーワード一致のチェック
         const filtered = data.filter(item => item.title.includes(query) || item.desc.includes(query) || item.url.includes(query));
         const resultsDiv = document.getElementById('results');
+        const hitCountDiv = document.getElementById('hitCount');
+
+        // ヒット件数を自動で表示
+        hitCountDiv.innerText = `約 ${filtered.length} 件のヒット (0.01 秒)`;
 
         if (filtered.length > 0) {
             filtered.forEach(item => {
