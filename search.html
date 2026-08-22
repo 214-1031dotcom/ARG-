@@ -98,6 +98,37 @@
     <div class="footer">
         Mariage Search Engine (v2.0.4)
     </div>
+<!-- 検索ボタンと入力欄にイベントを追加するスクリプト -->
+    <script>
+        function executeSearch() {
+            const query = document.querySelector('.search-input').value.trim();
 
+            // 「月々星小学校」や「実緒」「事件」「ニュース」などのワードが入っていたらニュースページへ飛ばす
+            if (query.includes('月々星小学校') || query.includes('実緒') || query.includes('事件') || query.includes('ニュース')) {
+                window.location.href = 'news_20171031.html';
+            } else if (query !== "") {
+                // それ以外の文字が検索されたとき
+                alert('「' + query + '」に一致する情報は見つかりませんでした。');
+            } else {
+                // 何も入力されていないとき
+                alert('検索キーワードを入力してください。');
+            }
+        }
+
+        // 検索ボタン（Mariage 検索）が押されたときのイベント
+        document.querySelectorAll('.btn')[0].addEventListener('click', executeSearch);
+
+        // 「I'm Feeling Lucky」が押されたときのちょっとしたお遊び
+        document.querySelectorAll('.btn')[1].addEventListener('click', function() {
+            window.location.href = 'news_20171031.html'; // 運試しでいきなり闇のニュースへ直行
+        });
+
+        // 検索窓でEnterキーを押したときも検索を実行する
+        document.querySelector('.search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                executeSearch();
+            }
+        });
+    </script>
 </body>
 </html>
