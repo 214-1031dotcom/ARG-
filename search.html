@@ -1,48 +1,109 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>検索結果</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>検索結果 - Mariage</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; }
-        .result-item { margin-bottom: 20px; }
-        .result-title { color: #1a0dab; font-size: 18px; text-decoration: none; display: block; }
-        .result-url { color: #006621; font-size: 14px; }
-        .result-desc { color: #4d5156; font-size: 14px; margin-top: 5px; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; color: #222; background-color: #fff; }
+        .header-area { display: flex; align-items: center; margin-bottom: 30px; border-bottom: 1px solid #ebebeb; padding-bottom: 15px; }
+        .mini-logo { font-size: 28px; font-weight: bold; letter-spacing: -1px; margin-right: 20px; text-decoration: none; }
+        .mini-logo span:nth-child(1) { color: #4285F4; } .mini-logo span:nth-child(2) { color: #EA4335; } .mini-logo span:nth-child(3) { color: #FBBC05; } .mini-logo span:nth-child(4) { color: #4285F4; } .mini-logo span:nth-child(5) { color: #34A853; } .mini-logo span:nth-child(6) { color: #EA4335; } .mini-logo span:nth-child(7) { color: #FBBC05; } .mini-logo span:nth-child(8) { color: #4285F4; }
+        
+        .mini-search-input { width: 100%; max-width: 500px; padding: 8px 15px; font-size: 15px; border: 1px solid #dfe1e5; border-radius: 24px; outline: none; }
+        
+        .results-container { max-width: 650px; margin-left: 120px; }
+        .result-item { margin-bottom: 25px; }
+        .result-url { color: #202124; font-size: 12px; margin-bottom: 2px; }
+        .result-title { color: #1a0dab; font-size: 20px; text-decoration: none; display: inline-block; }
+        .result-title:hover { text-decoration: underline; }
+        .result-desc { color: #4d5156; font-size: 14px; line-height: 1.4; margin-top: 3px; }
+        .no-result { font-size: 16px; color: #5f6368; margin-top: 20px; }
+        
+        @media (max-width: 768px) {
+            .header-area { flex-direction: column; align-items: flex-start; }
+            .results-container { margin-left: 0; }
+            .mini-search-input { max-width: 100%; margin-top: 10px; }
+        }
     </style>
 </head>
 <body>
-    <div id="results"></div>
+
+    <div class="header-area">
+        <a href="index.html" class="mini-logo">
+            <span>M</span><span>a</span><span>r</span><span>i</span><span>a</span><span>g</span><span>e</span>
+        </a>
+        <input type="text" id="miniSearchInput" class="mini-search-input" placeholder="キーワードを入力">
+    </div>
+
+    <div class="results-container" id="results">
+        <!-- ここに検索結果のリストが差し込まれます -->
+    </div>
 
     <script>
         const params = new URLSearchParams(window.location.search);
-        const query = params.get('q');
-        const resultsDiv = document.getElementById('results');
+        let query = params.get('q') || '';
+        
+        // 検索窓に今のキーワードを入れておく
+        document.getElementById('miniSearchInput').value = query;
 
-        // 結果リストのデータ（ここに増やしていけばOK！）
+        // Enterキーで再検索できるようにする
+        document.getElementById('miniSearchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const newQuery = this.value.trim();
+                if (newQuery) {
+                    window.location.href = 'search.html?q=' + encodeURIComponent(newQuery);
+                }
+            }
+        });
+
+        // 検索データのデータベース（ここにどんどん追加できるよ！）
         const data = [
-            { title: "にーよ8号", url: "https://x.com/YingDou21485", desc: "にーよ8号さんの公式Xアカウントです。" },
-            { title: "日乃市立月々星小学校", url: "school.html", desc: "日乃市立月々星小学校についての詳細情報。" },
-            { title: "月の落石事件 ", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の詳細。" },
-            { title: "ひなあられさん", url: "https://x.com/hina_arare1211", desc: "ひなあられさんの公式Xアカウントです。" }
+            { 
+                title: "にーよ8号", 
+                url: "https://x.com/YingDou21485", 
+                desc: "Plan_aot主導者 " 
+            },
+            { 
+                title: "日乃市立月々星小学校", 
+                url: "school.html", 
+                desc: "日乃市立月々星小学校についての詳細情報や学校生活に関するページです。" 
+            },
+            { 
+                title: "【ニュース】月の落石事件", 
+                url: "news_20171031.html", 
+                desc: "2017年10月31日に発生した「月の落石事件」" 
+            },
+            { 
+                title: "ひなあられ", 
+                url: "https://x.com/hina_arare1211", 
+                desc: "18↓／雑多／1次創作「aot」協力してます ノベルゲーム「 #君の命を絵の具に乗せて 」公開中。利用規約や素材はリットリンクにて" 
+            }
         ];
 
-        // 検索ワードが含まれるものだけ抽出
-        const filtered = data.filter(item => item.title.includes(query) || item.desc.includes(query));
+        // あいまい検索・キーワード一致のチェック
+        const filtered = data.filter(item => item.title.includes(query) || item.desc.includes(query) || item.url.includes(query));
+        const resultsDiv = document.getElementById('results');
 
         if (filtered.length > 0) {
             filtered.forEach(item => {
                 resultsDiv.innerHTML += `
                     <div class="result-item">
-                        <a href="${item.url}" class="result-title">${item.title}</a>
                         <div class="result-url">${item.url}</div>
+                        <a href="${item.url}" class="result-title">${item.title}</a>
                         <div class="result-desc">${item.desc}</div>
                     </div>
                 `;
             });
         } else {
-            resultsDiv.innerHTML = '<h1>「' + query + '」は見つかりませんでした。</h1>';
+            resultsDiv.innerHTML = `
+                <div class="no-result">
+                    <p>一致する検索結果はありませんでした: <b>${query}</b></p>
+                    <p style="font-size: 13px; color: #70757a;">キーワードに誤字・脱字がないか確かめてみてください。</p>
+                </div>
+            `;
         }
     </script>
+
 </body>
 </html>
