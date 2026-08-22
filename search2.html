@@ -7,70 +7,34 @@
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 20px; color: #222; background-color: #fff; }
         .header-area { display: flex; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 15px; }
-        .mini-logo { font-size: 28px; font-weight: bold; letter-spacing: -1px; margin-right: 20px; text-decoration: none; }
-        .mini-logo span:nth-child(1) { color: #4285F4; } .mini-logo span:nth-child(2) { color: #EA4335; } .mini-logo span:nth-child(3) { color: #FBBC05; } .mini-logo span:nth-child(4) { color: #4285F4; } .mini-logo span:nth-child(5) { color: #34A853; } .mini-logo span:nth-child(6) { color: #EA4335; } .mini-logo span:nth-child(7) { color: #FBBC05; } .mini-logo span:nth-child(8) { color: #4285F4; }
+        .mini-logo { font-size: 28px; font-weight: bold; letter-spacing: -1px; margin-right: 20px; text-decoration: none; color: #4285F4; }
         
         .mini-search-wrapper { position: relative; display: flex; align-items: center; width: 100%; max-width: 500px; }
         .mini-search-input { width: 100%; padding: 8px 15px 8px 40px; font-size: 15px; border: 1px solid #dfe1e5; border-radius: 24px; outline: none; box-sizing: border-box; }
-        .search-icon { position: absolute; left: 14px; width: 18px; height: 18px; color: #9aa0a6; pointer-events: none; }
         
-        .sub-header { max-width: 650px; margin-left: 120px; margin-bottom: 20px; font-size: 13px; display: flex; gap: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 8px; }
-        .sub-header a { text-decoration: none; color: #70757a; padding-bottom: 8px; }
-        .sub-header .active { color: #1a0dab; font-weight: bold; border-bottom: 2px solid #1a0dab; }
-
-        .main-layout { display: flex; align-items: flex-start; position: relative; }
-        
-        .side-icon-area {
-            width: 100px;
-            display: flex;
-            justify-content: center;
-            padding-top: 5px;
-            flex-shrink: 0;
-        }
-        .side-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
-        }
+        .main-layout { display: flex; align-items: flex-start; margin-top: 20px; }
+        .side-icon-area { width: 100px; display: flex; justify-content: center; flex-shrink: 0; }
+        .side-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
 
         .results-content { flex-grow: 1; max-width: 650px; }
         .search-result-item { margin-bottom: 25px; }
         .result-url { font-size: 12px; color: #202124; margin-bottom: 2px; }
-        .result-title { color: #1a0dab; font-size: 20px; text-decoration: none; display: inline-block; margin-bottom: 3px; font-weight: normal; }
+        .result-title { color: #1a0dab; font-size: 20px; text-decoration: none; display: inline-block; margin-bottom: 3px; }
         .result-title:hover { text-decoration: underline; }
         .result-desc { color: #4d5156; font-size: 14px; line-height: 1.4; }
-
-        @media (max-width: 768px) {
-            .header-area { flex-direction: column; align-items: flex-start; }
-            .sub-header { margin-left: 0; }
-            .main-layout { flex-direction: column; }
-            .side-icon-area { display: none; }
-            .results-content { max-width: 100%; }
-        }
     </style>
 </head>
 <body>
 
     <div class="header-area">
-        <a href="index.html" class="mini-logo"><span>M</span><span>a</span><span>r</span><span>i</span><span>a</span><span>g</span><span>e</span></a>
+        <a href="index.html" class="mini-logo">Mariage</a>
         <div class="mini-search-wrapper">
-            <svg class="search-icon" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
             <input type="text" id="miniSearchInput" class="mini-search-input">
         </div>
     </div>
 
-    <div class="sub-header">
-        <a href="#" class="active" id="tabAll">すべて</a>
-        <a href="#" id="tabImages">画像</a>
-        <a href="#" id="tabNews">ニュース</a>
-        <span id="hitCount" style="margin-left: auto; color: #70757a;"></span>
-    </div>
-
     <div class="main-layout">
         <div class="side-icon-area">
-            <!-- デフォルトはにーよ8号 -->
             <img id="sideIconImg" src="https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg" alt="アイコン" class="side-avatar">
         </div>
         <div class="results-content" id="searchResults"></div>
@@ -78,61 +42,54 @@
 
     <script>
         const params = new URLSearchParams(window.location.search);
-        let query = params.get('q') || '';
+        const query = params.get('q') || '';
         document.getElementById('miniSearchInput').value = query;
 
         const sideIconImg = document.getElementById('sideIconImg');
-
-        // 基本の検索データ
-        let mockData = [
-            { title: "にーよ8号", url: "https://x.com/YingDou21485", desc: "Plan_aot主導者" },
-            { title: "月々星小学校", url: "school.html", desc: "日乃市立月々星小学校の公式・非公式情報まとめ。" },
-            { title: "月の落石事件まとめ", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の全貌と当時のニュース報道。" }
-        ];
-
-        // 「ひなあられ」のとき
-        if (query.includes('ひなあられ')) {
-            sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7445.jpeg';
-            sideIconImg.alt = 'ひなあられ';
-            mockData.unshift({
-                title: "ひなあられ",
-                url: "https://x.com/hina_arare1211",
-                desc: "18↓／雑多／1次創作「aot」協力してます
-ノベルゲーム「 #君の命を絵の具に乗せて 」公開中。利用規約や素材はリットリンクにて"
-            });
-        }
-
-        // 「佐藤めいこ」のとき
-        if (query.includes('佐藤めいこ')) {
-            sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7446.jpeg';
-            sideIconImg.alt = '佐藤めいこ';
-            mockData.unshift({
-                title: "佐藤めいこ",
-                url: "https://x.com/Satou_meiko",
-                desc: "りぼん漫画家志望🎀"
-            });
-        }
-
-        document.getElementById('tabAll').href = 'search2.html?q=' + encodeURIComponent(query);
-        document.getElementById('tabImages').href = 'images.html?q=' + encodeURIComponent(query);
-        document.getElementById('tabNews').href = 'news.html?q=' + encodeURIComponent(query);
-
-        document.getElementById('miniSearchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') { window.location.href = 'search2.html?q=' + encodeURIComponent(this.value.trim()); }
-        });
-
-        const filtered = mockData.filter(item => item.title.includes(query) || item.desc.includes(query));
-        document.getElementById('hitCount').innerText = `約 ${filtered.length} 件のヒット`;
         const container = document.getElementById('searchResults');
 
-        filtered.forEach(item => {
-            container.innerHTML += `
-                <div class="search-result-item">
-                    <div class="result-url">${item.url}</div>
-                    <a href="${item.url}" class="result-title" target="_blank">${item.title}</a>
-                    <div class="result-desc">${item.desc}</div>
-                </div>
-            `;
+        // デフォルトの検索データ
+        let results = [
+            { title: "にーよ8号", url: "https://x.com/YingDou21485", desc: "Plan_aot主導者" },
+            { title: "月々星小学校", url: "school.html", desc: "日乃市立月々星小学校の公式ホームページです。" },
+            { title: "月の落石事件", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の全貌とニュース報道。" }
+        ];
+
+        // キーワードに応じた切り替え
+        if (query.includes('ひなあられ')) {
+            sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7445.jpeg';
+            results.unshift({
+                title: "ひなあられ",
+                url: "https://x.com/hina_arare1211",
+                desc: "制作協力者（いつも手伝ってくれてありがとう！）"
+            });
+        } else if (query.includes('佐藤めいこ')) {
+            sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7446.jpeg';
+            results.unshift({
+                title: "佐藤めいこ",
+                url: "https://x.com/Satou_meiko",
+                desc: "制作協力者（いつも手伝ってくれてありがとう！）"
+            });
+        }
+
+        // 画面に描画
+        results.forEach(item => {
+            if (item.title.includes(query) || item.desc.includes(query) || query === '') {
+                container.innerHTML += `
+                    <div class="search-result-item">
+                        <div class="result-url">${item.url}</div>
+                        <a href="${item.url}" class="result-title" target="_blank">${item.title}</a>
+                        <div class="result-desc">${item.desc}</div>
+                    </div>
+                `;
+            }
+        });
+
+        // 検索窓でEnterを押したとき
+        document.getElementById('miniSearchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                window.location.href = 'search2.html?q=' + encodeURIComponent(this.value.trim());
+            }
         });
     </script>
 </body>
