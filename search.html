@@ -30,7 +30,7 @@
         <button class="btn" onclick="checkSearch()">Mariage 検索</button>
     </div>
 
-    <div class="footer">Mariage Search Engine (v2.0.7)</div>
+    <div class="footer">Mariage Search Engine (v2.0.8)</div>
 
     <script>
         function checkSearch() {
@@ -40,9 +40,9 @@
             if (query.includes('月の落石事件') || query.includes('落石')) {
                 window.location.href = 'news_20171031.html';
             } 
-            // 「月々星小学校」で検索したとき（学校のページへ！ ※ファイル名は後で作るものでOK）
-            else if (query.includes('月々星小学校') || query.includes('小学校')) {
-                window.location.href = 'school.html';
+            // 「月々星小学校」または「小学校」で指定のGitHub URLへ飛ぶ設定
+            else if (query.includes('月々星小学校') ('日乃市立月々星小学校')|| query.includes('小学校')) {
+                window.location.href = 'https://github.com/214-1031dotcom/ARG-/blob/main/index.html';
             }
             else {
                 alert('「' + (query || '（空欄）') + '」に一致する検索結果はありません。');
