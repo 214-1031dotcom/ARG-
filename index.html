@@ -30,25 +30,31 @@
         <button class="btn" onclick="checkSearch()">Mariage 検索</button>
     </div>
 
-    <div class="footer">Mariage Search Engine (v2.0.9)</div>
+    <div class="footer">Mariage Search Engine (v2.1.0)</div>
 
     <script>
         function checkSearch() {
-            const query = document.getElementById('searchInput').value.trim();
+            // 入力された文字の前後にある不要なスペースを綺麗に消す
+            let query = document.getElementById('searchInput').value.trim();
 
-            // 1. 「月の落石事件」でニュースページへ飛ぶ
+            // 全角の数字やアルファベットを半角に自動変換するお助け処理（これで全角半角のミスを防ぐ！）
+            query = query.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
+                return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+            });
+
+            // 1. 「月の落石事件」または「落石」
             if (query.includes('月の落石事件') || query.includes('落石')) {
                 window.location.href = 'news_20171031.html';
             } 
-            // 2. 「月々星小学校」で検索したとき
+            // 2. 「月々星小学校」または「小学校」
             else if (query.includes('月々星小学校') || query.includes('小学校')) {
                 window.location.href = 'school.html';
             } 
-            // 3. 「にーよ8号」で検索したとき
-            else if (query.includes('にーよ8号')) {
+            // 3. 「にーよ8号」または「にーよ」
+            else if (query.includes('にーよ8号') || query.includes('にーよ')) {
                 window.location.href = 'https://x.com/YingDou21485';
             }
-            // 4. 「ひなあられ」で検索したとき
+            // 4. 「ひなあられ」
             else if (query.includes('ひなあられ')) {
                 window.location.href = 'https://x.com/hina_arare1211';
             }   
@@ -56,9 +62,9 @@
             else {
                 alert('「' + (query || '（空欄）') + '」に一致する検索結果はありません。');
             }   
-        } // ← ★ここが checkSearch() 全体のフタ！
+        }
 
-        // Enterキー対応（独立して正しく動くように修正！）
+        // Enterキー対応
         document.getElementById('searchInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') { 
                 checkSearch(); 
