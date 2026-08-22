@@ -44,13 +44,13 @@
             <span>M</span><span>a</span><span>r</span><span>i</span><span>a</span><span>g</span><span>e</span>
         </a>
         <div class="mini-search-wrapper">
-            <!-- 虫眼鏡マーク復活！ -->
+            <!-- どんなときも絶対に消えない虫眼鏡 -->
             <svg class="search-icon" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
             <input type="text" id="miniSearchInput" class="mini-search-input">
         </div>
     </div>
 
-    <!-- サブヘッダー（画像・ニュース・すべてタブ）復活！ -->
+    <!-- どんなときも絶対に消えないタブ（すべて・画像・ニュース） -->
     <div class="sub-header">
         <a href="#" class="active" id="tabAll">すべて</a>
         <a href="#" id="tabImages">画像</a>
@@ -73,36 +73,30 @@
         const sideIconImg = document.getElementById('sideIconImg');
         const container = document.getElementById('searchResults');
 
-        // タブのリンク先を連動させる
+        // タブのリンク連動
         document.getElementById('tabAll').href = 'search2.html?q=' + encodeURIComponent(query);
         document.getElementById('tabImages').href = 'images.html?q=' + encodeURIComponent(query);
         document.getElementById('tabNews').href = 'news.html?q=' + encodeURIComponent(query);
 
-        // 基本の検索データ（にーよ8号も確実にここに鎮座します！）
+        // 全ての検索データをあらかじめ用意
         let results = [
             { title: "にーよ8号", url: "https://x.com/YingDou21485", desc: "Plan_aot主導者" },
             { title: "月々星小学校", url: "school.html", desc: "日乃市立月々星小学校" },
-            { title: "月の落石事件", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の全貌とニュース報道。" }
+            { title: "月の落石事件", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の全貌とニュース報道。" },
+            { title: "ひなあられ", url: "https://x.com/hina_arare1211", desc: "制作協力者（いつも手伝ってくれてありがとう！）" },
+            { title: "佐藤めいこ", url: "https://x.com/Satou_meiko", desc: "制作協力者（いつも手伝ってくれてありがとう！）" }
         ];
 
-        // キーワードに応じたアイコン＆データの切り替え
+        // 検索ワードに応じて「左側のアイコン」だけを切り替える
         if (query.includes('ひなあられ')) {
             sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7445.jpeg';
-            results.unshift({
-                title: "ひなあられ",
-                url: "https://x.com/hina_arare1211",
-                desc: "制作協力者（いつも手伝ってくれてありがとう！）"
-            });
+            sideIconImg.alt = 'ひなあられ';
         } else if (query.includes('佐藤めいこ')) {
             sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7446.jpeg';
-            results.unshift({
-                title: "佐藤めいこ",
-                url: "https://x.com/Satou_meiko",
-                desc: "制作協力者（いつも手伝ってくれてありがとう！）"
-            });
+            sideIconImg.alt = '佐藤めいこ';
         }
 
-        // フィルター処理
+        // 入力された文字に引っかかるものをすべて表示するフィルター
         const filtered = results.filter(item => {
             if (query === '') return true;
             return item.title.includes(query) || item.desc.includes(query) || item.url.includes(query);
@@ -110,15 +104,19 @@
 
         document.getElementById('hitCount').innerText = `約 ${filtered.length} 件のヒット`;
 
-        filtered.forEach(item => {
-            container.innerHTML += `
-                <div class="search-result-item">
-                    <div class="result-url">${item.url}</div>
-                    <a href="${item.url}" class="result-title" target="_blank">${item.title}</a>
-                    <div class="result-desc">${item.desc}</div>
-                </div>
-            `;
-        });
+        if (filtered.length === 0) {
+            container.innerHTML = `<div style="color: #70757a; padding: 20px 0;">一致する結果はありませんでした。</div>`;
+        } else {
+            filtered.forEach(item => {
+                container.innerHTML += `
+                    <div class="search-result-item">
+                        <div class="result-url">${item.url}</div>
+                        <a href="${item.url}" class="result-title" target="_blank">${item.title}</a>
+                        <div class="result-desc">${item.desc}</div>
+                    </div>
+                `;
+            });
+        }
 
         // Enterキーで検索
         document.getElementById('miniSearchInput').addEventListener('keypress', function(e) {
