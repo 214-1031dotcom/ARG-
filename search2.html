@@ -78,22 +78,25 @@
         // 全検索データ
         let results = [
             { title: "にーよ8号", url: "https://x.com/YingDou21485", desc: "Plan_aot主導者" },
-            { title: "月々星小学校", url: "school.html", desc: "日乃市立月々星小学校。" },
-            { title: "月の落石事件まとめ", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の全貌とニュース報道。" },
+            { title: "月々星小学校", url: "school.html", desc: "日乃市立月々星小学校" },
+            { title: "月の落石事件", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の全貌とニュース報道。" },
             { title: "ひなあられ", url: "https://x.com/hina_arare1211", desc: "制作協力者（いつも手伝ってくれてありがとう！）" },
-            { title: "佐藤めいこ", url: "https://x.com/Satou_meiko", desc: "制作協力者（いつも手伝ってくれてありがとう！）" }
+            { title: "佐藤めいこ", url: "https://x.com/Satou_meiko", desc: "制作協力者（いつも手伝ってくれてありがとう！）" },
+            { title: "宮森", url: "https://x.com/my_my_77777", desc: "制作協力者（いつも手伝ってくれてありがとう！）" }
         ];
 
-        // アイコンの切り替え
+        // キーワードに応じたアイコンの切り替え
         if (query.includes('ひなあられ')) {
             sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7445.jpeg';
             sideIconImg.alt = 'ひなあられ';
         } else if (query.includes('佐藤めいこ')) {
             sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7446.jpeg';
             sideIconImg.alt = '佐藤めいこ';
+        } else if (query.includes('宮森')) {
+            sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/936932E4-FAD1-4E75-9DCD-4E1712950FEF.jpeg';
+            sideIconImg.alt = '宮森';
         }
 
-        // あいまい検索に対応（大文字小文字や空白の揺れを少し吸収）
         const cleanQuery = query.trim().toLowerCase();
         
         const filtered = results.filter(item => {
