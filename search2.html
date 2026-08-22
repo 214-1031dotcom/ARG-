@@ -10,7 +10,6 @@
         .mini-logo { font-size: 28px; font-weight: bold; letter-spacing: -1px; margin-right: 20px; text-decoration: none; }
         .mini-logo span:nth-child(1) { color: #4285F4; } .mini-logo span:nth-child(2) { color: #EA4335; } .mini-logo span:nth-child(3) { color: #FBBC05; } .mini-logo span:nth-child(4) { color: #4285F4; } .mini-logo span:nth-child(5) { color: #34A853; } .mini-logo span:nth-child(6) { color: #EA4335; } .mini-logo span:nth-child(7) { color: #FBBC05; } .mini-logo span:nth-child(8) { color: #4285F4; }
         
-        /* 検索バーとアイコンのスタイル */
         .mini-search-wrapper { position: relative; display: flex; align-items: center; width: 100%; max-width: 500px; }
         .mini-search-input { width: 100%; padding: 8px 15px 8px 40px; font-size: 15px; border: 1px solid #dfe1e5; border-radius: 24px; outline: none; box-sizing: border-box; }
         .search-icon { position: absolute; left: 14px; width: 18px; height: 18px; color: #9aa0a6; pointer-events: none; }
@@ -19,10 +18,8 @@
         .sub-header a { text-decoration: none; color: #70757a; padding-bottom: 8px; }
         .sub-header .active { color: #1a0dab; font-weight: bold; border-bottom: 2px solid #1a0dab; }
 
-        /* 全体のレイアウト（左側のアイコンエリアと検索結果エリア） */
         .main-layout { display: flex; align-items: flex-start; position: relative; }
         
-        /* 左側にぽつんと置くアイコンのエリア */
         .side-icon-area {
             width: 100px;
             display: flex;
@@ -38,7 +35,6 @@
             box-shadow: 0 1px 4px rgba(0,0,0,0.15);
         }
 
-        /* 検索結果リスト側 */
         .results-content { flex-grow: 1; max-width: 650px; }
         .search-result-item { margin-bottom: 25px; }
         .result-url { font-size: 12px; color: #202124; margin-bottom: 2px; }
@@ -50,7 +46,7 @@
             .header-area { flex-direction: column; align-items: flex-start; }
             .sub-header { margin-left: 0; }
             .main-layout { flex-direction: column; }
-            .side-icon-area { display: none; } /* スマホでは非表示にするなどお好みで */
+            .side-icon-area { display: none; }
             .results-content { max-width: 100%; }
         }
     </style>
@@ -72,7 +68,6 @@
         <span id="hitCount" style="margin-left: auto; color: #70757a;"></span>
     </div>
 
-    <!-- 左右に分かれたレイアウト（左：アイコン、右：検索結果） -->
     <div class="main-layout">
         <div class="side-icon-area">
             <img src="https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg" alt="にーよ8号" class="side-avatar">
@@ -95,8 +90,8 @@
 
         const mockData = [
             { title: "にーよ8号", url: "https://x.com/YingDou21485", desc: "Plan_aot主導者" },
-            { title: "月々星小学校", url: "school.html", desc: "日乃市立月々星小学校の公式・非公式情報まとめ。" },
-            { title: "月の落石事件まとめ", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の全貌と当時のニュース報道。" }
+            { title: "月々星小学校", url: "school.html", desc: "日乃市立月々星小学校ホームページです" },
+            { title: "月の落石事件", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の全貌と当時のニュース報道。" }
         ];
 
         const filtered = mockData.filter(item => item.title.includes(query) || item.desc.includes(query));
