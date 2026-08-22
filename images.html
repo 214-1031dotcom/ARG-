@@ -9,7 +9,11 @@
         .header-area { display: flex; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 15px; }
         .mini-logo { font-size: 28px; font-weight: bold; letter-spacing: -1px; margin-right: 20px; text-decoration: none; }
         .mini-logo span:nth-child(1) { color: #4285F4; } .mini-logo span:nth-child(2) { color: #EA4335; } .mini-logo span:nth-child(3) { color: #FBBC05; } .mini-logo span:nth-child(4) { color: #4285F4; } .mini-logo span:nth-child(5) { color: #34A853; } .mini-logo span:nth-child(6) { color: #EA4335; } .mini-logo span:nth-child(7) { color: #FBBC05; } .mini-logo span:nth-child(8) { color: #4285F4; }
-        .mini-search-input { width: 100%; max-width: 500px; padding: 8px 15px; font-size: 15px; border: 1px solid #dfe1e5; border-radius: 24px; outline: none; }
+        
+        /* 検索バーとアイコンのスタイル */
+        .mini-search-wrapper { position: relative; display: flex; align-items: center; width: 100%; max-width: 500px; }
+        .mini-search-input { width: 100%; padding: 8px 15px 8px 40px; font-size: 15px; border: 1px solid #dfe1e5; border-radius: 24px; outline: none; box-sizing: border-box; }
+        .search-icon { position: absolute; left: 14px; width: 18px; height: 18px; color: #9aa0a6; pointer-events: none; }
         
         .sub-header { max-width: 650px; margin-left: 120px; margin-bottom: 20px; font-size: 13px; display: flex; gap: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 8px; }
         .sub-header a { text-decoration: none; color: #70757a; padding-bottom: 8px; }
@@ -26,7 +30,7 @@
         @media (max-width: 768px) {
             .header-area { flex-direction: column; align-items: flex-start; }
             .image-container, .sub-header { margin-left: 0; }
-            .mini-search-input { max-width: 100%; margin-top: 10px; }
+            .mini-search-wrapper { max-width: 100%; margin-top: 10px; }
         }
     </style>
 </head>
@@ -34,7 +38,10 @@
 
     <div class="header-area">
         <a href="index.html" class="mini-logo"><span>M</span><span>a</span><span>r</span><span>i</span><span>a</span><span>g</span><span>e</span></a>
-        <input type="text" id="miniSearchInput" class="mini-search-input">
+        <div class="mini-search-wrapper">
+            <svg class="search-icon" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+            <input type="text" id="miniSearchInput" class="mini-search-input">
+        </div>
     </div>
 
     <div class="sub-header">
@@ -59,9 +66,8 @@
             if (e.key === 'Enter') { window.location.href = 'images.html?q=' + encodeURIComponent(this.value.trim()); }
         });
 
-        // 画像データのデータベース（ここにaotの画像や設定画を仕込めるよ！）
         const imageData = [
-            { title: "にーよ8号アイコン", src: "https://via.placeholder.com/300x200?text=YingDou21485", url: "https://x.com/YingDou21485", desc: "Plan_aot主導者" },
+            { title: "にーよ8号", src: "https://via.placeholder.com/300x200?text=YingDou21485", url: "https://x.com/YingDou21485", desc: "Plan_aot主導者" },
             { title: "月々星小学校 校舎", src: "https://via.placeholder.com/300x200?text=School", url: "school.html", desc: "校舎の写真" },
             { title: "月の落石事件現場", src: "https://via.placeholder.com/300x200?text=Meteor", url: "news_20171031.html", desc: "事件当日の現場写真" }
         ];
