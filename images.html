@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>検索結果 - Mariage</title>
+    <title>画像検索 - Mariage</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 20px; color: #222; background-color: #fff; }
         .header-area { display: flex; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 15px; }
@@ -11,21 +11,21 @@
         .mini-logo span:nth-child(1) { color: #4285F4; } .mini-logo span:nth-child(2) { color: #EA4335; } .mini-logo span:nth-child(3) { color: #FBBC05; } .mini-logo span:nth-child(4) { color: #4285F4; } .mini-logo span:nth-child(5) { color: #34A853; } .mini-logo span:nth-child(6) { color: #EA4335; } .mini-logo span:nth-child(7) { color: #FBBC05; } .mini-logo span:nth-child(8) { color: #4285F4; }
         .mini-search-input { width: 100%; max-width: 500px; padding: 8px 15px; font-size: 15px; border: 1px solid #dfe1e5; border-radius: 24px; outline: none; }
         
-        /* タブのスタイル */
         .sub-header { max-width: 650px; margin-left: 120px; margin-bottom: 20px; font-size: 13px; display: flex; gap: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 8px; }
         .sub-header a { text-decoration: none; color: #70757a; padding-bottom: 8px; }
         .sub-header .active { color: #1a0dab; font-weight: bold; border-bottom: 2px solid #1a0dab; }
 
-        .results-container { max-width: 650px; margin-left: 120px; }
-        .result-item { margin-bottom: 25px; }
-        .result-url { color: #202124; font-size: 12px; margin-bottom: 2px; }
-        .result-title { color: #1a0dab; font-size: 20px; text-decoration: none; display: inline-block; }
-        .result-title:hover { text-decoration: underline; }
-        .result-desc { color: #4d5156; font-size: 14px; line-height: 1.4; margin-top: 3px; }
-        
+        /* 画像検索グリッド */
+        .image-container { max-width: 900px; margin-left: 120px; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+        .image-card { border: 1px solid #dfe1e5; border-radius: 8px; overflow: hidden; background: #f8f9fa; text-decoration: none; color: inherit; display: block; }
+        .image-card img { width: 100%; height: 140px; object-fit: cover; background-color: #ddd; }
+        .image-info { padding: 10px; font-size: 13px; }
+        .image-title { font-weight: bold; color: #1a0dab; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .image-source { color: #70757a; font-size: 11px; }
+
         @media (max-width: 768px) {
             .header-area { flex-direction: column; align-items: flex-start; }
-            .results-container, .sub-header { margin-left: 0; }
+            .image-container, .sub-header { margin-left: 0; }
             .mini-search-input { max-width: 100%; margin-top: 10px; }
         }
     </style>
@@ -37,48 +37,48 @@
         <input type="text" id="miniSearchInput" class="mini-search-input">
     </div>
 
-    <!-- ここをリンクにしたよ！ -->
-    <div class="sub-header" id="tabContainer">
-        <a href="#" class="active" id="tabAll">すべて</a>
-        <a href="#" id="tabImages">画像</a>
+    <div class="sub-header">
+        <a href="#" id="tabAll">すべて</a>
+        <a href="#" class="active" id="tabImages">画像</a>
         <a href="#" id="tabNews">ニュース</a>
         <span id="hitCount" style="margin-left: auto; color: #70757a;"></span>
     </div>
 
-    <div class="results-container" id="results"></div>
+    <div class="image-container" id="imageResults"></div>
 
     <script>
         const params = new URLSearchParams(window.location.search);
         let query = params.get('q') || '';
         document.getElementById('miniSearchInput').value = query;
 
-        // リンク先を自動設定
         document.getElementById('tabAll').href = 'search2.html?q=' + encodeURIComponent(query);
         document.getElementById('tabImages').href = 'images.html?q=' + encodeURIComponent(query);
         document.getElementById('tabNews').href = 'news.html?q=' + encodeURIComponent(query);
 
         document.getElementById('miniSearchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') { window.location.href = 'search2.html?q=' + encodeURIComponent(this.value.trim()); }
+            if (e.key === 'Enter') { window.location.href = 'images.html?q=' + encodeURIComponent(this.value.trim()); }
         });
 
-        const data = [
-            { title: "にーよ8号", url: "https://x.com/YingDou21485", desc: "Plan_aot主導者" },
-            { title: "日乃市立月々星小学校", url: "school.html", desc: "日乃市立月々星小学校についての詳細情報や学校生活に関するページです。" },
-            { title: "【ニュース】月の落石事件", url: "news_20171031.html", desc: "2017年10月31日に発生した「月の落石事件」" },
-            { title: "ひなあられ", url: "https://x.com/hina_arare1211", desc: "18↓／雑多／1次創作「aot」協力してます" }
+        // 画像データのデータベース（ここにaotの画像や設定画を仕込めるよ！）
+        const imageData = [
+            { title: "にーよ8号アイコン", src: "https://via.placeholder.com/300x200?text=YingDou21485", url: "https://x.com/YingDou21485", desc: "Plan_aot主導者" },
+            { title: "月々星小学校 校舎", src: "https://via.placeholder.com/300x200?text=School", url: "school.html", desc: "校舎の写真" },
+            { title: "月の落石事件現場", src: "https://via.placeholder.com/300x200?text=Meteor", url: "news_20171031.html", desc: "事件当日の現場写真" }
         ];
 
-        const filtered = data.filter(item => item.title.includes(query) || item.desc.includes(query) || item.url.includes(query));
-        const resultsDiv = document.getElementById('results');
-        document.getElementById('hitCount').innerText = `約 ${filtered.length} 件のヒット`;
+        const filtered = imageData.filter(item => item.title.includes(query) || item.desc.includes(query));
+        document.getElementById('hitCount').innerText = `約 ${filtered.length} 件`;
+        const container = document.getElementById('imageResults');
 
         filtered.forEach(item => {
-            resultsDiv.innerHTML += `
-                <div class="result-item">
-                    <div class="result-url">${item.url}</div>
-                    <a href="${item.url}" class="result-title">${item.title}</a>
-                    <div class="result-desc">${item.desc}</div>
-                </div>
+            container.innerHTML += `
+                <a href="${item.url}" class="image-card">
+                    <img src="${item.src}" alt="${item.title}">
+                    <div class="image-info">
+                        <div class="image-title">${item.title}</div>
+                        <div class="image-source">${item.url}</div>
+                    </div>
+                </a>
             `;
         });
     </script>
