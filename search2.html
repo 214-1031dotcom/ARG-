@@ -79,10 +79,11 @@
         let results = [
             { title: "にーよ8号", url: "https://x.com/YingDou21485", desc: "Plan_aot主導者" },
             { title: "月々星小学校", url: "school.html", desc: "日乃市立月々星小学校" },
-            { title: "月の落石事件", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の全貌とニュース報道。" },
+            { title: "月の落石事件まとめ", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の全貌とニュース報道。" },
             { title: "ひなあられ", url: "https://x.com/hina_arare1211", desc: "制作協力者（いつも手伝ってくれてありがとう！）" },
             { title: "佐藤めいこ", url: "https://x.com/Satou_meiko", desc: "制作協力者（いつも手伝ってくれてありがとう！）" },
-            { title: "宮森", url: "https://x.com/my_my_77777", desc: "制作協力者（いつも手伝ってくれてありがとう！）" }
+            { title: "宮森", url: "https://x.com/my_my_77777", desc: "制作協力者（いつも手伝ってくれてありがとう！）" },
+            { title: "やと", url: "https://x.com/yato_k5", desc: "制作協力者（いつも手伝ってくれてありがとう！）" }
         ];
 
         // キーワードに応じたアイコンの切り替え
@@ -95,6 +96,9 @@
         } else if (query.includes('宮森')) {
             sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/936932E4-FAD1-4E75-9DCD-4E1712950FEF.jpeg';
             sideIconImg.alt = '宮森';
+        } else if (query.includes('やと')) {
+            sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/0C3924E6-B098-4386-828A-4D10633F06EC.jpeg';
+            sideIconImg.alt = 'やと';
         }
 
         const cleanQuery = query.trim().toLowerCase();
