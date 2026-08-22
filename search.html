@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mariage 検索</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #222;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .logo {
+            font-size: 64px;
+            font-weight: bold;
+            letter-spacing: -2px;
+            margin-bottom: 30px;
+        }
+        /* Googleっぽいカラフルな文字遊びにするならこれでもOK */
+        .logo span:nth-child(1) { color: #4285F4; }
+        .logo span:nth-child(2) { color: #EA4335; }
+        .logo span:nth-child(3) { color: #FBBC05; }
+        .logo span:nth-child(4) { color: #4285F4; }
+        .logo span:nth-child(5) { color: #34A853; }
+        .logo span:nth-child(6) { color: #EA4335; }
+        .logo span:nth-child(7) { color: #FBBC05; }
+        .logo span:nth-child(8) { color: #4285F4; }
+
+        .search-box {
+            width: 100%;
+            max-width: 580px;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        .search-input {
+            width: 90%;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            outline: none;
+            box-shadow: 0 1px 6px rgba(32,33,36,0.08);
+            transition: box-shadow 0.2s;
+        }
+        .search-input:focus {
+            box-shadow: 0 1px 8px rgba(32,33,36,0.15);
+            border-color: rgba(223,225,229,0);
+        }
+        .search-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        .btn {
+            background-color: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            border-radius: 4px;
+            color: #3c4043;
+            font-size: 14px;
+            padding: 10px 16px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            background-color: #f8f9fa;
+            border: 1px solid #dadce0;
+            color: #202124;
+        }
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            font-size: 12px;
+            color: #70757a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logo">
+        <span>M</span><span>a</span><span>r</span><span>i</span><span>a</span><span>g</span><span>e</span>
+    </div>
+
+    <div class="search-box">
+        <input type="text" class="search-input" placeholder="キーワードを入力して検索 (例: 月々星小学校)" autofocus>
+    </div>
+
+    <div class="search-buttons">
+        <button class="btn" onclick="alert('検索結果はありません。')">Mariage 検索</button>
+        <button class="btn" onclick="alert('直感で進め。')">I'm Feeling Lucky</button>
+    </div>
+
+    <div class="footer">
+        Mariage Search Engine (v2.0.4)
+    </div>
+
+</body>
+</html>
