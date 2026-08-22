@@ -40,7 +40,7 @@
             if (query.includes('月の落石事件') || query.includes('落石')) {
                 window.location.href = 'news_20171031.html';
             } 
-            // 2. 「日乃市立月々星小学校」または「月々星小学校」で検索したとき（一旦アラートでしっかり反応を確認！）
+            // 2. 「月々星小学校」で検索したとき
             else if (query.includes('月々星小学校') || query.includes('小学校')) {
                 window.location.href = 'school.html';
             } 
@@ -56,10 +56,13 @@
             else {
                 alert('「' + (query || '（空欄）') + '」に一致する検索結果はありません。');
             }   
-            
-        // Enterキー対応
+        } // ← ★ここが checkSearch() 全体のフタ！
+
+        // Enterキー対応（独立して正しく動くように修正！）
         document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') { checkSearch(); }
+            if (e.key === 'Enter') { 
+                checkSearch(); 
+            }
         });
     </script>
 
