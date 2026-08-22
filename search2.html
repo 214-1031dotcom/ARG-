@@ -7,10 +7,18 @@
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 20px; color: #222; background-color: #fff; }
         .header-area { display: flex; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 15px; }
-        .mini-logo { font-size: 28px; font-weight: bold; letter-spacing: -1px; margin-right: 20px; text-decoration: none; color: #4285F4; }
+        .mini-logo { font-size: 28px; font-weight: bold; letter-spacing: -1px; margin-right: 20px; text-decoration: none; }
+        .mini-logo span:nth-child(1) { color: #4285F4; } 
+        .mini-logo span:nth-child(2) { color: #EA4335; } 
+        .mini-logo span:nth-child(3) { color: #FBBC05; } 
+        .mini-logo span:nth-child(4) { color: #4285F4; } 
+        .mini-logo span:nth-child(5) { color: #34A853; } 
+        .mini-logo span:nth-child(6) { color: #EA4335; } 
+        .mini-logo span:nth-child(7) { color: #FBBC05; } 
+        .mini-logo span:nth-child(8) { color: #4285F4; }
         
         .mini-search-wrapper { position: relative; display: flex; align-items: center; width: 100%; max-width: 500px; }
-        .mini-search-input { width: 100%; padding: 8px 15px 8px 40px; font-size: 15px; border: 1px solid #dfe1e5; border-radius: 24px; outline: none; box-sizing: border-box; }
+        .mini-search-input { width: 100%; padding: 8px 15px; font-size: 15px; border: 1px solid #dfe1e5; border-radius: 24px; outline: none; box-sizing: border-box; }
         
         .main-layout { display: flex; align-items: flex-start; margin-top: 20px; }
         .side-icon-area { width: 100px; display: flex; justify-content: center; flex-shrink: 0; }
@@ -27,7 +35,9 @@
 <body>
 
     <div class="header-area">
-        <a href="index.html" class="mini-logo">Mariage</a>
+        <a href="index.html" class="mini-logo">
+            <span>M</span><span>a</span><span>r</span><span>i</span><span>a</span><span>g</span><span>e</span>
+        </a>
         <div class="mini-search-wrapper">
             <input type="text" id="miniSearchInput" class="mini-search-input">
         </div>
@@ -48,14 +58,14 @@
         const sideIconImg = document.getElementById('sideIconImg');
         const container = document.getElementById('searchResults');
 
-        // デフォルトの検索データ
+        // デフォルトの検索データ（にーよ8号、月々星小学校、月の落石事件）
         let results = [
             { title: "にーよ8号", url: "https://x.com/YingDou21485", desc: "Plan_aot主導者" },
-            { title: "月々星小学校", url: "school.html", desc: "日乃市立月々星小学校の公式ホームページです。" },
-            { title: "月の落石事件", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の全貌とニュース報道。" }
+            { title: "月々星小学校", url: "school.html", desc: "日乃市立月々星小学校" },
+            { title: "月の落石事件まとめ", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の全貌とニュース報道。" }
         ];
 
-        // キーワードに応じた切り替え
+        // キーワードに応じたアイコン切り替え＆おまけ追加
         if (query.includes('ひなあられ')) {
             sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7445.jpeg';
             results.unshift({
@@ -72,17 +82,20 @@
             });
         }
 
-        // 画面に描画
-        results.forEach(item => {
-            if (item.title.includes(query) || item.desc.includes(query) || query === '') {
-                container.innerHTML += `
-                    <div class="search-result-item">
-                        <div class="result-url">${item.url}</div>
-                        <a href="${item.url}" class="result-title" target="_blank">${item.title}</a>
-                        <div class="result-desc">${item.desc}</div>
-                    </div>
-                `;
-            }
+        // 検索ワードに一致するものだけを確実にフィルターして描画
+        const filtered = results.filter(item => {
+            if (query === '') return true;
+            return item.title.includes(query) || item.desc.includes(query) || item.url.includes(query);
+        });
+
+        filtered.forEach(item => {
+            container.innerHTML += `
+                <div class="search-result-item">
+                    <div class="result-url">${item.url}</div>
+                    <a href="${item.url}" class="result-title" target="_blank">${item.title}</a>
+                    <div class="result-desc">${item.desc}</div>
+                </div>
+            `;
         });
 
         // 検索窓でEnterを押したとき
