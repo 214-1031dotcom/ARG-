@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -9,12 +9,12 @@
         .header-area { display: flex; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 15px; }
         .mini-logo { font-size: 28px; font-weight: bold; letter-spacing: -1px; margin-right: 20px; text-decoration: none; }
         .mini-logo span:nth-child(1) { color: #4285F4; } .mini-logo span:nth-child(2) { color: #EA4335; } .mini-logo span:nth-child(3) { color: #FBBC05; } .mini-logo span:nth-child(4) { color: #4285F4; } .mini-logo span:nth-child(5) { color: #34A853; } .mini-logo span:nth-child(6) { color: #EA4335; } .mini-logo span:nth-child(7) { color: #FBBC05; } .mini-logo span:nth-child(8) { color: #4285F4; }
-        
         .mini-search-input { width: 100%; max-width: 500px; padding: 8px 15px; font-size: 15px; border: 1px solid #dfe1e5; border-radius: 24px; outline: none; }
         
-        /* 検索窓の下のタブとヒット件数エリア */
-        .sub-header { max-width: 650px; margin-left: 120px; margin-bottom: 20px; font-size: 13px; color: #70757a; display: flex; gap: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 8px; }
-        .sub-header .active { color: #1a0dab; font-weight: bold; border-bottom: 2px solid #1a0dab; padding-bottom: 6px; }
+        /* タブのスタイル */
+        .sub-header { max-width: 650px; margin-left: 120px; margin-bottom: 20px; font-size: 13px; display: flex; gap: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 8px; }
+        .sub-header a { text-decoration: none; color: #70757a; padding-bottom: 8px; }
+        .sub-header .active { color: #1a0dab; font-weight: bold; border-bottom: 2px solid #1a0dab; }
 
         .results-container { max-width: 650px; margin-left: 120px; }
         .result-item { margin-bottom: 25px; }
@@ -22,7 +22,6 @@
         .result-title { color: #1a0dab; font-size: 20px; text-decoration: none; display: inline-block; }
         .result-title:hover { text-decoration: underline; }
         .result-desc { color: #4d5156; font-size: 14px; line-height: 1.4; margin-top: 3px; }
-        .no-result { font-size: 16px; color: #5f6368; margin-top: 20px; }
         
         @media (max-width: 768px) {
             .header-area { flex-direction: column; align-items: flex-start; }
@@ -34,17 +33,15 @@
 <body>
 
     <div class="header-area">
-        <a href="index.html" class="mini-logo">
-            <span>M</span><span>a</span><span>r</span><span>i</span><span>a</span><span>g</span><span>e</span>
-        </a>
-        <input type="text" id="miniSearchInput" class="mini-search-input" placeholder="キーワードを入力">
+        <a href="index.html" class="mini-logo"><span>M</span><span>a</span><span>r</span><span>i</span><span>a</span><span>g</span><span>e</span></a>
+        <input type="text" id="miniSearchInput" class="mini-search-input">
     </div>
 
-    <!-- 検索窓の下のタブ＆ヒット件数表示 -->
-    <div class="sub-header">
-        <span class="active">すべて</span>
-        <span>画像</span>
-        <span>ニュース</span>
+    <!-- ここをリンクにしたよ！ -->
+    <div class="sub-header" id="tabContainer">
+        <a href="#" class="active" id="tabAll">すべて</a>
+        <a href="#" id="tabImages">画像</a>
+        <a href="#" id="tabNews">ニュース</a>
         <span id="hitCount" style="margin-left: auto; color: #70757a;"></span>
     </div>
 
@@ -53,66 +50,37 @@
     <script>
         const params = new URLSearchParams(window.location.search);
         let query = params.get('q') || '';
-        
         document.getElementById('miniSearchInput').value = query;
 
+        // リンク先を自動設定
+        document.getElementById('tabAll').href = 'search2.html?q=' + encodeURIComponent(query);
+        document.getElementById('tabImages').href = 'images.html?q=' + encodeURIComponent(query);
+        document.getElementById('tabNews').href = 'news.html?q=' + encodeURIComponent(query);
+
         document.getElementById('miniSearchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const newQuery = this.value.trim();
-                if (newQuery) {
-                    window.location.href = 'search2.html?q=' + encodeURIComponent(newQuery);
-                }
-            }
+            if (e.key === 'Enter') { window.location.href = 'search2.html?q=' + encodeURIComponent(this.value.trim()); }
         });
 
-        // 検索データベース
         const data = [
-            { 
-                title: "にーよ8号", 
-                url: "https://x.com/YingDou21485", 
-                desc: "Plan_aot主導者" 
-            },
-            { 
-                title: "日乃市立月々星小学校", 
-                url: "school.html", 
-                desc: "日乃市立月々星小学校についての詳細情報や学校生活に関するページです。" 
-            },
-            { 
-                title: "【ニュース】月の落石事件", 
-                url: "news_20171031.html", 
-                desc: "2017年10月31日に発生した「月の落石事件」" 
-            },
-            { 
-                title: "ひなあられ", 
-                url: "https://x.com/hina_arare1211", 
-                desc: "18↓／雑多／1次創作「aot」協力してます ノベルゲーム「 #君の命を絵の具に乗せて 」公開中。利用規約や素材はリットリンクにて" 
-            }
+            { title: "にーよ8号", url: "https://x.com/YingDou21485", desc: "Plan_aot主導者" },
+            { title: "日乃市立月々星小学校", url: "school.html", desc: "日乃市立月々星小学校についての詳細情報や学校生活に関するページです。" },
+            { title: "【ニュース】月の落石事件", url: "news_20171031.html", desc: "2017年10月31日に発生した「月の落石事件」" },
+            { title: "ひなあられ", url: "https://x.com/hina_arare1211", desc: "18↓／雑多／1次創作「aot」協力してます" }
         ];
 
         const filtered = data.filter(item => item.title.includes(query) || item.desc.includes(query) || item.url.includes(query));
         const resultsDiv = document.getElementById('results');
-        const hitCountDiv = document.getElementById('hitCount');
+        document.getElementById('hitCount').innerText = `約 ${filtered.length} 件のヒット`;
 
-        hitCountDiv.innerText = `約 ${filtered.length} 件のヒット (0.01 秒)`;
-
-        if (filtered.length > 0) {
-            filtered.forEach(item => {
-                resultsDiv.innerHTML += `
-                    <div class="result-item">
-                        <div class="result-url">${item.url}</div>
-                        <a href="${item.url}" class="result-title">${item.title}</a>
-                        <div class="result-desc">${item.desc}</div>
-                    </div>
-                `;
-            });
-        } else {
-            resultsDiv.innerHTML = `
-                <div class="no-result">
-                    <p>一致する検索結果はありませんでした: <b>${query}</b></p>
-                    <p style="font-size: 13px; color: #70757a;">キーワードに誤字・脱字がないか確かめてみてください。</p>
+        filtered.forEach(item => {
+            resultsDiv.innerHTML += `
+                <div class="result-item">
+                    <div class="result-url">${item.url}</div>
+                    <a href="${item.url}" class="result-title">${item.title}</a>
+                    <div class="result-desc">${item.desc}</div>
                 </div>
             `;
-        }
+        });
     </script>
 </body>
 </html>
