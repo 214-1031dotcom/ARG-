@@ -22,7 +22,6 @@
             letter-spacing: -2px;
             margin-bottom: 30px;
         }
-        /* Google風のカラフルな文字デザイン */
         .logo span:nth-child(1) { color: #4285F4; }
         .logo span:nth-child(2) { color: #EA4335; }
         .logo span:nth-child(3) { color: #FBBC05; }
@@ -91,37 +90,37 @@
     </div>
 
     <div class="search-buttons">
-        <button class="btn">Mariage 検索</button>
-        <button class="btn">I'm Feeling Lucky</button>
+        <button class="btn" id="search-btn">Mariage 検索</button>
+        <button class="btn" id="lucky-btn">I'm Feeling Lucky</button>
     </div>
 
     <div class="footer">
         Mariage Search Engine (v2.0.4)
     </div>
 
-    <!-- 正しく整理された検索・ジャンプ用のプログラム -->
     <script>
         function executeSearch() {
             const query = document.querySelector('.search-input').value.trim();
 
-            // 「月々星小学校」「実緒」「事件」「ニュース」などのワードが入っていたらニュースページへ
+            // 正しいキーワードのときだけニュースへ飛ぶ
             if (query.includes('月々星小学校') || query.includes('実緒') || query.includes('事件') || query.includes('ニュース')) {
                 window.location.href = 'news_20171031.html';
             } else {
-                // 関係ない言葉や空欄のときはアラートだけ出して、勝手にページ移動させない
+                // 関係ないときはアラートを出して、ここで「return（処理終了）」させる！
                 alert('「' + (query || '（空欄）') + '」に一致する検索結果は見つかりませんでした。');
+                return; 
             }
         }
 
-        // 1つ目のボタン（Mariage 検索）が押されたとき
-        document.querySelectorAll('.btn')[0].addEventListener('click', executeSearch);
+        // Mariage 検索ボタン
+        document.getElementById('search-btn').addEventListener('click', executeSearch);
 
-        // 2つ目のボタン（I'm Feeling Lucky）が押されたとき(気楽に直行！）
-        document.querySelectorAll('.btn')[1].addEventListener('click', function() {
+        // I'm Feeling Lucky（直感で進め）ボタン → こっちは押したら問答無用でニュースへ直行！
+        document.getElementById('lucky-btn').addEventListener('click', function() {
             window.location.href = 'news_20171031.html';
         });
 
-        // 検索窓でEnterキーを押したときも検索を実行
+        // Enterキー
         document.querySelector('.search-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 executeSearch();
