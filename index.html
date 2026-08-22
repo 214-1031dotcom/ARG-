@@ -52,6 +52,10 @@
             else {
                 alert('「' + (query || '（空欄）') + '」に一致する検索結果はありません。');
             }
+            // 5. 「ひなあられ」で検索したとき
+        else if (query.includes('ひなあられ')) {
+            window.location.href = 'https://x.com/hina_arare1211';
+        }
         }
 
         // Enterキー対応
