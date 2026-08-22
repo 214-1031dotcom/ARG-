@@ -5,89 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>日乃市立月々星小学校</title>
     <style>
-        body {
-            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            margin: 0; padding: 0; background-color: #f4f4f4; color: #333; line-height: 1.6;
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; color: #222; background-color: #fff; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { font-size: 24px; color: #1a0dab; border-bottom: 2px solid #1a0dab; padding-bottom: 5px; }
+        p { font-size: 15px; color: #4d5156; }
+        
+        /* フッター全体のスタイル（校章を左に配置） */
+        .site-footer {
+            display: flex;
+            align-items: center; /* 縦方向の中央を合わせる */
+            gap: 20px;          /* 校章と文字の間隔 */
+            border-top: 1px solid #ebebeb;
+            padding: 20px 0;
+            margin-top: 50px;
+            color: #70757a;
+            font-size: 13px;
         }
-        header { background-color: #005f8a; color: white; text-align: center; padding: 20px 20px; }
-        header h1 { margin: 0; font-size: 22px; }
-        .container {
-            max-width: 800px; margin: 20px auto; background: #fff; padding: 20px;
-            border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        /* フッター内の校章サイズ調整 */
+        .footer-emblem {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
         }
-        /* 一番上の写真エリア */
-        .school-image { text-align: center; margin-bottom: 20px; }
-        .school-image img { 
-            max-width: 100%; height: auto; border-radius: 5px; 
-            display: block; margin: 0 auto;
+        .footer-text p {
+            margin: 2px 0;
+            font-size: 13px;
+            color: #70757a;
         }
-        .school-info-box {
-            background: #f8f9fa; border: 1px solid #e2e8f0; padding: 15px;
-            border-radius: 5px; margin-bottom: 20px; font-size: 13px;
-        }
-        h2 { color: #005f8a; border-bottom: 2px solid #005f8a; padding-bottom: 5px; font-size: 18px; margin-top: 30px; }
-        .news-list { list-style: none; padding: 0; }
-        .news-list li { padding: 10px 0; border-bottom: 1px solid #eee; font-size: 14px; }
-        .news-date { color: #777; font-weight: bold; margin-right: 15px; }
-        .link-buttons { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
-        .link-btn {
-            flex: 1; min-width: 200px; background: #f8f9fa; border: 1px solid #ddd;
-            padding: 15px; text-align: center; border-radius: 5px; text-decoration: none;
-            color: #005f8a; font-weight: bold;
-        }
-        .bottom-section { margin-top: 50px; border-top: 2px solid #ddd; padding-top: 20px; text-align: center; }
-        .school-address-box { font-size: 13px; color: #555; padding: 15px; }
-        footer { text-align: center; padding: 20px; font-size: 12px; color: #777; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>日乃市立月々星小学校</h1>
-</header>
-
-<div class="container">
-
-    <!-- 一番上に写真を配置（URLを直接指定する形にしました！） -->
-    <div class="school-image">
-        <img src="https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7407.jpeg" alt="日乃市立月々星小学校 校舎">
-    </div>
-
-    <div class="school-info-box">
-        <h3>【星のように、美しく輝く】</h3>
-        <p><strong></strong>        自然豊かな月々星山のふもとに位置し、地域とともにある温かい学校づくりを目指しています。</p><br>
-
-    </div>
-
-    <h2>新着情報・お知らせ</h2>
-    <ul class="news-list">
+    <div class="container">
+        <h1>日乃市立月々星小学校</h1>
+        <p>ようこそ、日乃市立月々星小学校の公式ホームページへ。</p>
+        <p>本校は自然豊かな環境の中で、子どもたちの健やかな成長を見守っています。</p>
         
-        <li><span class="news-date">2017.07.10</span>夏期休業前の全校集会についてのお知らせ</li>
-        <li><span class="news-date">2017.09.01</span>保健室より<a href="nurse.html" style="color: #005f8a; text-decoration: underline;">「2017年度 9月号」</a>を公開しました。</li>
-        <li><span class="news-date">2018.10.15</span><a href="calendar.html" style="color: #005f8a; text-decoration: underline;">10月の行事予定</a>を更新しました。</li>
-        <li><span class="news-date">2018.10.15</span><a href="sports_day.html" style="color: #005f8a; text-decoration: underline;">運動会のお知らせ</a>を更新しました。</li>
-    </ul>
-
-    <h2>校内各ページへのご案内</h2>
-    <div class="link-buttons">
-        <a href="calendar.html" class="link-btn">📅 行事予定</a>
-        <a href="nurse.html" class="link-btn">🌿 流れ星号(保健室)</a>
+        <!-- ここに学校の詳細な情報やストーリーのテキストなどを追加していく場所 -->
     </div>
 
-    <div class="bottom-section">
-        <div class="school-address-box">
-            <p><strong>日乃市立月々星小学校</strong><br>
-            所在地：〒190-0000 日乃市月々星町 1-9-0 </p>
-                <br>電話番号：09-28XX-XXXX</p>
+    <!-- フッター部分 -->
+    <footer class="container site-footer">
+        <img src="https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/%E7%84%A1%E9%A1%8C1119_20260823025701.png" alt="月々星小学校 校章" class="footer-emblem">
+        <div class="footer-text">
+            <p>日乃市立月々星小学校</p>
+            <p>〒XXX-XXXX 〇〇県日乃市立月々星町....</p>
+            <p>TEL: 29-190-XXXX</p>
+            <p style="margin-top: 8px; font-size: 11px;">&copy; Hinoshiritsu Tsukiyuboshi Elementary School. All Rights Reserved.</p>
         </div>
-    </div>
-
-</div>
-
-<footer>
-    <p>※当サイトはフィクションです。実在の人物・団体・学校とは一切関係ありません。<br>
-    2026 aot製作委員会</p>
-</footer>
+    </footer>
 
 </body>
 </html>
