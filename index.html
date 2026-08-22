@@ -1,121 +1,53 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>検索結果 - Mariage</title>
+    <title>Mariage 検索</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; color: #222; background-color: #fff; }
-        .header-area { display: flex; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 15px; }
-        .mini-logo { font-size: 28px; font-weight: bold; letter-spacing: -1px; margin-right: 20px; text-decoration: none; }
-        .mini-logo span:nth-child(1) { color: #4285F4; } .mini-logo span:nth-child(2) { color: #EA4335; } .mini-logo span:nth-child(3) { color: #FBBC05; } .mini-logo span:nth-child(4) { color: #4285F4; } .mini-logo span:nth-child(5) { color: #34A853; } .mini-logo span:nth-child(6) { color: #EA4335; } .mini-logo span:nth-child(7) { color: #FBBC05; } .mini-logo span:nth-child(8) { color: #4285F4; }
-        
-        .mini-search-input { width: 100%; max-width: 500px; padding: 8px 15px; font-size: 15px; border: 1px solid #dfe1e5; border-radius: 24px; outline: none; }
-        
-        /* 検索窓の下のタブとヒット件数エリア */
-        .sub-header { max-width: 650px; margin-left: 120px; margin-bottom: 20px; font-size: 13px; color: #70757a; display: flex; gap: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 8px; }
-        .sub-header .active { color: #1a0dab; font-weight: bold; border-bottom: 2px solid #1a0dab; padding-bottom: 6px; }
-
-        .results-container { max-width: 650px; margin-left: 120px; }
-        .result-item { margin-bottom: 25px; }
-        .result-url { color: #202124; font-size: 12px; margin-bottom: 2px; }
-        .result-title { color: #1a0dab; font-size: 20px; text-decoration: none; display: inline-block; }
-        .result-title:hover { text-decoration: underline; }
-        .result-desc { color: #4d5156; font-size: 14px; line-height: 1.4; margin-top: 3px; }
-        .no-result { font-size: 16px; color: #5f6368; margin-top: 20px; }
-        
-        @media (max-width: 768px) {
-            .header-area { flex-direction: column; align-items: flex-start; }
-            .results-container, .sub-header { margin-left: 0; }
-            .mini-search-input { max-width: 100%; margin-top: 10px; }
-        }
+        body { font-family: Arial, sans-serif; background-color: #fff; color: #222; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+        .logo { font-size: 64px; font-weight: bold; letter-spacing: -2px; margin-bottom: 30px; }
+        .logo span:nth-child(1) { color: #4285F4; } .logo span:nth-child(2) { color: #EA4335; } .logo span:nth-child(3) { color: #FBBC05; } .logo span:nth-child(4) { color: #4285F4; } .logo span:nth-child(5) { color: #34A853; } .logo span:nth-child(6) { color: #EA4335; } .logo span:nth-child(7) { color: #FBBC05; } .logo span:nth-child(8) { color: #4285F4; }
+        .search-box { width: 100%; max-width: 580px; display: flex; justify-content: center; margin-bottom: 25px; }
+        .search-input { width: 90%; padding: 12px 20px; font-size: 16px; border: 1px solid #dfe1e5; border-radius: 24px; outline: none; box-shadow: 0 1px 6px rgba(32,33,36,0.08); }
+        .search-buttons { display: flex; justify-content: center; }
+        .btn { background-color: #f8f9fa; border: 1px solid #f8f9fa; border-radius: 4px; color: #3c4043; font-size: 14px; padding: 10px 16px; cursor: pointer; }
+        .btn:hover { background-color: #f8f9fa; border: 1px solid #dadce0; }
+        .footer { position: absolute; bottom: 20px; font-size: 12px; color: #70757a; }
     </style>
 </head>
 <body>
 
-    <div class="header-area">
-        <a href="index.html" class="mini-logo">
-            <span>M</span><span>a</span><span>r</span><span>i</span><span>a</span><span>g</span><span>e</span>
-        </a>
-        <input type="text" id="miniSearchInput" class="mini-search-input" placeholder="キーワードを入力">
+    <div class="logo">
+        <span>M</span><span>a</span><span>r</span><span>i</span><span>a</span><span>g</span><span>e</span>
     </div>
 
-    <!-- 検索窓の下のタブ＆ヒット件数表示 -->
-    <div class="sub-header">
-        <span class="active">すべて</span>
-        <span>画像</span>
-        <span>ニュース</span>
-        <span id="hitCount" style="margin-left: auto; color: #70757a;"></span>
+    <div class="search-box">
+        <input type="text" id="searchInput" class="search-input" placeholder="キーワードを入力して検索 (例: にーよ8号)" autofocus>
     </div>
 
-    <div class="results-container" id="results">
-        <!-- ここに検索結果のリストが差し込まれます -->
+    <div class="search-buttons">
+        <button class="btn" onclick="checkSearch()">Mariage 検索</button>
     </div>
+
+    <div class="footer">Mariage Search Engine (v2.1.0)</div>
 
     <script>
-        const params = new URLSearchParams(window.location.search);
-        let query = params.get('q') || '';
-        
-        document.getElementById('miniSearchInput').value = query;
+        function checkSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (query) {
+                // ここで search2.html に飛ばすようにしているよ！
+                window.location.href = 'search2.html?q=' + encodeURIComponent(query);
+            } else {
+                alert('キーワードを入力してね！');
+            }
+        }
 
-        document.getElementById('miniSearchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const newQuery = this.value.trim();
-                if (newQuery) {
-                    window.location.href = 'search.html?q=' + encodeURIComponent(newQuery);
-                }
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') { 
+                checkSearch(); 
             }
         });
-
-        // 検索データのデータベース
-        const data = [
-            { 
-                title: "にーよ8号", 
-                url: "https://x.com/YingDou21485", 
-                desc: "Plan_aot主導者 " 
-            },
-            { 
-                title: "日乃市立月々星小学校", 
-                url: "school.html", 
-                desc: "日乃市立月々星小学校についての詳細情報や学校生活に関するページです。" 
-            },
-            { 
-                title: "【ニュース】月の落石事件", 
-                url: "news_20171031.html", 
-                desc: "2017年10月31日に発生した「月の落石事件」" 
-            },
-            { 
-                title: "ひなあられ", 
-                url: "https://x.com/hina_arare1211", 
-                desc: "18↓／雑多／1次創作「aot」協力してます ノベルゲーム「 #君の命を絵の具に乗せて 」公開中。利用規約や素材はリットリンクにて" 
-            }
-        ];
-
-        const filtered = data.filter(item => item.title.includes(query) || item.desc.includes(query) || item.url.includes(query));
-        const resultsDiv = document.getElementById('results');
-        const hitCountDiv = document.getElementById('hitCount');
-
-        // ヒット件数を自動で表示
-        hitCountDiv.innerText = `約 ${filtered.length} 件のヒット (0.01 秒)`;
-
-        if (filtered.length > 0) {
-            filtered.forEach(item => {
-                resultsDiv.innerHTML += `
-                    <div class="result-item">
-                        <div class="result-url">${item.url}</div>
-                        <a href="${item.url}" class="result-title">${item.title}</a>
-                        <div class="result-desc">${item.desc}</div>
-                    </div>
-                `;
-            });
-        } else {
-            resultsDiv.innerHTML = `
-                <div class="no-result">
-                    <p>一致する検索結果はありませんでした: <b>${query}</b></p>
-                    <p style="font-size: 13px; color: #70757a;">キーワードに誤字・脱字がないか確かめてみてください。</p>
-                </div>
-            `;
-        }
     </script>
 
 </body>
