@@ -86,12 +86,13 @@
     </div>
 
     <div class="search-box">
-        <input type="text" class="search-input" placeholder="キーワードを入力して検索 (例: 月々星小学校)" autofocus>
+        <input type="text" id="searchInput" class="search-input" placeholder="キーワードを入力して検索 (例: 月々星小学校)" autofocus>
     </div>
 
     <div class="search-buttons">
-        <button class="btn" id="search-btn">Mariage 検索</button>
-        <button class="btn" id="lucky-btn">I'm Feeling Lucky</button>
+        <!-- onclickを直接HTMLに埋め込んで、JavaScriptの誤作動を完全に防ぐ！ -->
+        <button class="btn" onclick="doSearch()">Mariage 検索</button>
+        <button class="btn" onclick="doLucky()">I'm Feeling Lucky</button>
     </div>
 
     <div class="footer">
@@ -99,29 +100,26 @@
     </div>
 
     <script>
-        // 1. 「Mariage 検索」ボタンやEnterキーのときの検索処理
-        function executeSearch() {
-            const query = document.querySelector('.search-input').value.trim();
+        // 検索ボタン用の関数
+        function doSearch() {
+            const query = document.getElementById('searchInput').value.trim();
 
-            if (query.includes('月々星小学校') || query.includes('実緒') || query.includes('事件') || query.includes('ニュース')) {
+            if (query.includes('日乃市立月々星小学校') ('月々星小学校')|| query.includes('実緒') || query.includes('事件') || query.includes('ニュース')) {
                 window.location.href = 'news_20171031.html';
             } else {
                 alert('「' + (query || '（空欄）') + '」に一致する検索結果は見つかりませんでした。');
             }
         }
 
-        // 「Mariage 検索」ボタンが押されたとき
-        document.getElementById('search-btn').addEventListener('click', executeSearch);
-
-        // 「I'm Feeling Lucky」ボタンが押されたとき（こっちは問答無用でニュースへ直行！）
-        document.getElementById('lucky-btn').addEventListener('click', function() {
+        // 運試しボタン用の関数（絶対こっちだけで動く）
+        function doLucky() {
             window.location.href = 'news_20171031.html';
-        });
+        }
 
-        // 検索窓でEnterキーを押したとき
-        document.querySelector('.search-input').addEventListener('keypress', function(e) {
+        // Enterキー対応
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                executeSearch();
+                doSearch();
             }
         });
     </script>
