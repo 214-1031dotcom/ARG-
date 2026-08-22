@@ -83,23 +83,33 @@
 
         const sideIconImg = document.getElementById('sideIconImg');
 
-        // 検索データ（通常データ＋ひなあられでお友達のXが出るデータ）
+        // 基本の検索データ
         let mockData = [
             { title: "にーよ8号", url: "https://x.com/YingDou21485", desc: "Plan_aot主導者" },
-            { title: "月々星小学校", url: "school.html", desc: "日乃市立月々星小学校の公式ウェブサイトです。" },
+            { title: "月々星小学校", url: "school.html", desc: "日乃市立月々星小学校の公式・非公式情報まとめ。" },
             { title: "月の落石事件まとめ", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の全貌と当時のニュース報道。" }
         ];
 
-        // 「ひなあられ」と検索されたときだけ、左側のアイコンを切り替えて、お友達のXリンクを検索結果に出す！
+        // 「ひなあられ」のとき
         if (query.includes('ひなあられ')) {
             sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7445.jpeg';
             sideIconImg.alt = 'ひなあられ';
-            
-            // ひなあられ検索の時専用の結果を追加
             mockData.unshift({
                 title: "ひなあられ",
                 url: "https://x.com/hina_arare1211",
-                desc: "18↓／雑多／1次創作「aot」協力してます。ノベルゲーム「 #君の命を絵の具に乗せて 」公開中。利用規約や素材はリットリンクにて"
+                desc: "18↓／雑多／1次創作「aot」協力してます
+ノベルゲーム「 #君の命を絵の具に乗せて 」公開中。利用規約や素材はリットリンクにて"
+            });
+        }
+
+        // 「佐藤めいこ」のとき
+        if (query.includes('佐藤めいこ')) {
+            sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7446.jpeg';
+            sideIconImg.alt = '佐藤めいこ';
+            mockData.unshift({
+                title: "佐藤めいこ",
+                url: "https://x.com/Satou_meiko",
+                desc: "りぼん漫画家志望🎀"
             });
         }
 
