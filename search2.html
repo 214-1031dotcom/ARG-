@@ -70,7 +70,8 @@
 
     <div class="main-layout">
         <div class="side-icon-area">
-            <img src="https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg" alt="にーよ8号" class="side-avatar">
+            <!-- 検索ワードに応じてJavaScriptで画像が切り替わります -->
+            <img id="sideIconImg" src="https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg" alt="アイコン" class="side-avatar">
         </div>
         <div class="results-content" id="searchResults"></div>
     </div>
@@ -79,6 +80,13 @@
         const params = new URLSearchParams(window.location.search);
         let query = params.get('q') || '';
         document.getElementById('miniSearchInput').value = query;
+
+        // 「ひなあられ」が検索されたら、左側のアイコンをIMG_7445.jpegに切り替える！
+        const sideIconImg = document.getElementById('sideIconImg');
+        if (query.includes('ひなあられ')) {
+            sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7445.jpeg';
+            sideIconImg.alt = 'ひなあられ';
+        }
 
         document.getElementById('tabAll').href = 'search2.html?q=' + encodeURIComponent(query);
         document.getElementById('tabImages').href = 'images.html?q=' + encodeURIComponent(query);
@@ -90,8 +98,9 @@
 
         const mockData = [
             { title: "にーよ8号", url: "https://x.com/YingDou21485", desc: "Plan_aot主導者" },
-            { title: "月々星小学校", url: "school.html", desc: "日乃市立月々星小学校ホームページです" },
-            { title: "月の落石事件", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の全貌と当時のニュース報道。" }
+            { title: "ひなあられの秘密", url: "hinaarare.html", desc: "あの日に食べたひなあられに隠された、奇妙な共通点についての記録。" },
+            { title: "月々星小学校", url: "school.html", desc: "日乃市立月々星小学校の公式・非公式情報まとめ。" },
+            { title: "月の落石事件まとめ", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の全貌と当時のニュース報道。" }
         ];
 
         const filtered = mockData.filter(item => item.title.includes(query) || item.desc.includes(query));
