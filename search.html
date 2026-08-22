@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -23,27 +23,26 @@
     </div>
 
     <div class="search-box">
-        <input type="text" id="searchInput" class="search-input" placeholder="キーワードを入力して検索 (例: 月月の落石事件)" autofocus>
+        <input type="text" id="searchInput" class="search-input" placeholder="キーワードを入力して検索 (例: 月の落石事件)" autofocus>
     </div>
 
     <div class="search-buttons">
-        <!-- 検索ボタン1つだけ！ -->
         <button class="btn" onclick="checkSearch()">Mariage 検索</button>
     </div>
 
-    <div class="footer">Mariage Search Engine (v2.0.6)</div>
+    <div class="footer">Mariage Search Engine (v2.0.7)</div>
 
     <script>
         function checkSearch() {
             const query = document.getElementById('searchInput').value.trim();
 
-            // 「月の落石事件」または「落石」でニュースへ
+            // 「月の落石事件」または「落石」でニュースページへ
             if (query.includes('月の落石事件') || query.includes('落石')) {
                 window.location.href = 'news_20171031.html';
             } 
-            // 「月々星小学校」のとき
-            else if (query.includes('月々星小学校')) {
-                alert('「月々星小学校」に関連するアーカイブは見つかりましたが、閲覧権限がありません。');
+            // 「月々星小学校」で検索したとき（学校のページへ！ ※ファイル名は後で作るものでOK）
+            else if (query.includes('月々星小学校') || query.includes('小学校')) {
+                window.location.href = 'school.html';
             }
             else {
                 alert('「' + (query || '（空欄）') + '」に一致する検索結果はありません。');
