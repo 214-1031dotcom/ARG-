@@ -99,28 +99,26 @@
     </div>
 
     <script>
+        // 1. 「Mariage 検索」ボタンやEnterキーのときの検索処理
         function executeSearch() {
             const query = document.querySelector('.search-input').value.trim();
 
-            // 正しいキーワードのときだけニュースへ飛ぶ
             if (query.includes('月々星小学校') || query.includes('実緒') || query.includes('事件') || query.includes('ニュース')) {
                 window.location.href = 'news_20171031.html';
             } else {
-                // 関係ないときはアラートを出して、ここで「return（処理終了）」させる！
                 alert('「' + (query || '（空欄）') + '」に一致する検索結果は見つかりませんでした。');
-                return; 
             }
         }
 
-        // Mariage 検索ボタン
+        // 「Mariage 検索」ボタンが押されたとき
         document.getElementById('search-btn').addEventListener('click', executeSearch);
 
-        // I'm Feeling Lucky（直感で進め）ボタン → こっちは押したら問答無用でニュースへ直行！
+        // 「I'm Feeling Lucky」ボタンが押されたとき（こっちは問答無用でニュースへ直行！）
         document.getElementById('lucky-btn').addEventListener('click', function() {
             window.location.href = 'news_20171031.html';
         });
 
-        // Enterキー
+        // 検索窓でEnterキーを押したとき
         document.querySelector('.search-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 executeSearch();
