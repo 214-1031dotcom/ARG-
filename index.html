@@ -47,16 +47,15 @@
 // 3. 「にーよ8号」で検索したとき
         else if (query.includes('にーよ8号')) {
             window.location.href = 'https://x.com/YingDou21485';
-        }
-            // 4. それ以外の言葉のとき
-            else {
-                alert('「' + (query || '（空欄）') + '」に一致する検索結果はありません。');
             }
-            // 5. 「ひなあられ」で検索したとき
+            // 4. 「ひなあられ」で検索したとき
         else if (query.includes('ひなあられ')) {
             window.location.href = 'https://x.com/hina_arare1211';
-        }
-
+        }   
+           // 5. それ以外の言葉のとき
+            else {
+                alert('「' + (query || '（空欄）') + '」に一致する検索結果はありません。');
+                
         // Enterキー対応
         document.getElementById('searchInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') { checkSearch(); }
