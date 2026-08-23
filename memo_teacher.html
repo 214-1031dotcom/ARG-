@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>職員専用メモ - クラス実態把握</title>
+    <style>
+        body {
+            background-color: #0b0b0b;
+            color: #b5b5b5;
+            font-family: "Courier New", Courier, monospace;
+            line-height: 1.6;
+            padding: 40px 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #121212;
+            border: 1px solid #2a2a2a;
+            padding: 40px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.9);
+        }
+        .warning-header {
+            color: #d9534f;
+            border-bottom: 1px dashed #444;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+        h2 {
+            color: #dfdfdf;
+            font-size: 18px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        p.intro {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 30px;
+        }
+        .memo-box {
+            background: #161616;
+            border-left: 3px solid #555;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+        .memo-box.highlight-group {
+            border-left-color: #d9534f; /* トラブルメーカーのグループは赤く不穏に */
+        }
+        .memo-title {
+            color: #fff;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .memo-content {
+            font-size: 13px;
+            color: #aaa;
+        }
+        .back-link {
+            display: block;
+            margin-top: 40px;
+            text-align: center;
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-link:hover {
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="warning-header">
+            [CONFIDENTIAL] 5年1組 生徒特性・人間関係非公式メモ（※鍵付き引き出し保管）
+        </div>
+
+        <h2>裏プロファイリング</h2>
+        <p class="intro">表向きの指導記録には書けない、クラスの「本当の力関係」と生徒たちの実態メモ。何かあった時の保身用。</p>
+
+        <!-- グループA：カースト上位・実態の主犯格など -->
+        <div class="memo-box highlight-group">
+            <div class="memo-title">【中心グループ（一軍・空気の支配者層）】</div>
+            <div class="memo-content">
+                <strong>愛澤 廉</strong>（リーダー気取り・教師の目を盗むのがうまい）<br>
+                <strong>赤城 陽菜</strong>（愛澤の取り巻き・同調圧力が強い）<br>
+                <strong>飯田 翔太</strong>・<strong>金子 陸</strong>（運動神経が良く、取り巻きとして同調している）<br>
+                <em>→ クラスの流行や「誰をターゲットにするか」の方向性を無意識に決めている面々。敵に回すと厄介。</em>
+            </div>
+        </div>
+
+        <!-- グループB：周囲に流される層 -->
+        <div class="memo-box">
+            <div class="memo-title">【日和見（ひよりみ）グループ】</div>
+            <div class="memo-content">
+                宇都宮 健、遠藤 葵、小田切莉子、栗原悠人、小暮颯太、斉藤美咲、篠原凛、高木陽翔、豊田結衣、中野蒼空、野村拓海、長谷川結菜、原田蓮、三浦陽向、山田翼<br>
+                <em>→ 基本的には無関心層。強い者（中心グループ）に逆らうと自分が標的になるのを分かっているため、実緒へのいじめや無視を「見て見ぬふり」している。</em>
+            </div>
+        </div>
+
+        <!-- 孤立した存在 -->
+        <div class="memo-box highlight-group" style="border-left-color: #f0ad4e;">
+            <div class="memo-title">【孤立・異物（ターゲット）】</div>
+            <div class="memo-content">
+                <strong>18. 十森 実緒（ともり みお）</strong><br>
+                <em>→ あだ名（陰での蔑称）：「ゾンビ」「幽霊」「喋らない置物」などと呼ばれている。</em><br>
+                家庭環境に問題あり。何を考えているか一切不明。引き出しの中に何か執着している私物を隠しているが、下手に触ると何をしでかすか分からないため放置。クラス全体の不穏な空気の「受け皿」になってしまっている。
+            </div>
+        </div>
+
+        <a href="diary_teacher.html" class="back-link">◀ 担任の業務記録へ戻る</a>
+    </div>
+
+</body>
+</html>
