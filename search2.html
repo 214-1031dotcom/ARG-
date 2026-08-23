@@ -30,11 +30,11 @@
         .side-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
 
         .results-content { flex-grow: 1; max-width: 650px; }
-        .search-result-item { margin-bottom: 25px; }
-        .result-url { font-size: 12px; color: #202124; margin-bottom: 2px; }
-        .result-title { color: #1a0dab; font-size: 20px; text-decoration: none; display: inline-block; margin-bottom: 3px; }
-        .result-title:hover { text-decoration: underline; }
-        .result-desc { color: #4d5156; font-size: 14px; line-height: 1.4; }
+        .search-item { margin-bottom: 24px; }
+        .search-url { font-size: 12px; color: #202124; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .search-title { font-size: 20px; color: #1a0dab; text-decoration: none; display: block; margin-bottom: 3px; }
+        .search-title:hover { text-decoration: underline; }
+        .search-desc { font-size: 14px; color: #4d5156; line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -75,7 +75,7 @@
         document.getElementById('tabImages').href = 'images.html?q=' + encodeURIComponent(query);
         document.getElementById('tabNews').href = 'news.html?q=' + encodeURIComponent(query);
 
-        // 各データにそれぞれのアイコンURLを持たせる！
+        // 検索データリスト（月々星小学校のアイコンを校章に変更済み！）
         let results = [
             { 
                 title: "にーよ8号", 
@@ -87,7 +87,7 @@
                 title: "月々星小学校", 
                 url: "school.html", 
                 desc: "日乃市立月々星小学校", 
-                icon: "https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg" 
+                icon: "https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/%E7%84%A1%E9%A1%8C1119_20260823025701.png" 
             },
             { 
                 title: "月の落石事件", 
@@ -148,23 +148,22 @@
                    item.url.toLowerCase().includes(cleanQuery);
         });
 
-        // 検索結果にヒットした「最初のアイテム」のアイコンを、左側のサイドアイコンに自動設定する！
+        // ヒットした最初のアイテムのアイコンをサイドに反映
         if (filtered.length > 0) {
             sideIconImg.src = filtered[0].icon;
-            sideIconImg.alt = filtered[0].title;
         }
 
         document.getElementById('hitCount').innerText = `約 ${filtered.length} 件のヒット`;
 
         if (filtered.length === 0) {
-            container.innerHTML = `<div style="color: #70757a; padding: 20px 0;">一致する結果はありませんでした。</div>`;
+            container.innerHTML = `<div style="color: #70757a; padding: 20px 0;">一致する検索結果はありませんでした。</div>`;
         } else {
             filtered.forEach(item => {
                 container.innerHTML += `
-                    <div class="search-result-item">
-                        <div class="result-url">${item.url}</div>
-                        <a href="${item.url}" class="result-title" target="_blank">${item.title}</a>
-                        <div class="result-desc">${item.desc}</div>
+                    <div class="search-item">
+                        <div class="search-url">${item.url}</div>
+                        <a href="${item.url}" class="search-title" target="_blank">${item.title}</a>
+                        <div class="search-desc">${item.desc}</div>
                     </div>
                 `;
             });
