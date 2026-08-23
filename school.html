@@ -33,6 +33,65 @@
             border-bottom: 2px solid #1a5276;
             padding-bottom: 10px;
         }
+
+        /* 🌙 「日乃」と「星」の隠しボタンスタイル */
+        .secret-btn {
+            background: none;
+            border: none;
+            color: inherit;
+            font-size: inherit;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0 2px;
+            transition: color 0.2s;
+        }
+        .secret-btn:hover {
+            color: #f39c12;
+            text-shadow: 0 0 6px rgba(243, 156, 18, 0.6);
+        }
+
+        /* 🔐 隠しパスワード入力パネル共通スタイル */
+        .secret-panel {
+            display: none; /* 最初は隠れている */
+            background: #111;
+            border: 1px solid #0f0;
+            padding: 20px;
+            max-width: 350px;
+            margin: 15px auto;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+            text-align: left;
+            font-family: monospace;
+            box-sizing: border-box;
+        }
+        .secret-panel input[type="text"] {
+            width: 100%;
+            background: #000;
+            border: 1px solid #0f0;
+            color: #0f0;
+            padding: 8px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            font-family: monospace;
+        }
+        .secret-panel button {
+            background: #0f0;
+            color: #000;
+            border: none;
+            padding: 6px 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .secret-panel button:hover {
+            background: #0a0;
+        }
+        .error-msg {
+            color: #ff6b6b;
+            font-size: 12px;
+            margin-top: 8px;
+            display: none;
+        }
+
         /* ② 校舎の画像 */
         .school-image-container {
             text-align: center;
@@ -94,13 +153,22 @@
             padding-top: 20px;
             margin-top: 20px;
         }
-        /* 校章（大きめに変更！） */
+        /* 校章（リンク化してホバー効果をつける） */
+        .emblem-link {
+            display: inline-block;
+            cursor: pointer;
+            flex-shrink: 0;
+            margin-right: 20px;
+        }
+        .emblem-link:hover img {
+            opacity: 0.8;
+            filter: drop-shadow(0 0 4px rgba(217, 83, 79, 0.5));
+        }
         .school-emblem {
             width: 90px;
             height: 90px;
             object-fit: contain;
-            margin-right: 20px;
-            flex-shrink: 0;
+            display: block;
         }
         .address-text {
             font-size: 14px;
@@ -124,9 +192,31 @@
 <body>
 
     <div class="container">
- <!-- ① 学校名 -->
+        <!-- ① 学校名（「日乃」と「星」が隠しスイッチ！） -->
         <div class="school-title">
-            <a href="lock.html" style="color: inherit; text-decoration: none; cursor: pointer;">日乃</a>市立月々星小学校
+            <button class="secret-btn" onclick="togglePanel('hinoPanel', 'hinoPass')" title="……？">日乃</button>市立月々<button class="secret-btn" onclick="togglePanel('starPanel', 'starPass')" title="……？">星</button>小学校
+        </div>
+
+        <!-- 🔐 「日乃」をクリックしたときに出現するパネル（校長の日記用） -->
+        <div id="hinoPanel" class="secret-panel">
+            <p style="color: #0f0; font-size: 13px; margin-top: 0; border-bottom: 1px solid #0f0; padding-bottom: 5px;">
+                RESTRICTED // 校長室管理記録
+            </p>
+            <input type="text" id="hinoPass" placeholder="パスワードを入力...">
+            <br>
+            <button onclick="checkHinoPassword()">認証</button>
+            <div id="hinoError" class="error-msg">認証失敗：コードが一致しません。</div>
+        </div>
+
+        <!-- 🔐 「星」をクリックしたときに出現するパネル（先生の日記用） -->
+        <div id="starPanel" class="secret-panel">
+            <p style="color: #0f0; font-size: 13px; margin-top: 0; border-bottom: 1px solid #0f0; padding-bottom: 5px;">
+                RESTRICTED // 職員専用記録
+            </p>
+            <input type="text" id="starPass" placeholder="パスワードを入力...">
+            <br>
+            <button onclick="checkStarPassword()">認証</button>
+            <div id="starError" class="error-msg">認証失敗：コードが一致しません。</div>
         </div>
 
         <!-- ② 校舎の画像 -->
@@ -144,17 +234,18 @@
         <div class="notices-section">
             <h3>お知らせ</h3>
             <ul class="notices-list">
-                <li> <a href="history.html">学校の沿革（歴史）</a></li>
-                <li> <a href="nurse.html">流れ星号(保健室だより)</a></li>
-                <li> <a href="sports_day.html">運動会のお知らせ</a></li>
-                <li> <a href="calendar.html">平成30年行事予定表</a></li>
+                <li><a href="history.html">学校の沿革（歴史）</a></li>
+                <li><a href="nurse.html">流れ星号(保健室だより)</a></li>
+                <li><a href="sports_day.html">運動会のお知らせ</a></li>
+                <li><a href="calendar.html">平成30年行事予定表</a></li>
             </ul>
         </div>
 
-        <!-- ⑤ 住所・電話番号 ＆ 大きめの校章 -->
+        <!-- ⑤ 住所・電話番号 ＆ 校章エリア（クリックするとカーストメモのパスワードページへ） -->
         <div class="footer-info">
-            <!-- 校章（新しいURL＆大きめサイズ・左側に配置） -->
-            <img src="https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/%E7%84%A1%E9%A1%8C1119_20260823201413.png" alt="学校校章" class="school-emblem">
+            <a href="lock_memo.html" class="emblem-link" title="極秘データへ...">
+                <img src="https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/%E7%84%A1%E9%A1%8C1119_20260823201413.png" alt="学校校章" class="school-emblem">
+            </a>
             <div class="address-text">
                 <strong>日乃市立月々星小学校</strong><br>
                 〒190-0000 日乃市月々星町 0-1-2<br>
@@ -165,6 +256,50 @@
     </div>
 
     <a href="index.html" class="back-link">＜ 検索トップに戻る</a>
+
+    <!-- 💡 パスワードの開閉と判定を行うプログラム -->
+    <script>
+        // パネルの表示・非表示を切り替える共通関数
+        function togglePanel(panelId, inputId) {
+            const hinoP = document.getElementById('hinoPanel');
+            const starP = document.getElementById('starPanel');
+            const targetP = document.getElementById(panelId);
+
+            // 片方を開いたらもう片方は閉じる
+            if (panelId === 'hinoPanel') {
+                starP.style.display = 'none';
+            } else {
+                hinoP.style.display = 'none';
+            }
+
+            if (targetP.style.display === 'block') {
+                targetP.style.display = 'none';
+            } else {
+                targetP.style.display = 'block';
+                document.getElementById(inputId).focus();
+            }
+        }
+
+        // 🏫 「日乃」のパスワード（校長の日記用：Efklhwkwql）
+        function checkHinoPassword() {
+            const input = document.getElementById('hinoPass').value.trim();
+            if (input === "Efklhwkwql") { 
+                window.location.href = "diary_principal.html"; // 正解したら校長の日記へ！
+            } else {
+                document.getElementById('hinoError').style.display = 'block';
+            }
+        }
+
+        // 🌟 「星」のパスワード（担任の日記用：Vkdiz zgzg＝d）
+        function checkStarPassword() {
+            const input = document.getElementById('starPass').value.trim();
+            if (input === "Vkdiz zgzg＝d") {
+                window.location.href = "diary_teacher.html"; // 正解したら肥沼先生の日記へ！
+            } else {
+                document.getElementById('starError').style.display = 'block';
+            }
+        }
+    </script>
 
 </body>
 </html>
