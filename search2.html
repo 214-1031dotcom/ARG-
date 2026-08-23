@@ -75,49 +75,69 @@
         document.getElementById('tabImages').href = 'images.html?q=' + encodeURIComponent(query);
         document.getElementById('tabNews').href = 'news.html?q=' + encodeURIComponent(query);
 
-        // 全検索データ
+        // 各データにそれぞれのアイコンURLを持たせる！
         let results = [
-            { title: "にーよ8号", url: "https://x.com/YingDou21485", desc: "Plan_aot主導者" },
-            { title: "月々星小学校", url: "school.html", desc: "日乃市立月々星小学校" },
-            { title: "月の落石事件", url: "news_20171031.html", desc: "2017年10月31日に発生した事件の全貌とニュース報道。" },
+            { 
+                title: "にーよ8号", 
+                url: "https://x.com/YingDou21485", 
+                desc: "Plan_aot主導者", 
+                icon: "https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg" 
+            },
+            { 
+                title: "月々星小学校", 
+                url: "school.html", 
+                desc: "日乃市立月々星小学校", 
+                icon: "https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg" 
+            },
+            { 
+                title: "月の落石事件", 
+                url: "news_20171031.html", 
+                desc: "2017年10月31日に発生した事件の全貌とニュース報道。", 
+                icon: "https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg" 
+            },
             { 
                 title: "Plan_aot / 小説シリーズ - pixiv", 
                 url: "https://www.pixiv.net/novel/series/14359145", 
-                desc: "pixivに投稿された、Plan_aot小説シリーズ。この作品の詳しい話を知れるかも……。" 
+                desc: "pixivに投稿された, Plan_aot小説シリーズ。この作品の詳しい話を知れるかも……。", 
+                icon: "https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_4999.jpeg" 
             },
             { 
                 title: "ヒューマリア (@dymnghu125964)", 
                 url: "https://x.com/dymnghu125964", 
-                desc: "私たちヒューマリアが運営する公式X(旧Twitter)アカウント！" 
+                desc: "私たちヒューマリアが運営する公式X(旧Twitter)アカウント！", 
+                icon: "https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_4999.jpeg" 
             },
             { 
                 title: "Plan_aot 公式YouTubeチャンネル", 
                 url: "https://youtube.com/@aot.01234?si=mMRoj_ybAeQ50V4T", 
-                desc: "Plan_aotの公式YouTubeチャンネルです。" 
+                desc: "Plan_aotの公式YouTubeチャンネルです。", 
+                icon: "https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_4999.jpeg" 
             },
-            { title: "ひなあられ", url: "https://x.com/hina_arare1211", desc: "制作協力者（いつも手伝ってくれてありがとう！）" },
-            { title: "佐藤めいこ", url: "https://x.com/Satou_meiko", desc: "制作協力者（いつも手伝ってくれてありがとう！）" },
-            { title: "宮森", url: "https://x.com/my_my_77777", desc: "制作協力者（いつも手伝ってくれてありがとう！）" },
-            { title: "やと", url: "https://x.com/yato_k5", desc: "制作協力者（いつも手伝ってくれてありがとう！）" }
+            { 
+                title: "ひなあられ", 
+                url: "https://x.com/hina_arare1211", 
+                desc: "制作協力者（いつも手伝ってくれてありがとう！）", 
+                icon: "https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7445.jpeg" 
+            },
+            { 
+                title: "佐藤めいこ", 
+                url: "https://x.com/Satou_meiko", 
+                desc: "制作協力者（いつも手伝ってくれてありがとう！）", 
+                icon: "https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7446.jpeg" 
+            },
+            { 
+                title: "宮森", 
+                url: "https://x.com/my_my_77777", 
+                desc: "制作協力者（いつも手伝ってくれてありがとう！）", 
+                icon: "https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/936932E4-FAD1-4E75-9DCD-4E1712950FEF.jpeg" 
+            },
+            { 
+                title: "やと", 
+                url: "https://x.com/yato_k5", 
+                desc: "制作協力者（いつも手伝ってくれてありがとう！）", 
+                icon: "https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/0C3924E6-B098-4386-828A-4D10633F06EC.jpeg" 
+            }
         ];
-
-        // キーワードに応じたアイコンの切り替え（「aot.01234」や「youtube」も追加！）
-        if (query.includes('ひなあられ')) {
-            sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7445.jpeg';
-            sideIconImg.alt = 'ひなあられ';
-        } else if (query.includes('佐藤めいこ')) {
-            sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7446.jpeg';
-            sideIconImg.alt = '佐藤めいこ';
-        } else if (query.includes('宮森')) {
-            sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/936932E4-FAD1-4E75-9DCD-4E1712950FEF.jpeg';
-            sideIconImg.alt = '宮森';
-        } else if (query.includes('やと')) {
-            sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/0C3924E6-B098-4386-828A-4D10633F06EC.jpeg';
-            sideIconImg.alt = 'やと';
-        } else if (query.includes('ヒューマリア') || query.includes('dymnghu125964') || query.includes('Plan_aot') || query.includes('aot.01234') || query.includes('youtube')) {
-            sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_4999.jpeg';
-            sideIconImg.alt = 'ヒューマリア・Plan_aot';
-        }
 
         const cleanQuery = query.trim().toLowerCase();
         
@@ -127,6 +147,12 @@
                    item.desc.toLowerCase().includes(cleanQuery) || 
                    item.url.toLowerCase().includes(cleanQuery);
         });
+
+        // 検索結果にヒットした「最初のアイテム」のアイコンを、左側のサイドアイコンに自動設定する！
+        if (filtered.length > 0) {
+            sideIconImg.src = filtered[0].icon;
+            sideIconImg.alt = filtered[0].title;
+        }
 
         document.getElementById('hitCount').innerText = `約 ${filtered.length} 件のヒット`;
 
