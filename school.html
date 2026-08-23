@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -153,7 +153,7 @@
             padding-top: 20px;
             margin-top: 20px;
         }
-        /* 校章（クリックするとパスワードパネルが開くように変更） */
+        /* 校章（クリックするとパスワードパネルが開く） */
         .emblem-btn {
             background: none;
             border: none;
@@ -244,7 +244,7 @@
             </ul>
         </div>
 
-        <!-- ⑤ 住所・電話番号 ＆ 校章エリア（校章をクリックするとパスワードパネルが開く） -->
+        <!-- ⑤ 住所・電話番号 ＆ 校章エリア -->
         <div class="footer-info">
             <button class="emblem-btn" onclick="togglePanel('emblemPanel', 'emblemPass')" title="極秘データへ...">
                 <img src="https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/%E7%84%A1%E9%A1%8C1119_20260823201413.png" alt="学校校章" class="school-emblem">
@@ -273,14 +273,12 @@
 
     <!-- 💡 パスワードの開閉と判定を行うプログラム -->
     <script>
-        // パネルの表示・非表示を切り替える共通関数
         function togglePanel(panelId, inputId) {
             const hinoP = document.getElementById('hinoPanel');
             const starP = document.getElementById('starPanel');
             const emblemP = document.getElementById('emblemPanel');
             const targetP = document.getElementById(panelId);
 
-            // 他のパネルはすべて閉じる
             hinoP.style.display = 'none';
             starP.style.display = 'none';
             emblemP.style.display = 'none';
@@ -290,12 +288,10 @@
             } else {
                 targetP.style.display = 'block';
                 document.getElementById(inputId).focus();
-                // パネルを開いたときに視界に入るようスクロール調整
                 targetP.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         }
 
-        // 🏫 「日乃」のパスワード（校長の日記用：Efklhwkwql）
         function checkHinoPassword() {
             const input = document.getElementById('hinoPass').value.trim();
             if (input === "Efklhwkwql") { 
@@ -305,7 +301,6 @@
             }
         }
 
-        // 🌟 「星」のパスワード（担任の日記用：Vkdiz zgzg＝d）
         function checkStarPassword() {
             const input = document.getElementById('starPass').value.trim();
             if (input === "Vkdiz zgzg＝d") {
@@ -315,7 +310,6 @@
             }
         }
 
-        // 🛡️ 「校章」のパスワード（生徒カーストメモ用：Procyon）
         function checkEmblemPassword() {
             const input = document.getElementById('emblemPass').value.trim();
             if (input === "Procyon") {
