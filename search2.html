@@ -83,7 +83,12 @@
             { 
                 title: "Plan_aot / 小説シリーズ - pixiv", 
                 url: "https://www.pixiv.net/novel/series/14359145", 
-                desc: "pixivに投稿された、Plan_aot小説シリーズ。本作品の概要が詳しく綴られている……。" 
+                desc: "pixivに投稿された、Plan_aot小説シリーズ。この作品の概要が詳しく書かれています……👀" 
+            },
+            { 
+                title: "ヒューマリア (@dymnghu125964)", 
+                url: "https://x.com/dymnghu125964", 
+                desc: "私たちヒューマリアが運営する公式Xアカウント。情報集めに使ってるよ" 
             },
             { title: "ひなあられ", url: "https://x.com/hina_arare1211", desc: "制作協力者（いつも手伝ってくれてありがとう！）" },
             { title: "佐藤めいこ", url: "https://x.com/Satou_meiko", desc: "制作協力者（いつも手伝ってくれてありがとう！）" },
@@ -104,6 +109,9 @@
         } else if (query.includes('やと')) {
             sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/0C3924E6-B098-4386-828A-4D10633F06EC.jpeg';
             sideIconImg.alt = 'やと';
+        } else if (query.includes('月々星小学校') || query.includes('dymnghu125964')) {
+            sideIconImg.src = 'https://github.com/214-1031dotcom/ARG-/blob/main/IMG_4999.jpeg';
+            sideIconImg.alt = 'ヒューマリア';
         }
 
         const cleanQuery = query.trim().toLowerCase();
