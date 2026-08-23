@@ -158,9 +158,9 @@
                    item.url.toLowerCase().includes(cleanQuery);
         });
 
-        // ヒットした最初のアイテムのアイコンをサイドに反映
+        // ヒットした最初のアイテムのアイコンをサイドに反映（修正箇所）
         if (filtered.length > 0) {
-            sideIconImg.src = filtered.0.icon;
+            sideIconImg.src = filtered[0].icon;
         }
 
         document.getElementById('hitCount').innerText = `約 ${filtered.length} 件のヒット`;
