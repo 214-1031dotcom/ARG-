@@ -90,6 +90,11 @@
                 url: "https://x.com/dymnghu125964", 
                 desc: "私たちヒューマリアが運営する公式X(旧Twitter)アカウント！" 
             },
+            { 
+                title: "Plan_aot 公式YouTubeチャンネル", 
+                url: "https://youtube.com/@aot.01234?si=mMRoj_ybAeQ50V4T", 
+                desc: "Plan_aotの公式YouTubeチャンネルです。" 
+            },
             { title: "ひなあられ", url: "https://x.com/hina_arare1211", desc: "制作協力者（いつも手伝ってくれてありがとう！）" },
             { title: "佐藤めいこ", url: "https://x.com/Satou_meiko", desc: "制作協力者（いつも手伝ってくれてありがとう！）" },
             { title: "宮森", url: "https://x.com/my_my_77777", desc: "制作協力者（いつも手伝ってくれてありがとう！）" },
@@ -109,9 +114,9 @@
         } else if (query.includes('やと')) {
             sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/0C3924E6-B098-4386-828A-4D10633F06EC.jpeg';
             sideIconImg.alt = 'やと';
-        } else if (query.includes('ヒューマリア') || query.includes('dymnghu125964')) {
+        } else if (query.includes('ヒューマリア') || query.includes('dymnghu125964') || query.includes('Plan_aot') || query.includes('aot.01234')) {
             sideIconImg.src = 'https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_4999.jpeg';
-            sideIconImg.alt = 'ヒューマリア';
+            sideIconImg.alt = 'ヒューマリア・Plan_aot';
         }
 
         const cleanQuery = query.trim().toLowerCase();
