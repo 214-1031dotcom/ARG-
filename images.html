@@ -1,43 +1,53 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>画像検索 - Mariage</title>
+    <title>画像検索結果 - Mariage</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 20px; color: #222; background-color: #fff; }
         .header-area { display: flex; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 15px; }
         .mini-logo { font-size: 28px; font-weight: bold; letter-spacing: -1px; margin-right: 20px; text-decoration: none; }
-        .mini-logo span:nth-child(1) { color: #4285F4; } .mini-logo span:nth-child(2) { color: #EA4335; } .mini-logo span:nth-child(3) { color: #FBBC05; } .mini-logo span:nth-child(4) { color: #4285F4; } .mini-logo span:nth-child(5) { color: #34A853; } .mini-logo span:nth-child(6) { color: #EA4335; } .mini-logo span:nth-child(7) { color: #FBBC05; } .mini-logo span:nth-child(8) { color: #4285F4; }
+        .mini-logo span:nth-child(1) { color: #4285F4; } 
+        .mini-logo span:nth-child(2) { color: #EA4335; } 
+        .mini-logo span:nth-child(3) { color: #FBBC05; } 
+        .mini-logo span:nth-child(4) { color: #4285F4; } 
+        .mini-logo span:nth-child(5) { color: #34A853; } 
+        .mini-logo span:nth-child(6) { color: #EA4335; } 
+        .mini-logo span:nth-child(7) { color: #FBBC05; } 
+        .mini-logo span:nth-child(8) { color: #4285F4; }
         
-        /* 検索バーとアイコンのスタイル */
         .mini-search-wrapper { position: relative; display: flex; align-items: center; width: 100%; max-width: 500px; }
         .mini-search-input { width: 100%; padding: 8px 15px 8px 40px; font-size: 15px; border: 1px solid #dfe1e5; border-radius: 24px; outline: none; box-sizing: border-box; }
         .search-icon { position: absolute; left: 14px; width: 18px; height: 18px; color: #9aa0a6; pointer-events: none; }
         
-        .sub-header { max-width: 650px; margin-left: 120px; margin-bottom: 20px; font-size: 13px; display: flex; gap: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 8px; }
+        .sub-header { max-width: 900px; margin-left: 120px; margin-bottom: 20px; font-size: 13px; display: flex; gap: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 8px; }
         .sub-header a { text-decoration: none; color: #70757a; padding-bottom: 8px; }
         .sub-header .active { color: #1a0dab; font-weight: bold; border-bottom: 2px solid #1a0dab; }
 
-        /* 画像検索グリッド */
-        .image-container { max-width: 900px; margin-left: 120px; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
-        .image-card { border: 1px solid #dfe1e5; border-radius: 8px; overflow: hidden; background: #f8f9fa; text-decoration: none; color: inherit; display: block; }
-        .image-card img { width: 100%; height: 140px; object-fit: cover; background-color: #ddd; }
-        .image-info { padding: 10px; font-size: 13px; }
-        .image-title { font-weight: bold; color: #1a0dab; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .image-source { color: #70757a; font-size: 11px; }
+        .main-layout { display: flex; align-items: flex-start; position: relative; }
+        .side-icon-area { width: 100px; display: flex; justify-content: center; padding-top: 5px; flex-shrink: 0; }
+        .side-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
 
-        @media (max-width: 768px) {
-            .header-area { flex-direction: column; align-items: flex-start; }
-            .image-container, .sub-header { margin-left: 0; }
-            .mini-search-wrapper { max-width: 100%; margin-top: 10px; }
-        }
+        .results-content { flex-grow: 1; max-width: 900px; }
+        
+        /* 画像検索結果のグリッド表示 */
+        .image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+        .image-item { border: 1px solid #dfe1e5; border-radius: 8px; overflow: hidden; background: #fff; transition: box-shadow 0.2s; }
+        .image-item:hover { box-shadow: 0 1px 6px rgba(32,33,36,0.28); }
+        .image-thumb { width: 100%; height: 140px; object-fit: cover; background: #f1f3f4; display: block; }
+        .image-info { padding: 8px 10px; font-size: 12px; }
+        .image-title { color: #1a0dab; text-decoration: none; display: block; margin-bottom: 4px; font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .image-title:hover { text-decoration: underline; }
+        .image-url { color: #70757a; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     </style>
 </head>
 <body>
 
     <div class="header-area">
-        <a href="index.html" class="mini-logo"><span>M</span><span>a</span><span>r</span><span>i</span><span>a</span><span>g</span><span>e</span></a>
+        <a href="index.html" class="mini-logo">
+            <span>M</span><span>a</span><span>r</span><span>i</span><span>a</span><span>g</span><span>e</span>
+        </a>
         <div class="mini-search-wrapper">
             <svg class="search-icon" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
             <input type="text" id="miniSearchInput" class="mini-search-input">
@@ -51,41 +61,81 @@
         <span id="hitCount" style="margin-left: auto; color: #70757a;"></span>
     </div>
 
-    <div class="image-container" id="imageResults"></div>
+    <div class="main-layout">
+        <div class="side-icon-area">
+            <img id="sideIconImg" src="https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg" alt="アイコン" class="side-avatar">
+        </div>
+        <div class="results-content">
+            <div class="image-grid" id="imageResults"></div>
+        </div>
+    </div>
 
     <script>
         const params = new URLSearchParams(window.location.search);
         let query = params.get('q') || '';
         document.getElementById('miniSearchInput').value = query;
 
+        const sideIconImg = document.getElementById('sideIconImg');
+        const container = document.getElementById('imageResults');
+
         document.getElementById('tabAll').href = 'search2.html?q=' + encodeURIComponent(query);
         document.getElementById('tabImages').href = 'images.html?q=' + encodeURIComponent(query);
         document.getElementById('tabNews').href = 'news.html?q=' + encodeURIComponent(query);
 
-        document.getElementById('miniSearchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') { window.location.href = 'images.html?q=' + encodeURIComponent(this.value.trim()); }
-        });
-
-        const imageData = [
-            { title: "にーよ8号", src: "https://via.placeholder.com/300x200?text=YingDou21485", url: "https://x.com/YingDou21485", desc: "Plan_aot主導者" },
-            { title: "月々星小学校 校舎", src: "https://via.placeholder.com/300x200?text=School", url: "school.html", desc: "校舎の写真" },
-            { title: "月の落石事件現場", src: "https://via.placeholder.com/300x200?text=Meteor", url: "news_20171031.html", desc: "事件当日の現場写真" }
+        // 画像検索用のデータリスト（ここに新しい事件現場の写真を追加！）
+        let imageResults = [
+            { 
+                title: "月の落石事件の現場写真", 
+                url: "news_20171031.html", 
+                imgUrl: "https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/%E7%84%A1%E9%A1%8C1120_20260823155546.png",
+                desc: "月の落石事件" 
+            },
+            { 
+                title: "日乃市立月々星小学校 校舎", 
+                url: "school.html", 
+                imgUrl: "https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7418.jpeg",
+                desc: "月々星小学校" 
+            }
         ];
 
-        const filtered = imageData.filter(item => item.title.includes(query) || item.desc.includes(query));
-        document.getElementById('hitCount').innerText = `約 ${filtered.length} 件`;
-        const container = document.getElementById('imageResults');
+        const cleanQuery = query.trim().toLowerCase();
+        
+        const filtered = imageResults.filter(item => {
+            if (cleanQuery === '') return true;
+            return item.title.toLowerCase().includes(cleanQuery) || 
+                   item.desc.toLowerCase().includes(cleanQuery) || 
+                   item.url.toLowerCase().includes(cleanQuery);
+        });
 
-        filtered.forEach(item => {
-            container.innerHTML += `
-                <a href="${item.url}" class="image-card">
-                    <img src="${item.src}" alt="${item.title}">
-                    <div class="image-info">
-                        <div class="image-title">${item.title}</div>
-                        <div class="image-source">${item.url}</div>
+        // ヒットした最初のアイテムのアイコンをサイドに反映
+        if (filtered.length > 0) {
+            sideIconImg.src = "https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg";
+        }
+
+        document.getElementById('hitCount').innerText = `約 ${filtered.length} 件のヒット`;
+
+        if (filtered.length === 0) {
+            container.innerHTML = `<div style="color: #70757a; padding: 20px 0; grid-column: 1 / -1;">一致する画像はありませんでした。</div>`;
+        } else {
+            filtered.forEach(item => {
+                container.innerHTML += `
+                    <div class="image-item">
+                        <a href="${item.url}" target="_blank">
+                            <img src="${item.imgUrl}" alt="${item.title}" class="image-thumb">
+                        </a>
+                        <div class="image-info">
+                            <a href="${item.url}" class="image-title" target="_blank">${item.title}</a>
+                            <div class="image-url">${item.url}</div>
+                        </div>
                     </div>
-                </a>
-            `;
+                `;
+            });
+        }
+
+        document.getElementById('miniSearchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                window.location.href = 'images.html?q=' + encodeURIComponent(this.value.trim());
+            }
         });
     </script>
 </body>
