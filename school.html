@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -153,14 +153,17 @@
             padding-top: 20px;
             margin-top: 20px;
         }
-        /* 校章（リンク化してホバー効果をつける） */
-        .emblem-link {
-            display: inline-block;
+        /* 校章（クリックするとパスワードパネルが開くように変更） */
+        .emblem-btn {
+            background: none;
+            border: none;
+            padding: 0;
             cursor: pointer;
             flex-shrink: 0;
             margin-right: 20px;
+            display: inline-block;
         }
-        .emblem-link:hover img {
+        .emblem-btn:hover img {
             opacity: 0.8;
             filter: drop-shadow(0 0 4px rgba(217, 83, 79, 0.5));
         }
@@ -241,17 +244,28 @@
             </ul>
         </div>
 
-        <!-- ⑤ 住所・電話番号 ＆ 校章エリア（クリックすると生徒カーストメモのページへ） -->
+        <!-- ⑤ 住所・電話番号 ＆ 校章エリア（校章をクリックするとパスワードパネルが開く） -->
         <div class="footer-info">
-            <a href="memo_teacher.html" class="emblem-link" title="極秘データへ...">
+            <button class="emblem-btn" onclick="togglePanel('emblemPanel', 'emblemPass')" title="極秘データへ...">
                 <img src="https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/%E7%84%A1%E9%A1%8C1119_20260823201413.png" alt="学校校章" class="school-emblem">
-            </a>
+            </button>
             <div class="address-text">
                 <strong>日乃市立月々星小学校</strong><br>
                 〒190-0000 日乃市月々星町 0-1-2<br>
                 TEL: 29-0928-XXXX / FAX: 00-XXXX-XXXX<br>
                 E-mail: tsukizukiboshi-E@hino-ed.jp
             </div>
+        </div>
+
+        <!-- 🔐 「校章」をクリックしたときに出現するパネル（生徒カーストメモ用） -->
+        <div id="emblemPanel" class="secret-panel">
+            <p style="color: #0f0; font-size: 13px; margin-top: 0; border-bottom: 1px solid #0f0; padding-bottom: 5px;">
+                RESTRICTED // 生徒データ管理記録
+            </p>
+            <input type="text" id="emblemPass" placeholder="パスワードを入力...">
+            <br>
+            <button onclick="checkEmblemPassword()">認証</button>
+            <div id="emblemError" class="error-msg">認証失敗：コードが一致しません。</div>
         </div>
     </div>
 
@@ -263,20 +277,21 @@
         function togglePanel(panelId, inputId) {
             const hinoP = document.getElementById('hinoPanel');
             const starP = document.getElementById('starPanel');
+            const emblemP = document.getElementById('emblemPanel');
             const targetP = document.getElementById(panelId);
 
-            // 片方を開いたらもう片方は閉じる
-            if (panelId === 'hinoPanel') {
-                starP.style.display = 'none';
-            } else {
-                hinoP.style.display = 'none';
-            }
+            // 他のパネルはすべて閉じる
+            hinoP.style.display = 'none';
+            starP.style.display = 'none';
+            emblemP.style.display = 'none';
 
             if (targetP.style.display === 'block') {
                 targetP.style.display = 'none';
             } else {
                 targetP.style.display = 'block';
                 document.getElementById(inputId).focus();
+                // パネルを開いたときに視界に入るようスクロール調整
+                targetP.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         }
 
@@ -284,7 +299,7 @@
         function checkHinoPassword() {
             const input = document.getElementById('hinoPass').value.trim();
             if (input === "Efklhwkwql") { 
-                window.location.href = "diary_principal.html"; // 正解したら校長の日記へ！
+                window.location.href = "diary_principal.html"; 
             } else {
                 document.getElementById('hinoError').style.display = 'block';
             }
@@ -294,9 +309,19 @@
         function checkStarPassword() {
             const input = document.getElementById('starPass').value.trim();
             if (input === "Vkdiz zgzg＝d") {
-                window.location.href = "diary_teacher.html"; // 正解したら肥沼先生の日記へ！
+                window.location.href = "diary_teacher.html"; 
             } else {
                 document.getElementById('starError').style.display = 'block';
+            }
+        }
+
+        // 🛡️ 「校章」のパスワード（生徒カーストメモ用：Procyon）
+        function checkEmblemPassword() {
+            const input = document.getElementById('emblemPass').value.trim();
+            if (input === "Procyon") {
+                window.location.href = "memo_teacher.html"; 
+            } else {
+                document.getElementById('emblemError').style.display = 'block';
             }
         }
     </script>
