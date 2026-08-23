@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>職員室 - 入力認証</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #111;
+            color: #0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .terminal {
+            background: #000;
+            border: 1px solid #0f0;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+        }
+        h2 { font-size: 18px; border-bottom: 1px solid #0f0; padding-bottom: 10px; margin-top: 0; }
+        .hint { color: #888; font-size: 14px; margin-bottom: 20px; line-height: 1.6; }
+        input[type="text"] {
+            width: 100%;
+            background: #111;
+            border: 1px solid #0f0;
+            color: #0f0;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            font-family: monospace;
+        }
+        button {
+            background: #0f0;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover { background: #0a0; }
+        .error { color: #f55; margin-top: 10px; display: none; }
+        .back-link { display: block; margin-top: 20px; color: #555; text-decoration: none; font-size: 12px; }
+        .back-link:hover { color: #888; }
+    </style>
+</head>
+<body>
+
+    <div class="terminal">
+        <h2>RESTRICTED ACCESS // 職員室端末</h2>
+        <p class="hint">ヒント：逆シーザー暗号（3文字戻す）を解読せよ。<br>[ 暗号文: Efklhwkwql ]</p>
+        
+        <input type="text" id="passInput" placeholder="パスワードを入力..." autofocus>
+        <br>
+        <button onclick="checkPassword()">認証</button>
+        <div id="errorMsg" class="error">認証失敗：コードが一致しません。</div>
+        
+        <a href="index.html" class="back-link">◀ トップページへ戻る</a>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const input = document.getElementById('passInput').value;
+            
+            // 正解のパスワード（Efklhwkwql を逆シーザーで解いた「ひのかなと」）
+            if (input === "Efklhwkwql") {
+                window.location.href = "diary_principal.html"; // 正解したら校長の日記ページへ
+            } else {
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        }
+    </script>
+
+</body>
+</html>
