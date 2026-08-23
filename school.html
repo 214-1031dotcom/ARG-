@@ -5,55 +5,163 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>日乃市立月々星小学校</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; color: #222; background-color: #fff; line-height: 1.6; }
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
-        h1 { font-size: 24px; color: #1a0dab; border-bottom: 2px solid #1a0dab; padding-bottom: 5px; }
-        p { font-size: 15px; color: #4d5156; }
-        
-        /* フッター全体のスタイル（校章を左に配置） */
-        .site-footer {
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
             display: flex;
-            align-items: center; /* 縦方向の中央を合わせる */
-            gap: 20px;          /* 校章と文字の間隔 */
-            border-top: 1px solid #ebebeb;
-            padding: 20px 0;
-            margin-top: 50px;
-            color: #70757a;
-            font-size: 13px;
+            flex-direction: column;
+            align-items: center;
         }
-        /* フッター内の校章サイズ調整 */
-        .footer-emblem {
-            width: 50px;
-            height: 50px;
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background: #fff;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+        }
+        /* ① 学校名 */
+        .school-title {
+            font-size: 26px;
+            font-weight: bold;
+            text-align: center;
+            color: #1a5276;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #1a5276;
+            padding-bottom: 10px;
+        }
+        /* ② 校舎の画像 */
+        .school-image-container {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .school-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        /* ③ 校訓 */
+        .school-motto {
+            background-color: #f2f4f4;
+            border-left: 4px solid #1a5276;
+            padding: 15px;
+            margin-bottom: 25px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        .school-motto h3 {
+            margin: 0 0 5px 0;
+            color: #1a5276;
+            font-size: 16px;
+        }
+        /* ④ 保健室だより・各種お知らせリンク */
+        .notices-section {
+            margin-bottom: 30px;
+        }
+        .notices-section h3 {
+            font-size: 18px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            color: #333;
+        }
+        .notices-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .notices-list li {
+            margin: 10px 0;
+        }
+        .notices-list a {
+            color: #1a0dab;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .notices-list a:hover {
+            text-decoration: underline;
+        }
+
+        /* ⑤ 住所・電話番号 ＆ 校章エリア */
+        .footer-info {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+        /* 校章（大きめ） */
+        .school-emblem {
+            width: 90px;
+            height: 90px;
             object-fit: contain;
+            margin-right: 20px;
+            flex-shrink: 0;
         }
-        .footer-text p {
-            margin: 2px 0;
-            font-size: 13px;
+        .address-text {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        /* 戻るリンクなど */
+        .back-link {
+            margin-top: 20px;
+            display: inline-block;
             color: #70757a;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>日乃市立月々星小学校</h1>
-        <p>ようこそ、日乃市立月々星小学校の公式ホームページへ。</p>
-        <p>本校は自然豊かな環境の中で、子どもたちの健やかな成長を見守っています。</p>
-        
-        <!-- ここに学校の詳細な情報やストーリーのテキストなどを追加していく場所 -->
+        <!-- ① 学校名 -->
+        <div class="school-title">日乃市立月々星小学校</div>
+
+        <!-- ② 校舎の画像 -->
+        <div class="school-image-container">
+            <img src="https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7418.jpeg" alt="校舎" class="school-image">
+        </div>
+
+        <!-- ③ 校訓 -->
+        <div class="school-motto">
+            <h3>【校訓】</h3>
+            <p>星のように輝き、美しく</p>
+        </div>
+
+        <!-- ④ 各種お知らせリンク -->
+        <div class="notices-section">
+            <h3>お知らせ</h3>
+            <ul class="notices-list">
+                <li>📄 <a href="nurse.html">流れ星号(保健室だより)</a></li>
+                <li>🏃‍♂️ <a href="sports_day.html">運動会のお知らせ（秋季大運動会プログラム）</a></li>
+                <li>📅 <a href="calendar.html">平成30年行事予定表</a></li>
+            </ul>
+        </div>
+
+        <!-- ⑤ 住所・電話番号 ＆ 大きめの校章 -->
+        <div class="footer-info">
+            <!-- 校章（大きめサイズ・左側に配置） -->
+            <img src="https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/%E7%84%A1%E9%A1%8C1119_20260823025701.png" alt="学校校章" class="school-emblem">
+            <div class="address-text">
+                <strong>日乃市立月々星小学校</strong><br>
+                〒190-0000 日乃市月々星町 0-1-2<br>
+                TEL: 29-0928-XXXX / FAX: 00-XXXX-XXXX<br>
+                E-mail: tsukizukiboshi-E@hino-ed.jp
+            </div>
+        </div>
     </div>
 
-    <!-- フッター部分 -->
-    <footer class="container site-footer">
-        <img src="https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/%E7%84%A1%E9%A1%8C1119_20260823025701.png" alt="月々星小学校 校章" class="footer-emblem">
-        <div class="footer-text">
-            <p>日乃市立月々星小学校</p>
-            <p>〒XXX-XXXX 〇〇県日乃市立月々星町....</p>
-            <p>TEL: 29-190-XXXX</p>
-            <p style="margin-top: 8px; font-size: 11px;">&copy; Hinoshiritsu Tsukiyuboshi Elementary School. All Rights Reserved.</p>
-        </div>
-    </footer>
+    <a href="index.html" class="back-link">＜ 検索トップに戻る</a>
 
 </body>
 </html>
