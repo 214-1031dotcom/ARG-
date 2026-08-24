@@ -13,7 +13,7 @@
             color: #fff;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             overflow: hidden;
-            padding-bottom: 55px; /* 下部ナビ分の余白 */
+            padding-bottom: 55px;
         }
 
         /* 🚀 起動画面（スプラッシュスクリーン） */
@@ -85,7 +85,7 @@
             letter-spacing: -1px;
         }
 
-        /* 🔔 サブヘッダー（通知・検索用） */
+        /* 🔔 サブヘッダー */
         .sub-header {
             position: sticky;
             top: 0;
@@ -114,7 +114,7 @@
             cursor: pointer;
         }
 
-        /* 🔍 検索画面用ヘッダー内パーツ */
+        /* 🔍 検索画面用 */
         .explore-header-inner {
             display: flex;
             align-items: center;
@@ -150,7 +150,7 @@
             pointer-events: none;
         }
 
-        /* 💬 投稿ボックス（タイムライン用） */
+        /* 💬 投稿ボックス */
         .post-box {
             padding: 12px 16px 8px 16px;
             border-bottom: 1px solid #2f3336;
@@ -201,7 +201,7 @@
             margin-bottom: 12px;
         }
 
-        /* 📊 投稿下部のアクションボタン群（インタラクティブ化対応） */
+        /* 📊 アクションボタン群 */
         .post-actions {
             display: flex;
             justify-content: space-between;
@@ -232,17 +232,17 @@
         }
         .post-action-btn.reply:hover { color: #1d9bf0; }
         
-        /* リポスト済み・いいね済みのカラー変化状態 */
         .post-action-btn.repost.active { color: #00ba7c; }
         .post-action-btn.repost:hover { color: #00ba7c; }
         
+        /* いいね：アクティブ時はピンク色＆ハート内部も塗りつぶす */
         .post-action-btn.like.active { color: #f91880; }
         .post-action-btn.like.active svg { fill: #f91880; }
         .post-action-btn.like:hover { color: #f91880; }
         
         .post-action-btn.bookmark:hover, .post-action-btn.share:hover { color: #1d9bf0; }
 
-        /* ✉️ チャット（メッセージ）画面のスタイル */
+        /* ✉️ チャット画面 */
         .chat-top-bar {
             position: sticky;
             top: 0;
@@ -362,7 +362,7 @@
             border: none;
         }
 
-        /* 👤 プロフィール画面のスタイル */
+        /* 👤 プロフィール画面 */
         #profile-view {
             display: none;
             position: absolute;
@@ -509,7 +509,7 @@
             border-radius: 2px;
         }
 
-        /* 🔔 通知画面のスタイル・タブ */
+        /* 🔔 通知画面 */
         .notification-sub-tabs {
             display: flex;
             border-bottom: 1px solid #2f3336;
@@ -561,7 +561,7 @@
             margin-bottom: 6px;
         }
 
-        /* 📈 トレンド項目 */
+        /* 📈 トレンド画面 */
         .trend-section-title {
             font-size: 20px;
             font-weight: bold;
@@ -638,7 +638,7 @@
             color: #fff;
         }
 
-        /* 📱 下部ナビゲーションバー（フッター） */
+        /* 📱 下部ナビゲーションバー */
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -681,7 +681,7 @@
 </head>
 <body>
 
-    <!-- 🚀 起動画面の処理 -->
+    <!-- 🚀 スプラッシュ画面 -->
     <div id="splash-screen">
         <div class="splash-logo">U</div>
     </div>
@@ -781,7 +781,7 @@
         </div>
 
         <!------------------------------------ 
-          ✉️ チャット（メッセージ）画面 
+          ✉️ チャット画面 
         ------------------------------------>
         <div id="messages-tab" class="tab-content">
             <div class="chat-top-bar">
@@ -878,7 +878,7 @@
         </div>
 
         <!------------------------------------ 
-          🔍 検索（Explore）画面 
+          🔍 検索画面 
         ------------------------------------>
         <div id="explore-tab" class="tab-content">
             <div class="sub-header">
@@ -929,7 +929,7 @@
         </div>
 
         <!------------------------------------ 
-          📌 下部ナビゲーションバー（メニュー） 
+          📌 下部ナビゲーションバー 
         ------------------------------------>
         <nav class="nav-bar">
             <button class="nav-item active" onclick="switchTab('home', this)">
@@ -950,7 +950,7 @@
 
     </div>
 
-    <!-- ⏱️ プログラム制御 & インタラクティブ機能 -->
+    <!-- ⏱️ プログラム制御 -->
     <script>
         window.addEventListener('load', function() {
             setTimeout(function() {
@@ -1006,7 +1006,7 @@
             document.getElementById('profile-view').style.display = 'none';
         }
 
-        // ❤️ いいねボタンのトグル処理
+        // ❤️ いいねボタンのトグル処理（ON / OFF切り替え）
         function toggleLike(btn) {
             const countSpan = btn.querySelector('.like-count');
             let count = parseInt(countSpan.textContent);
@@ -1047,7 +1047,7 @@
             }
         }
 
-        // 💬 返信モーダル関連の処理
+        // 💬 返信モーダル関連
         let currentReplyBtn = null;
 
         function openReplyModal(btn) {
