@@ -5,35 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Undergo</title>
     <style>
+        /* 📱 全体の基本設定（ダークモード風の黒背景） */
         body {
             margin: 0;
             padding: 0;
             background-color: #000;
             color: #fff;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            overflow: hidden;
+            overflow: hidden; /* ローディング中はスクロールさせない */
         }
 
+        /* 🚀 起動画面（スプラッシュスクリーン）のスタイル */
         #splash-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: #000;
+            background-color: #000; /* Xアプリみたいな完全な黒 */
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.6s ease;
+            transition: opacity 0.6s ease; /* 消えるときのふわっとした演出 */
         }
 
+        /* 真ん中の「U」ロゴのデザイン */
         .splash-logo {
             font-size: 64px;
             font-weight: bold;
             color: #fff;
             letter-spacing: -2px;
-            animation: pulse 1.2s infinite alternate;
+            animation: pulse 1.2s infinite alternate; /* 軽く呼吸するように光るアニメーション */
         }
 
         @keyframes pulse {
@@ -41,8 +44,9 @@
             100% { transform: scale(1.05); opacity: 1; text-shadow: 0 0 15px rgba(255,255,255,0.4); }
         }
 
+        /* 🐦 本体のタイムライン画面（最初は隠れている） */
         #main-content {
-            display: none;
+            display: none; /* ローディングが終わるまで非表示 */
             max-width: 600px;
             margin: 0 auto;
             border-left: 1px solid #2f3336;
@@ -52,26 +56,66 @@
             background-color: #000;
         }
 
+        /* 🧭 X風上部ヘッダー（アイコン ＋ 検索バー・スクロールしても固定） */
         .header {
             position: sticky;
             top: 0;
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid #2f3336;
-            padding: 12px 20px;
+            padding: 10px 15px;
             display: flex;
-            justify-content: center;
             align-items: center;
+            gap: 12px;
             z-index: 10;
         }
 
-        .header-logo {
-            font-size: 22px;
-            font-weight: bold;
-            color: #fff;
-            letter-spacing: -1px;
+        /* 左上の自分のアイコン */
+        .header-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
         }
 
+        /* 検索バーのラッパー */
+        .search-wrapper {
+            position: relative;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 検索入力欄 */
+        .search-input {
+            width: 100%;
+            background-color: #202327;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 12px 8px 36px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .search-input::placeholder {
+            color: #71767b;
+        }
+
+        /* 検索アイコン（虫眼鏡） */
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            width: 16px;
+            height: 16px;
+            color: #71767b;
+            pointer-events: none;
+        }
+
+        /* 💬 投稿ボックスのスタイル */
         .post-box {
             padding: 15px 20px;
             border-bottom: 1px solid #2f3336;
@@ -110,15 +154,23 @@
 </head>
 <body>
 
+    <!-- 🚀 起動画面（スプラッシュ） -->
     <div id="splash-screen">
         <div class="splash-logo">U</div>
     </div>
 
+    <!-- 📱 Undergo メイン画面（タイムライン） -->
     <div id="main-content">
+        <!-- 上部ヘッダー（アイコン ＋ 検索窓） -->
         <div class="header">
-            <div class="header-logo">U</div>
+            <div class="header-avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');"></div>
+            <div class="search-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M10.25 3.75c-3.59 0-6.5 2.91-6.5 6.5s2.91 6.5 6.5 6.5c1.79 0 3.41-.71 4.61-1.85l3.88 3.87 1.42-1.42-3.87-3.88c1.14-1.2 1.85-2.82 1.85-4.61 0-3.59-2.91-6.5-6.5-6.5zm0 2c2.49 0 4.5 2.01 4.5 4.5s-2.01 4.5-4.5 4.5-4.5-2.01-4.5-4.5 2.01-4.5 4.5-4.5z"></path></svg>
+                <input type="text" class="search-input" placeholder="検索">
+            </div>
         </div>
 
+        <!-- 投稿のサンプル1（にーよ8号） -->
         <div class="post-box">
             <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');"></div>
             <div class="post-content">
@@ -127,6 +179,7 @@
             </div>
         </div>
 
+        <!-- 投稿のサンプル2（もやし） -->
         <div class="post-box">
             <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7471.jpeg');"></div>
             <div class="post-content">
@@ -136,6 +189,7 @@
         </div>
     </div>
 
+    <!-- ⏱️ 起動画面を消してメイン画面に切り替えるプログラム -->
     <script>
         window.addEventListener('load', function() {
             setTimeout(function() {
