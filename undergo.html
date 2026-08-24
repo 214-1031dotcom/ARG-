@@ -201,7 +201,7 @@
             margin-bottom: 12px;
         }
 
-        /* 📊 投稿下部のアクションボタン群 */
+        /* 📊 投稿下部のアクションボタン群（インタラクティブ化対応） */
         .post-actions {
             display: flex;
             justify-content: space-between;
@@ -220,7 +220,10 @@
             font-size: 13px;
             cursor: pointer;
             padding: 0;
-            transition: color 0.2s;
+            transition: color 0.2s, transform 0.1s;
+        }
+        .post-action-btn:active {
+            transform: scale(0.9);
         }
         .post-action-btn svg {
             width: 18px;
@@ -228,8 +231,15 @@
             fill: currentColor;
         }
         .post-action-btn.reply:hover { color: #1d9bf0; }
+        
+        /* リポスト済み・いいね済みのカラー変化状態 */
+        .post-action-btn.repost.active { color: #00ba7c; }
         .post-action-btn.repost:hover { color: #00ba7c; }
+        
+        .post-action-btn.like.active { color: #f91880; }
+        .post-action-btn.like.active svg { fill: #f91880; }
         .post-action-btn.like:hover { color: #f91880; }
+        
         .post-action-btn.bookmark:hover, .post-action-btn.share:hover { color: #1d9bf0; }
 
         /* ✉️ チャット（メッセージ）画面のスタイル */
@@ -573,6 +583,61 @@
             color: #fff;
         }
 
+        /* 💬 返信用簡易モーダル */
+        #reply-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .reply-modal-content {
+            background-color: #000;
+            border: 1px solid #2f3336;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+        .reply-textarea {
+            width: 100%;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            resize: none;
+            outline: none;
+            margin-top: 10px;
+            min-height: 80px;
+        }
+        .reply-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .reply-cancel-btn, .reply-submit-btn {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+        .reply-cancel-btn {
+            background: transparent;
+            color: #71767b;
+        }
+        .reply-submit-btn {
+            background-color: #1d9bf0;
+            color: #fff;
+        }
+
         /* 📱 下部ナビゲーションバー（フッター） */
         .nav-bar {
             position: fixed;
@@ -621,6 +686,18 @@
         <div class="splash-logo">U</div>
     </div>
 
+    <!-- 💬 返信用モーダルポップアップ -->
+    <div id="reply-modal">
+        <div class="reply-modal-content">
+            <div style="font-weight: bold; font-size: 15px; color: #71767b;">返信を送信</div>
+            <textarea id="reply-text-input" class="reply-textarea" placeholder="返信を返す..."></textarea>
+            <div class="reply-actions">
+                <button class="reply-cancel-btn" onclick="closeReplyModal()">キャンセル</button>
+                <button class="reply-submit-btn" onclick="submitReply()">返信</button>
+            </div>
+        </div>
+    </div>
+
     <!-- 📱 アプリメイン画面 -->
     <div class="app-container" id="app-container">
 
@@ -633,34 +710,34 @@
             </div>
 
             <!-- 投稿1 -->
-            <div class="post-box">
+            <div class="post-box" data-id="1">
                 <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');" onclick="openProfile()"></div>
                 <div class="post-main">
                     <div class="post-content">
                         <div class="user-info-clickable" onclick="openProfile()">
-                            <span class="username">にーよ8号</span><span class="userid">@YingDou21485</span>
+                            <span class="username">ユーザーA</span><span class="userid">@user_a</span>
                         </div>
                         <span class="post-time">· 4時間</span>
                         <div class="text">Undergoシステム、起動テスト完了。……さて、始めるか。</div>
                     </div>
                     <div class="post-actions">
-                        <button class="post-action-btn reply">
+                        <button class="post-action-btn reply" onclick="openReplyModal(this)">
                             <svg viewBox="0 0 24 24"><path d="M1.751 10c0-4.42 3.584-8 8-8h5.5c4.416 0 8 3.58 8 8-3.584 8-8 8H9.75l-4.792 3.594c-.58.435-1.408-.016-1.408-.738V18.1c-1.077-.822-1.799-2.072-1.799-3.5V10zm8-6c-3.314 0-6 2.686-6 6s2.686 6 6 6h1.25c.552 0 1 .448 1 1v2.146l3.328-2.496c.38-.285.845-.436 1.322-.436H15.25c3.314 0 6-2.686 6-6s-2.686-6-6-6h-5.5z"/></svg>
-                            <span>12</span>
+                            <span class="reply-count">12</span>
                         </button>
-                        <button class="post-action-btn repost">
+                        <button class="post-action-btn repost" onclick="toggleRepost(this)">
                             <svg viewBox="0 0 24 24"><path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.89 2 2 2H13v2H7.5c-2.21 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 20.12l-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.89-2-2-2H11V4h5.5c2.21 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14z"/></svg>
-                            <span>48</span>
+                            <span class="repost-count">48</span>
                         </button>
-                        <button class="post-action-btn like">
+                        <button class="post-action-btn like" onclick="toggleLike(this)">
                             <svg viewBox="0 0 24 24"><path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.55 1.12-.38 2.53.44 3.81.91 1.41 2.93 3.39 6.22 5.66 3.29-2.27 5.31-4.25 6.22-5.66.82-1.28.99-2.69.44-3.81-.56-1.13-1.667-1.84-2.91-1.91zM12 20.35C3.82 14.71 2 11.85 2 9.5c0-1.87 1.15-3.5 3.03-3.6 1.51-.08 3.12.63 4.29 2.06L12 9.5l2.68-1.54c1.17-1.43 2.78-2.14 4.29-2.06 1.88.1 3.03 1.73 3.03 3.6 0 2.35-1.82 5.21-10 10.85z"/></svg>
-                            <span>321</span>
+                            <span class="like-count">321</span>
                         </button>
                         <button class="post-action-btn">
                             <svg viewBox="0 0 24 24"><path d="M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21v-6.5h2V21H4z"/></svg>
                             <span>1.2万</span>
                         </button>
-                        <button class="post-action-btn bookmark">
+                        <button class="post-action-btn bookmark" onclick="toggleBookmark(this)">
                             <svg viewBox="0 0 24 24"><path d="M4 4.5C4 3.12 5.12 2 6.5 2h11C18.88 2 20 3.12 20 4.5v18.15l-8-4.5-8 4.5V4.5zM6.5 4c-.28 0-.5.22-.5.5v14.76l6-3.38 6 3.38V4.5c0-.28-.22-.5-.5-.5h-11z"/></svg>
                         </button>
                     </div>
@@ -668,34 +745,34 @@
             </div>
 
             <!-- 投稿2 -->
-            <div class="post-box">
+            <div class="post-box" data-id="2">
                 <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7471.jpeg');" onclick="openProfile()"></div>
                 <div class="post-main">
                     <div class="post-content">
                         <div class="user-info-clickable" onclick="openProfile()">
-                            <span class="username">もやし</span><span class="userid">@moyashi_create</span>
+                            <span class="username">ユーザーB</span><span class="userid">@user_b</span>
                         </div>
                         <span class="post-time">· 6時間</span>
                         <div class="text">おつかれさま！ここからどう動くかだねー 👀✨</div>
                     </div>
                     <div class="post-actions">
-                        <button class="post-action-btn reply">
+                        <button class="post-action-btn reply" onclick="openReplyModal(this)">
                             <svg viewBox="0 0 24 24"><path d="M1.751 10c0-4.42 3.584-8 8-8h5.5c4.416 0 8 3.58 8 8-3.584 8-8 8H9.75l-4.792 3.594c-.58.435-1.408-.016-1.408-.738V18.1c-1.077-.822-1.799-2.072-1.799-3.5V10zm8-6c-3.314 0-6 2.686-6 6s2.686 6 6 6h1.25c.552 0 1 .448 1 1v2.146l3.328-2.496c.38-.285.845-.436 1.322-.436H15.25c3.314 0 6-2.686 6-6s-2.686-6-6-6h-5.5z"/></svg>
-                            <span>3</span>
+                            <span class="reply-count">3</span>
                         </button>
-                        <button class="post-action-btn repost">
+                        <button class="post-action-btn repost" onclick="toggleRepost(this)">
                             <svg viewBox="0 0 24 24"><path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.89 2 2 2H13v2H7.5c-2.21 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 20.12l-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.89-2-2-2H11V4h5.5c2.21 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14z"/></svg>
-                            <span>10</span>
+                            <span class="repost-count">10</span>
                         </button>
-                        <button class="post-action-btn like">
+                        <button class="post-action-btn like" onclick="toggleLike(this)">
                             <svg viewBox="0 0 24 24"><path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.55 1.12-.38 2.53.44 3.81.91 1.41 2.93 3.39 6.22 5.66 3.29-2.27 5.31-4.25 6.22-5.66.82-1.28.99-2.69.44-3.81-.56-1.13-1.667-1.84-2.91-1.91zM12 20.35C3.82 14.71 2 11.85 2 9.5c0-1.87 1.15-3.5 3.03-3.6 1.51-.08 3.12.63 4.29 2.06L12 9.5l2.68-1.54c1.17-1.43 2.78-2.14 4.29-2.06 1.88.1 3.03 1.73 3.03 3.6 0 2.35-1.82 5.21-10 10.85z"/></svg>
-                            <span>85</span>
+                            <span class="like-count">85</span>
                         </button>
                         <button class="post-action-btn">
                             <svg viewBox="0 0 24 24"><path d="M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21v-6.5h2V21H4z"/></svg>
                             <span>450</span>
                         </button>
-                        <button class="post-action-btn bookmark">
+                        <button class="post-action-btn bookmark" onclick="toggleBookmark(this)">
                             <svg viewBox="0 0 24 24"><path d="M4 4.5C4 3.12 5.12 2 6.5 2h11C18.88 2 20 3.12 20 4.5v18.15l-8-4.5-8 4.5V4.5zM6.5 4c-.28 0-.5.22-.5.5v14.76l6-3.38 6 3.38V4.5c0-.28-.22-.5-.5-.5h-11z"/></svg>
                         </button>
                     </div>
@@ -719,96 +796,27 @@
                 </div>
             </div>
 
-            <!-- チャットリストアイテム -->
             <div class="chat-item">
                 <div class="chat-item-avatar" style="background-color: #79c0ff;"></div>
                 <div class="chat-item-content">
                     <div class="chat-item-header">
-                        <span class="chat-item-name">岩塩</span>
+                        <span class="chat-item-name">友人1</span>
                         <span class="chat-item-time">2時間</span>
                     </div>
-                    <div class="chat-item-lastmsg">あなたが「なるほどね……!?」楽しみにしてます😭…</div>
+                    <div class="chat-item-lastmsg">楽しみにしてます😭…</div>
                 </div>
             </div>
-
             <div class="chat-item">
                 <div class="chat-item-avatar" style="background-color: #ff7b72;"></div>
                 <div class="chat-item-content">
                     <div class="chat-item-header">
-                        <span class="chat-item-name">るなたろう ‼️‼️</span>
+                        <span class="chat-item-name">友人2</span>
                         <span class="chat-item-time">1週間</span>
                     </div>
                     <div class="chat-item-lastmsg">フォローありがとうございますっ‼️</div>
                 </div>
             </div>
 
-            <div class="chat-item">
-                <div class="chat-item-avatar" style="background-color: #d2a8ff;"></div>
-                <div class="chat-item-content">
-                    <div class="chat-item-header">
-                        <span class="chat-item-name">えりの鍵垢</span>
-                        <span class="chat-item-time">2週間</span>
-                    </div>
-                    <div class="chat-item-lastmsg">もう脳みそから羊の家関連の情報記憶消されて…</div>
-                </div>
-            </div>
-
-            <div class="chat-item">
-                <div class="chat-item-avatar" style="background-color: #ffa657;"></div>
-                <div class="chat-item-content">
-                    <div class="chat-item-header">
-                        <span class="chat-item-name">めこ✂️</span>
-                        <span class="chat-item-time">9週間</span>
-                    </div>
-                    <div class="chat-item-lastmsg">2の写真をおすすめしました</div>
-                </div>
-            </div>
-
-            <div class="chat-item">
-                <div class="chat-item-avatar" style="background-color: #56d364;"></div>
-                <div class="chat-item-content">
-                    <div class="chat-item-header">
-                        <span class="chat-item-name">しもがーる ‼️ら</span>
-                        <span class="chat-item-time">14週間</span>
-                    </div>
-                    <div class="chat-item-lastmsg">わざわざありがとうございます😭</div>
-                </div>
-            </div>
-
-            <div class="chat-item">
-                <div class="chat-item-avatar" style="background-color: #3fb950;"></div>
-                <div class="chat-item-content">
-                    <div class="chat-item-header">
-                        <span class="chat-item-name">💚</span>
-                        <span class="chat-item-time">15週間</span>
-                    </div>
-                    <div class="chat-item-lastmsg">了解だぜ相棒</div>
-                </div>
-            </div>
-
-            <div class="chat-item">
-                <div class="chat-item-avatar" style="background-color: #e3b341;"></div>
-                <div class="chat-item-content">
-                    <div class="chat-item-header">
-                        <span class="chat-item-name">れを</span>
-                        <span class="chat-item-time">17週間</span>
-                    </div>
-                    <div class="chat-item-lastmsg">えへへえへへ…やった喜んでもらえた🧏🎶🎶</div>
-                </div>
-            </div>
-
-            <div class="chat-item">
-                <div class="chat-item-avatar" style="background-color: #8b949e;"></div>
-                <div class="chat-item-content">
-                    <div class="chat-item-header">
-                        <span class="chat-item-name">鍵穴から覗くもやし</span>
-                        <span class="chat-item-time">26週間</span>
-                    </div>
-                    <div class="chat-item-lastmsg">「ｳｫ!嬉しい知らせ！是非今すぐ載せたいとこ…</div>
-                </div>
-            </div>
-
-            <!-- 新規チャット作成ボタン -->
             <button class="chat-floating-btn">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><line x1="12" y1="7" x2="12" y2="13"></line><line x1="9" y1="10" x2="15" y2="10"></line></svg>
             </button>
@@ -823,12 +831,11 @@
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div>
-                    <div style="font-size: 18px; font-weight: bold;">うゆちゃん</div>
+                    <div style="font-size: 18px; font-weight: bold;">マイアカウント</div>
                     <div style="font-size: 12px; color: #71767b;">2 ポスト</div>
                 </div>
             </div>
 
-            <!-- ヘッダー画像 -->
             <div class="profile-banner" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');"></div>
             
             <div class="profile-info-section">
@@ -838,21 +845,21 @@
                 </div>
 
                 <div class="profile-name">
-                    うゆちゃん
+                    マイアカウント
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="#71767b"><path d="M19 11h-1V7c0-3.31-2.69-6-6-6S6 3.69 6 7v4H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zm-7-7c1.66 0 3 1.34 3 3v4H9V7c0-1.66 1.34-3 3-3zm7 16H5v-8h14v8zm-7-5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
                 </div>
-                <div class="profile-id">@U21485</div>
+                <div class="profile-id">@my_account</div>
                 
-                <div class="profile-bio">2026抱負<br>・フォロワー表で400人<br>・aotをもっと本格的に起動する<br>・ブロマイドケースが埋まるくらい描く<br>・aotを拡 散</div>
+                <div class="profile-bio">テストアカウント稼働中。<br>・SNSの挙動確認<br>・各機能のインテラクションテスト</div>
                 
                 <div class="profile-metadata">
                     <span>
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="#71767b"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                        ヘッダーしおちゃんちゃん
+                        東京都
                     </span>
                     <span>
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="#71767b"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>
-                        2025年8月からXを利用しています
+                        2025年8月から利用しています
                     </span>
                 </div>
 
@@ -867,38 +874,6 @@
                 <div class="profile-tab-item">返信</div>
                 <div class="profile-tab-item">メディア</div>
                 <div class="profile-tab-item">いいね</div>
-            </div>
-
-            <div class="post-box">
-                <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');"></div>
-                <div class="post-main">
-                    <div class="post-content">
-                        <span class="username">うゆちゃん</span><span class="userid">@U21485</span>
-                        <span class="post-time">· 12月31日</span>
-                        <div class="text">Undergoシステム、起動テスト完了。……さて、始めるか。</div>
-                    </div>
-                    <div class="post-actions">
-                        <button class="post-action-btn reply">
-                            <svg viewBox="0 0 24 24"><path d="M1.751 10c0-4.42 3.584-8 8-8h5.5c4.416 0 8 3.58 8 8-3.584 8-8 8H9.75l-4.792 3.594c-.58.435-1.408-.016-1.408-.738V18.1c-1.077-.822-1.799-2.072-1.799-3.5V10zm8-6c-3.314 0-6 2.686-6 6s2.686 6 6 6h1.25c.552 0 1 .448 1 1v2.146l3.328-2.496c.38-.285.845-.436 1.322-.436H15.25c3.314 0 6-2.686 6-6s-2.686-6-6-6h-5.5z"/></svg>
-                            <span>5</span>
-                        </button>
-                        <button class="post-action-btn repost">
-                            <svg viewBox="0 0 24 24"><path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.89 2 2 2H13v2H7.5c-2.21 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 20.12l-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.89-2-2-2H11V4h5.5c2.21 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14z"/></svg>
-                            <span>2</span>
-                        </button>
-                        <button class="post-action-btn like">
-                            <svg viewBox="0 0 24 24"><path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.55 1.12-.38 2.53.44 3.81.91 1.41 2.93 3.39 6.22 5.66 3.29-2.27 5.31-4.25 6.22-5.66.82-1.28.99-2.69.44-3.81-.56-1.13-1.667-1.84-2.91-1.91zM12 20.35C3.82 14.71 2 11.85 2 9.5c0-1.87 1.15-3.5 3.03-3.6 1.51-.08 3.12.63 4.29 2.06L12 9.5l2.68-1.54c1.17-1.43 2.78-2.14 4.29-2.06 1.88.1 3.03 1.73 3.03 3.6 0 2.35-1.82 5.21-10 10.85z"/></svg>
-                            <span>14</span>
-                        </button>
-                        <button class="post-action-btn">
-                            <svg viewBox="0 0 24 24"><path d="M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21v-6.5h2V21H4z"/></svg>
-                            <span>120</span>
-                        </button>
-                        <button class="post-action-btn bookmark">
-                            <svg viewBox="0 0 24 24"><path d="M4 4.5C4 3.12 5.12 2 6.5 2h11C18.88 2 20 3.12 20 4.5v18.15l-8-4.5-8 4.5V4.5zM6.5 4c-.28 0-.5.22-.5.5v14.76l6-3.38 6 3.38V4.5c0-.28-.22-.5-.5-.5h-11z"/></svg>
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -921,56 +896,34 @@
                 <div class="trend-category">国内のトレンド</div>
                 <div class="trend-title">#Undergoシステム</div>
             </div>
-            <div class="trend-item">
-                <div class="trend-category">ニュース · 急上昇</div>
-                <div class="trend-title">未確認の不穏な噂がネットで拡散中</div>
-            </div>
         </div>
 
         <!------------------------------------ 
           🔔 通知画面 
         ------------------------------------>
         <div id="notification-tab" class="tab-content">
-            <!-- ❶ 通知用トップヘッダー（左にアイコン、中央に「通知」、右に歯車SVGアイコン） -->
             <div class="sub-header">
                 <div class="header-left-area">
                     <div class="header-avatar-small" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');" onclick="openProfile()"></div>
                     <span>通知</span>
                 </div>
-                <!-- 歯車を絵文字から綺麗なSVGアイコンに変更 -->
                 <button style="background: none; border: none; cursor: pointer; color: #fff; display: flex; align-items: center; padding: 0;">
                     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
                 </button>
             </div>
 
-            <!-- ❷ 「すべて」と「@ツイート」の切り替えタブ（個別クリック対応） -->
             <div class="notification-sub-tabs">
                 <button class="notif-sub-tab active" onclick="switchNotifTab('all', this)">すべて</button>
                 <button class="notif-sub-tab" onclick="switchNotifTab('mentions', this)">@ツイート</button>
             </div>
 
-            <!-- 通知アイテム1 -->
-            <div class="notification-item">
-                <div class="notification-icon-area">
-                    <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#1d9bf0" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                </div>
-                <div class="notification-body">
-                    <div style="display: flex; gap: 4px; margin-bottom: 8px;">
-                        <div class="avatar" style="width: 28px; height: 28px; background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7471.jpeg');"></div>
-                    </div>
-                    <div class="notif-text"><strong>れを</strong>さんと他2人の新しいポスト通知 · 25分</div>
-                </div>
-            </div>
-
-            <!-- 通知アイテム2 -->
             <div class="notification-item">
                 <div class="notification-icon-area">
                     <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#f91880" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </div>
                 <div class="notification-body">
                     <div class="avatar" style="width: 28px; height: 28px; margin-bottom: 8px; background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7471.jpeg');"></div>
-                    <div class="notif-text"><strong>しもがーる ‼️ら</strong>さんがあなたの投稿をいいねしました</div>
-                    <div style="color: #71767b; font-size: 14px;">可愛くて死んだ</div>
+                    <div class="notif-text"><strong>ユーザーB</strong>さんがあなたの投稿をいいねしました</div>
                 </div>
             </div>
         </div>
@@ -979,22 +932,17 @@
           📌 下部ナビゲーションバー（メニュー） 
         ------------------------------------>
         <nav class="nav-bar">
-            <!-- ホーム -->
             <button class="nav-item active" onclick="switchTab('home', this)">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             </button>
-            <!-- 検索 -->
             <button class="nav-item" onclick="switchTab('explore', this)">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </button>
-            <!-- 仮ボタン -->
             <button class="nav-item"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></button>
-            <!-- 通知 -->
             <button class="nav-item" onclick="switchTab('notification', this)">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
                 <span class="badge">1</span>
             </button>
-            <!-- ✉️ メッセージ（チャット）ボタン -->
             <button class="nav-item" onclick="switchTab('messages', this)">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
             </button>
@@ -1002,7 +950,7 @@
 
     </div>
 
-    <!-- ⏱️ プログラム制御 -->
+    <!-- ⏱️ プログラム制御 & インタラクティブ機能 -->
     <script>
         window.addEventListener('load', function() {
             setTimeout(function() {
@@ -1017,7 +965,7 @@
                     document.body.style.overflow = 'auto';
                 }, 600);
 
-            }, 2000);
+            }, 1500);
         });
 
         function switchTab(tabName, buttonElement) {
@@ -1042,14 +990,12 @@
             buttonElement.classList.add('active');
         }
 
-        /* 通知タブ内の「すべて」「@ツイート」切り替え用関数 */
         function switchNotifTab(subTabName, buttonElement) {
             const parent = buttonElement.parentElement;
             parent.querySelectorAll('.notif-sub-tab').forEach(btn => {
                 btn.classList.remove('active');
             });
             buttonElement.classList.add('active');
-            // 後々ここに対応するデータの切り替え処理を実装できるよ！
         }
 
         function openProfile() {
@@ -1058,6 +1004,71 @@
 
         function closeProfile() {
             document.getElementById('profile-view').style.display = 'none';
+        }
+
+        // ❤️ いいねボタンのトグル処理
+        function toggleLike(btn) {
+            const countSpan = btn.querySelector('.like-count');
+            let count = parseInt(countSpan.textContent);
+            
+            if (btn.classList.contains('active')) {
+                btn.classList.remove('active');
+                count -= 1;
+            } else {
+                btn.classList.add('active');
+                count += 1;
+            }
+            countSpan.textContent = count;
+        }
+
+        // 🔄 リポストボタンのトグル処理
+        function toggleRepost(btn) {
+            const countSpan = btn.querySelector('.repost-count');
+            let count = parseInt(countSpan.textContent);
+            
+            if (btn.classList.contains('active')) {
+                btn.classList.remove('active');
+                count -= 1;
+            } else {
+                btn.classList.add('active');
+                count += 1;
+            }
+            countSpan.textContent = count;
+        }
+
+        // 🔖 ブックマークボタンのトグル処理
+        function toggleBookmark(btn) {
+            if (btn.style.color === 'rgb(29, 155, 240)') {
+                btn.style.color = 'inherit';
+                btn.querySelector('svg').style.fill = 'none';
+            } else {
+                btn.style.color = '#1d9bf0';
+                btn.querySelector('svg').style.fill = '#1d9bf0';
+            }
+        }
+
+        // 💬 返信モーダル関連の処理
+        let currentReplyBtn = null;
+
+        function openReplyModal(btn) {
+            currentReplyBtn = btn;
+            document.getElementById('reply-text-input').value = '';
+            document.getElementById('reply-modal').style.display = 'flex';
+            document.getElementById('reply-text-input').focus();
+        }
+
+        function closeReplyModal() {
+            document.getElementById('reply-modal').style.display = 'none';
+            currentReplyBtn = null;
+        }
+
+        function submitReply() {
+            const text = document.getElementById('reply-text-input').value.trim();
+            if (text && currentReplyBtn) {
+                const countSpan = currentReplyBtn.querySelector('.reply-count');
+                countSpan.textContent = parseInt(countSpan.textContent) + 1;
+            }
+            closeReplyModal();
         }
     </script>
 
