@@ -1006,7 +1006,7 @@
             document.getElementById('profile-view').style.display = 'none';
         }
 
-        // ❤️ いいねボタンのトグル処理（ON / OFF切り替え）
+        // ❤️ いいねボタンのトグル処理
         function toggleLike(btn) {
             const countSpan = btn.querySelector('.like-count');
             let count = parseInt(countSpan.textContent);
@@ -1036,14 +1036,12 @@
             countSpan.textContent = count;
         }
 
-        // 🔖 ブックマークボタンのトグル処理
+        // 🔖 ブックマークボタンのトグル処理（クラス方式に修正！）
         function toggleBookmark(btn) {
-            if (btn.style.color === 'rgb(29, 155, 240)') {
-                btn.style.color = 'inherit';
-                btn.querySelector('svg').style.fill = 'none';
+            if (btn.classList.contains('active')) {
+                btn.classList.remove('active');
             } else {
-                btn.style.color = '#1d9bf0';
-                btn.querySelector('svg').style.fill = '#1d9bf0';
+                btn.classList.add('active');
             }
         }
 
