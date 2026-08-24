@@ -46,7 +46,7 @@
 
         /* 🐦 アプリ全体の枠組み */
         .app-container {
-            display: none; /* ローディング後に表示 */
+            display: none;
             max-width: 600px;
             margin: 0 auto;
             border-left: 1px solid #2f3336;
@@ -54,17 +54,18 @@
             min-height: 100vh;
             box-sizing: border-box;
             background-color: #000;
+            position: relative;
         }
 
-        /* 📄 各タブの画面エリア（初期は非表示） */
+        /* 📄 各タブの画面エリア */
         .tab-content {
             display: none;
         }
         .tab-content.active {
-            display: block; /* アクティブな画面だけ表示 */
+            display: block;
         }
 
-        /* 🧭 共通ヘッダー（ホーム用） */
+        /* 🧭 ホーム用共通ヘッダー */
         .header {
             position: sticky;
             top: 0;
@@ -84,7 +85,7 @@
             letter-spacing: -1px;
         }
 
-        /* 🔔 通知画面・検索画面用共通ヘッダー */
+        /* 🔔 サブヘッダー（通知・検索用） */
         .sub-header {
             position: sticky;
             top: 0;
@@ -159,6 +160,13 @@
             flex-shrink: 0;
             background-size: cover;
             background-position: center;
+            cursor: pointer;
+        }
+        .post-content .user-info-clickable {
+            cursor: pointer;
+        }
+        .post-content .user-info-clickable:hover .username {
+            text-decoration: underline;
         }
         .post-content .username {
             font-weight: bold;
@@ -174,6 +182,147 @@
             color: #e7e9ea;
             font-size: 15px;
             line-height: 1.5;
+        }
+
+        /* 👤 プロフィール画面のスタイル */
+        #profile-view {
+            display: none; /* 初期は非表示 */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #000;
+            z-index: 50;
+        }
+        .profile-header-bar {
+            position: sticky;
+            top: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 8px 15px;
+            border-bottom: 1px solid #2f3336;
+            z-index: 10;
+        }
+        .back-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .back-btn:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        .profile-banner {
+            width: 100%;
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            background-color: #333;
+        }
+        .profile-info-section {
+            padding: 0 16px 15px 16px;
+            border-bottom: 1px solid #2f3336;
+            position: relative;
+        }
+        .profile-avatar-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: -35px;
+            margin-bottom: 12px;
+        }
+        .profile-big-avatar {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            border: 4px solid #000;
+            background-size: cover;
+            background-position: center;
+            background-color: #555;
+        }
+        .profile-edit-btn {
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid #536471;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .profile-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .profile-id {
+            color: #71767b;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .profile-bio {
+            font-size: 14px;
+            color: #e7e9ea;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+        .profile-metadata {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            color: #71767b;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+        .profile-follows {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: #71767b;
+        }
+        .profile-follows span strong {
+            color: #fff;
+        }
+        .profile-tabs {
+            display: flex;
+            border-bottom: 1px solid #2f3336;
+        }
+        .profile-tab-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 14px;
+            font-weight: bold;
+            color: #71767b;
+            cursor: pointer;
+            position: relative;
+        }
+        .profile-tab-item.active {
+            color: #fff;
+        }
+        .profile-tab-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 4px;
+            background-color: #1d9bf0;
+            border-radius: 2px;
         }
 
         /* 🔔 通知アイテムのスタイル */
@@ -197,7 +346,7 @@
             margin-bottom: 6px;
         }
 
-        /* 📈 トレンド項目（検索タブ用） */
+        /* 📈 トレンド項目 */
         .trend-section-title {
             font-size: 20px;
             font-weight: bold;
@@ -247,7 +396,6 @@
         .nav-item.active {
             color: #fff;
         }
-        /* 未読バッジ */
         .badge {
             position: absolute;
             top: 2px;
@@ -279,21 +427,77 @@
                 <div class="header-logo">U</div>
             </div>
 
-            <!-- 投稿1 -->
+            <!-- 投稿1（クリックするとうゆちゃんのプロフィールが開く） -->
             <div class="post-box">
-                <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');"></div>
+                <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');" onclick="openProfile()"></div>
                 <div class="post-content">
-                    <div class="username">にーよ8号 <span class="userid">@YingDou21485</span></div>
+                    <div class="user-info-clickable" onclick="openProfile()">
+                        <div class="username">にーよ8号 <span class="userid">@YingDou21485</span></div>
+                    </div>
                     <div class="text">Undergoシステム、起動テスト完了。……さて、始めるか。</div>
                 </div>
             </div>
 
             <!-- 投稿2 -->
             <div class="post-box">
-                <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7471.jpeg');"></div>
+                <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7471.jpeg');" onclick="openProfile()"></div>
                 <div class="post-content">
-                    <div class="username">もやし <span class="userid">@moyashi_create</span></div>
+                    <div class="user-info-clickable" onclick="openProfile()">
+                        <div class="username">もやし <span class="userid">@moyashi_create</span></div>
+                    </div>
                     <div class="text">おつかれさま！ここからどう動くかだねー 👀✨</div>
+                </div>
+            </div>
+        </div>
+
+        <!------------------------------------ 
+          👤 プロフィール画面（アイコンタップで出現！） 
+        ------------------------------------>
+        <div id="profile-view">
+            <div class="profile-header-bar">
+                <button class="back-btn" onclick="closeProfile()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </button>
+                <div>
+                    <div style="font-size: 18px; font-weight: bold;">うゆちゃん</div>
+                    <div style="font-size: 12px; color: #71767b;">2 ポスト</div>
+                </div>
+            </div>
+
+            <!-- ヘッダー画像 -->
+            <div class="profile-banner" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');"></div>
+            
+            <div class="profile-info-section">
+                <div class="profile-avatar-row">
+                    <div class="profile-big-avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');"></div>
+                    <button class="profile-edit-btn">プロフィールを編集</button>
+                </div>
+                <div class="profile-name">うゆちゃん 🔒</div>
+                <div class="profile-id">@U21485</div>
+                <div class="profile-bio">2026抱負<br>・フォロワー表で400人<br>・aotをもっと本格的に起動する<br>・ブロマイドケースが埋まるくらい描く<br>・aotを拡 散</div>
+                <div class="profile-metadata">
+                    <span>📍 ヘッダーしおちゃんちゃん</span>
+                    <span>📅 2025年8月からXを利用しています</span>
+                </div>
+                <div class="profile-follows">
+                    <span><strong>130</strong> フォロー中</span>
+                    <span><strong>26</strong> フォロワー</span>
+                </div>
+            </div>
+
+            <div class="profile-tabs">
+                <div class="profile-tab-item active">ポスト</div>
+                <div class="profile-tab-item">返信</div>
+                <div class="profile-tab-item">メディア</div>
+                <div class="profile-tab-item">いいね</div>
+            </div>
+
+            <!-- プロフィール内にあるその人のポスト -->
+            <div class="post-box">
+                <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');"></div>
+                <div class="post-content">
+                    <div class="username">うゆちゃん <span class="userid">@U21485</span></div>
+                    <div class="text">Undergoシステム、起動テスト完了。……さて、始めるか。</div>
                 </div>
             </div>
         </div>
@@ -332,7 +536,7 @@
                 <span style="font-size: 16px; color: #71767b; font-weight: normal;">⚙️</span>
             </div>
 
-            <!-- 通知サンプル1：いいね（SVGハートアイコン） -->
+            <!-- 通知サンプル1：いいね -->
             <div class="notification-item">
                 <div class="notification-icon-area">
                     <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#f91880" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -344,7 +548,7 @@
                 </div>
             </div>
 
-            <!-- 通知サンプル2：リプライ（SVG吹き出しアイコン） -->
+            <!-- 通知サンプル2：リプライ -->
             <div class="notification-item">
                 <div class="notification-icon-area">
                     <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#71767b" d="M1.75 12c0-5.38 4.36-9.75 9.75-9.75s9.75 4.36 9.75 9.75-4.36 9.75-9.75 9.75c-1.5 0-2.92-.35-4.17-.97l-4.16 1.39 1.39-4.16c-.62-1.25-.97-2.67-.97-4.17zM11.5 5.25c-3.73 0-6.75 3.02-6.75 6.75 0 1.22.33 2.37.91 3.35l-.88 2.64 2.64-.88c.98.58 2.13.91 3.35.91 3.73 0 6.75-3.02 6.75-6.75s-3.02-6.75-6.75-6.75z"></path></svg>
@@ -382,8 +586,9 @@
 
     </div>
 
-    <!-- ⏱️ 起動＆タブ切り替えプログラム -->
+    <!-- ⏱️ プログラム制御 -->
     <script>
+        // 🚀 起動画面の処理
         window.addEventListener('load', function() {
             setTimeout(function() {
                 const splash = document.getElementById('splash-screen');
@@ -400,7 +605,11 @@
             }, 2000);
         });
 
+        // 🔀 タブを切り替える関数
         function switchTab(tabName, buttonElement) {
+            // プロフィール画面が開いていた閉じる
+            closeProfile();
+
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
@@ -417,6 +626,16 @@
             }
 
             buttonElement.classList.add('active');
+        }
+
+        // 👤 プロフィール画面を開く関数
+        function openProfile() {
+            document.getElementById('profile-view').style.display = 'block';
+        }
+
+        // 🔙 プロフィール画面を閉じる（元に戻る）関数
+        function closeProfile() {
+            document.getElementById('profile-view').style.display = 'none';
         }
     </script>
 
