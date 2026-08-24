@@ -147,14 +147,14 @@
 
         /* 💬 投稿ボックス（タイムライン用） */
         .post-box {
-            padding: 15px 20px;
+            padding: 12px 16px 8px 16px;
             border-bottom: 1px solid #2f3336;
             display: flex;
-            gap: 15px;
+            gap: 12px;
         }
         .avatar {
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background-color: #555;
             flex-shrink: 0;
@@ -162,8 +162,12 @@
             background-position: center;
             cursor: pointer;
         }
+        .post-main {
+            flex-grow: 1;
+        }
         .post-content .user-info-clickable {
             cursor: pointer;
+            display: inline-block;
         }
         .post-content .user-info-clickable:hover .username {
             text-decoration: underline;
@@ -171,18 +175,57 @@
         .post-content .username {
             font-weight: bold;
             font-size: 15px;
-            margin-bottom: 4px;
+            color: #fff;
         }
         .post-content .userid {
             color: #71767b;
             font-weight: normal;
             font-size: 14px;
+            margin-left: 4px;
+        }
+        .post-content .post-time {
+            color: #71767b;
+            font-size: 14px;
+            margin-left: 4px;
         }
         .post-content .text {
             color: #e7e9ea;
             font-size: 15px;
             line-height: 1.5;
+            margin-top: 2px;
+            margin-bottom: 12px;
         }
+
+        /* 📊 投稿下部のアクションボタン群（リプライ、リポスト、いいね、インプレッション等） */
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            max-width: 425px;
+            color: #71767b;
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+        .post-action-btn {
+            background: none;
+            border: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 0;
+            transition: color 0.2s;
+        }
+        .post-action-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+        .post-action-btn.reply:hover { color: #1d9bf0; }
+        .post-action-btn.repost:hover { color: #00ba7c; }
+        .post-action-btn.like:hover { color: #f91880; }
+        .post-action-btn.bookmark:hover, .post-action-btn.share:hover { color: #1d9bf0; }
 
         /* 👤 プロフィール画面のスタイル */
         #profile-view {
@@ -436,28 +479,78 @@
             <!-- 投稿1 -->
             <div class="post-box">
                 <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');" onclick="openProfile()"></div>
-                <div class="post-content">
-                    <div class="user-info-clickable" onclick="openProfile()">
-                        <div class="username">にーよ8号 <span class="userid">@YingDou21485</span></div>
+                <div class="post-main">
+                    <div class="post-content">
+                        <div class="user-info-clickable" onclick="openProfile()">
+                            <span class="username">にーよ8号</span><span class="userid">@YingDou21485</span>
+                        </div>
+                        <span class="post-time">· 4時間</span>
+                        <div class="text">Undergoシステム、起動テスト完了。……さて、始めるか。</div>
                     </div>
-                    <div class="text">Undergoシステム、起動テスト完了。……さて、始めるか。</div>
+                    <!-- 📊 投稿アクションボタン群 -->
+                    <div class="post-actions">
+                        <button class="post-action-btn reply">
+                            <svg viewBox="0 0 24 24"><path d="M1.751 10c0-4.42 3.584-8 8-8h5.5c4.416 0 8 3.58 8 8s-3.584 8-8 8H9.75l-4.792 3.594c-.58.435-1.408-.016-1.408-.738V18.1c-1.077-.822-1.799-2.072-1.799-3.5V10zm8-6c-3.314 0-6 2.686-6 6s2.686 6 6 6h1.25c.552 0 1 .448 1 1v2.146l3.328-2.496c.38-.285.845-.436 1.322-.436H15.25c3.314 0 6-2.686 6-6s-2.686-6-6-6h-5.5z"/></svg>
+                            <span>12</span>
+                        </button>
+                        <button class="post-action-btn repost">
+                            <svg viewBox="0 0 24 24"><path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.89 2 2 2H13v2H7.5c-2.21 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 20.12l-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.89-2-2-2H11V4h5.5c2.21 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14z"/></svg>
+                            <span>48</span>
+                        </button>
+                        <button class="post-action-btn like">
+                            <svg viewBox="0 0 24 24"><path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.55 1.12-.38 2.53.44 3.81.91 1.41 2.93 3.39 6.22 5.66 3.29-2.27 5.31-4.25 6.22-5.66.82-1.28.99-2.69.44-3.81-.56-1.13-1.667-1.84-2.91-1.91zM12 20.35C3.82 14.71 2 11.85 2 9.5c0-1.87 1.15-3.5 3.03-3.6 1.51-.08 3.12.63 4.29 2.06L12 9.5l2.68-1.54c1.17-1.43 2.78-2.14 4.29-2.06 1.88.1 3.03 1.73 3.03 3.6 0 2.35-1.82 5.21-10 10.85z"/></svg>
+                            <span>321</span>
+                        </button>
+                        <button class="post-action-btn">
+                            <svg viewBox="0 0 24 24"><path d="M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21v-6.5h2V21H4z"/></svg>
+                            <span>1.2万</span>
+                        </button>
+                        <button class="post-action-btn bookmark">
+                            <svg viewBox="0 0 24 24"><path d="M4 4.5C4 3.12 5.12 2 6.5 2h11C18.88 2 20 3.12 20 4.5v18.15l-8-4.5-8 4.5V4.5zM6.5 4c-.28 0-.5.22-.5.5v14.76l6-3.38 6 3.38V4.5c0-.28-.22-.5-.5-.5h-11z"/></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
 
             <!-- 投稿2 -->
             <div class="post-box">
                 <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7471.jpeg');" onclick="openProfile()"></div>
-                <div class="post-content">
-                    <div class="user-info-clickable" onclick="openProfile()">
-                        <div class="username">もやし <span class="userid">@moyashi_create</span></div>
+                <div class="post-main">
+                    <div class="post-content">
+                        <div class="user-info-clickable" onclick="openProfile()">
+                            <span class="username">もやし</span><span class="userid">@moyashi_create</span>
+                        </div>
+                        <span class="post-time">· 6時間</span>
+                        <div class="text">おつかれさま！ここからどう動くかだねー 👀✨</div>
                     </div>
-                    <div class="text">おつかれさま！ここからどう動くかだねー 👀✨</div>
+                    <!-- 📊 投稿アクションボタン群 -->
+                    <div class="post-actions">
+                        <button class="post-action-btn reply">
+                            <svg viewBox="0 0 24 24"><path d="M1.751 10c0-4.42 3.584-8 8-8h5.5c4.416 0 8 3.58 8 8s-3.584 8-8 8H9.75l-4.792 3.594c-.58.435-1.408-.016-1.408-.738V18.1c-1.077-.822-1.799-2.072-1.799-3.5V10zm8-6c-3.314 0-6 2.686-6 6s2.686 6 6 6h1.25c.552 0 1 .448 1 1v2.146l3.328-2.496c.38-.285.845-.436 1.322-.436H15.25c3.314 0 6-2.686 6-6s-2.686-6-6-6h-5.5z"/></svg>
+                            <span>3</span>
+                        </button>
+                        <button class="post-action-btn repost">
+                            <svg viewBox="0 0 24 24"><path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.89 2 2 2H13v2H7.5c-2.21 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 20.12l-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.89-2-2-2H11V4h5.5c2.21 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14z"/></svg>
+                            <span>10</span>
+                        </button>
+                        <button class="post-action-btn like">
+                            <svg viewBox="0 0 24 24"><path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.55 1.12-.38 2.53.44 3.81.91 1.41 2.93 3.39 6.22 5.66 3.29-2.27 5.31-4.25 6.22-5.66.82-1.28.99-2.69.44-3.81-.56-1.13-1.667-1.84-2.91-1.91zM12 20.35C3.82 14.71 2 11.85 2 9.5c0-1.87 1.15-3.5 3.03-3.6 1.51-.08 3.12.63 4.29 2.06L12 9.5l2.68-1.54c1.17-1.43 2.78-2.14 4.29-2.06 1.88.1 3.03 1.73 3.03 3.6 0 2.35-1.82 5.21-10 10.85z"/></svg>
+                            <span>85</span>
+                        </button>
+                        <button class="post-action-btn">
+                            <svg viewBox="0 0 24 24"><path d="M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21v-6.5h2V21H4z"/></svg>
+                            <span>450</span>
+                        </button>
+                        <button class="post-action-btn bookmark">
+                            <svg viewBox="0 0 24 24"><path d="M4 4.5C4 3.12 5.12 2 6.5 2h11C18.88 2 20 3.12 20 4.5v18.15l-8-4.5-8 4.5V4.5zM6.5 4c-.28 0-.5.22-.5.5v14.76l6-3.38 6 3.38V4.5c0-.28-.22-.5-.5-.5h-11z"/></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!------------------------------------ 
-          👤 プロフィール画面（SVGアイコン対応版） 
+          👤 プロフィール画面 
         ------------------------------------>
         <div id="profile-view">
             <div class="profile-header-bar">
@@ -517,9 +610,34 @@
             <!-- プロフィール内ポスト -->
             <div class="post-box">
                 <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');"></div>
-                <div class="post-content">
-                    <div class="username">うゆちゃん <span class="userid">@U21485</span></div>
-                    <div class="text">Undergoシステム、起動テスト完了。……さて、始めるか。</div>
+                <div class="post-main">
+                    <div class="post-content">
+                        <span class="username">うゆちゃん</span><span class="userid">@U21485</span>
+                        <span class="post-time">· 12月31日</span>
+                        <div class="text">Undergoシステム、起動テスト完了。……さて、始めるか。</div>
+                    </div>
+                    <!-- 📊 投稿アクションボタン群 -->
+                    <div class="post-actions">
+                        <button class="post-action-btn reply">
+                            <svg viewBox="0 0 24 24"><path d="M1.751 10c0-4.42 3.584-8 8-8h5.5c4.416 0 8 3.58 8 8s-3.584 8-8 8H9.75l-4.792 3.594c-.58.435-1.408-.016-1.408-.738V18.1c-1.077-.822-1.799-2.072-1.799-3.5V10zm8-6c-3.314 0-6 2.686-6 6s2.686 6 6 6h1.25c.552 0 1 .448 1 1v2.146l3.328-2.496c.38-.285.845-.436 1.322-.436H15.25c3.314 0 6-2.686 6-6s-2.686-6-6-6h-5.5z"/></svg>
+                            <span>5</span>
+                        </button>
+                        <button class="post-action-btn repost">
+                            <svg viewBox="0 0 24 24"><path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.89 2 2 2H13v2H7.5c-2.21 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 20.12l-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.89-2-2-2H11V4h5.5c2.21 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14z"/></svg>
+                            <span>2</span>
+                        </button>
+                        <button class="post-action-btn like">
+                            <svg viewBox="0 0 24 24"><path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.55 1.12-.38 2.53.44 3.81.91 1.41 2.93 3.39 6.22 5.66 3.29-2.27 5.31-4.25 6.22-5.66.82-1.28.99-2.69.44-3.81-.56-1.13-1.667-1.84-2.91-1.91zM12 20.35C3.82 14.71 2 11.85 2 9.5c0-1.87 1.15-3.5 3.03-3.6 1.51-.08 3.12.63 4.29 2.06L12 9.5l2.68-1.54c1.17-1.43 2.78-2.14 4.29-2.06 1.88.1 3.03 1.73 3.03 3.6 0 2.35-1.82 5.21-10 10.85z"/></svg>
+                            <span>14</span>
+                        </button>
+                        <button class="post-action-btn">
+                            <svg viewBox="0 0 24 24"><path d="M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21v-6.5h2V21H4z"/></svg>
+                            <span>120</span>
+                        </button>
+                        <button class="post-action-btn bookmark">
+                            <svg viewBox="0 0 24 24"><path d="M4 4.5C4 3.12 5.12 2 6.5 2h11C18.88 2 20 3.12 20 4.5v18.15l-8-4.5-8 4.5V4.5zM6.5 4c-.28 0-.5.22-.5.5v14.76l6-3.38 6 3.38V4.5c0-.28-.22-.5-.5-.5h-11z"/></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
