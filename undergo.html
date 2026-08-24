@@ -189,16 +189,7 @@
             display: flex;
             justify-content: center;
             flex-shrink: 0;
-        }
-        /* いいねのハートアイコン */
-        .notif-heart {
-            color: #f91880;
-            font-size: 20px;
-        }
-        /* リプライのアイコン */
-        .notif-reply {
-            color: #71767b;
-            font-size: 20px;
+            padding-top: 2px;
         }
         .notification-body .notif-text {
             font-size: 15px;
@@ -254,9 +245,9 @@
             position: relative;
         }
         .nav-item.active {
-            color: #fff; /* 選ばれているときは白く光る */
+            color: #fff;
         }
-        /* 未読バッジ（通知の赤丸） */
+        /* 未読バッジ */
         .badge {
             position: absolute;
             top: 2px;
@@ -299,7 +290,7 @@
 
             <!-- 投稿2 -->
             <div class="post-box">
-                <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031tutotcom/...');"></div>
+                <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7471.jpeg');"></div>
                 <div class="post-content">
                     <div class="username">もやし <span class="userid">@moyashi_create</span></div>
                     <div class="text">おつかれさま！ここからどう動くかだねー 👀✨</div>
@@ -341,10 +332,10 @@
                 <span style="font-size: 16px; color: #71767b; font-weight: normal;">⚙️</span>
             </div>
 
-            <!-- 通知サンプル1：いいね -->
+            <!-- 通知サンプル1：いいね（SVGハートアイコン） -->
             <div class="notification-item">
                 <div class="notification-icon-area">
-                    <span class="notif-heart">❤</span>
+                    <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#f91880" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                 </div>
                 <div class="notification-body">
                     <div class="avatar" style="width: 32px; height: 32px; margin-bottom: 8px; background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7471.jpeg');"></div>
@@ -353,10 +344,10 @@
                 </div>
             </div>
 
-            <!-- 通知サンプル2：リプライ（写真のイメージに近い不穏なやつ） -->
+            <!-- 通知サンプル2：リプライ（SVG吹き出しアイコン） -->
             <div class="notification-item">
                 <div class="notification-icon-area">
-                    <span class="notif-reply">💬</span>
+                    <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#71767b" d="M1.75 12c0-5.38 4.36-9.75 9.75-9.75s9.75 4.36 9.75 9.75-4.36 9.75-9.75 9.75c-1.5 0-2.92-.35-4.17-.97l-4.16 1.39 1.39-4.16c-.62-1.25-.97-2.67-.97-4.17zM11.5 5.25c-3.73 0-6.75 3.02-6.75 6.75 0 1.22.33 2.37.91 3.35l-.88 2.64 2.64-.88c.98.58 2.13.91 3.35.91 3.73 0 6.75-3.02 6.75-6.75s-3.02-6.75-6.75-6.75z"></path></svg>
                 </div>
                 <div class="notification-body">
                     <div class="avatar" style="width: 32px; height: 32px; margin-bottom: 8px; background-color: #333;"></div>
@@ -378,7 +369,7 @@
             <button class="nav-item" onclick="switchTab('explore', this)">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </button>
-            <!-- 仮のタブボタン（おまけ） -->
+            <!-- 仮ボタン -->
             <button class="nav-item"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></button>
             <!-- 🔔 通知ボタン -->
             <button class="nav-item" onclick="switchTab('notification', this)">
@@ -393,7 +384,6 @@
 
     <!-- ⏱️ 起動＆タブ切り替えプログラム -->
     <script>
-        // 🚀 起動画面の処理
         window.addEventListener('load', function() {
             setTimeout(function() {
                 const splash = document.getElementById('splash-screen');
@@ -410,19 +400,14 @@
             }, 2000);
         });
 
-        // 🔀 タブを切り替える関数
         function switchTab(tabName, buttonElement) {
-            // すべてのタブの中身を非表示にする
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
-
-            // すべてのメニューボタンの選択状態を解除
             document.querySelectorAll('.nav-item').forEach(btn => {
                 btn.classList.remove('active');
             });
 
-            // 押されたタブを表示する
             if (tabName === 'home') {
                 document.getElementById('home-tab').classList.add('active');
             } else if (tabName === 'explore') {
@@ -431,7 +416,6 @@
                 document.getElementById('notification-tab').classList.add('active');
             }
 
-            // 押されたメニューボタンをアクティブにする
             buttonElement.classList.add('active');
         }
     </script>
