@@ -92,13 +92,26 @@
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid #2f3336;
-            padding: 12px 20px;
+            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 10;
-            font-size: 18px;
+            font-size: 19px;
             font-weight: bold;
+        }
+        .header-left-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header-avatar-small {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
         }
 
         /* 🔍 検索画面用ヘッダー内パーツ */
@@ -107,14 +120,6 @@
             align-items: center;
             gap: 12px;
             width: 100%;
-        }
-        .header-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background-size: cover;
-            background-position: center;
-            flex-shrink: 0;
         }
         .search-wrapper {
             position: relative;
@@ -494,7 +499,38 @@
             border-radius: 2px;
         }
 
-        /* 🔔 通知アイテムのスタイル */
+        /* 🔔 通知画面のスタイル・タブ */
+        .notification-sub-tabs {
+            display: flex;
+            border-bottom: 1px solid #2f3336;
+        }
+        .notif-sub-tab {
+            flex: 1;
+            text-align: center;
+            padding: 14px 0;
+            font-size: 15px;
+            font-weight: bold;
+            color: #71767b;
+            cursor: pointer;
+            position: relative;
+            background: none;
+            border: none;
+        }
+        .notif-sub-tab.active {
+            color: #fff;
+        }
+        .notif-sub-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 56px;
+            height: 4px;
+            background-color: #1d9bf0;
+            border-radius: 2px;
+        }
+
         .notification-item {
             padding: 15px 20px;
             border-bottom: 1px solid #2f3336;
@@ -609,7 +645,7 @@
                     </div>
                     <div class="post-actions">
                         <button class="post-action-btn reply">
-                            <svg viewBox="0 0 24 24"><path d="M1.751 10c0-4.42 3.584-8 8-8h5.5c4.416 0 8 3.58 8 8s-3.584 8-8 8H9.75l-4.792 3.594c-.58.435-1.408-.016-1.408-.738V18.1c-1.077-.822-1.799-2.072-1.799-3.5V10zm8-6c-3.314 0-6 2.686-6 6s2.686 6 6 6h1.25c.552 0 1 .448 1 1v2.146l3.328-2.496c.38-.285.845-.436 1.322-.436H15.25c3.314 0 6-2.686 6-6s-2.686-6-6-6h-5.5z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M1.751 10c0-4.42 3.584-8 8-8h5.5c4.416 0 8 3.58 8 8-3.584 8-8 8H9.75l-4.792 3.594c-.58.435-1.408-.016-1.408-.738V18.1c-1.077-.822-1.799-2.072-1.799-3.5V10zm8-6c-3.314 0-6 2.686-6 6s2.686 6 6 6h1.25c.552 0 1 .448 1 1v2.146l3.328-2.496c.38-.285.845-.436 1.322-.436H15.25c3.314 0 6-2.686 6-6s-2.686-6-6-6h-5.5z"/></svg>
                             <span>12</span>
                         </button>
                         <button class="post-action-btn repost">
@@ -644,7 +680,7 @@
                     </div>
                     <div class="post-actions">
                         <button class="post-action-btn reply">
-                            <svg viewBox="0 0 24 24"><path d="M1.751 10c0-4.42 3.584-8 8-8h5.5c4.416 0 8 3.58 8 8s-3.584 8-8 8H9.75l-4.792 3.594c-.58.435-1.408-.016-1.408-.738V18.1c-1.077-.822-1.799-2.072-1.799-3.5V10zm8-6c-3.314 0-6 2.686-6 6s2.686 6 6 6h1.25c.552 0 1 .448 1 1v2.146l3.328-2.496c.38-.285.845-.436 1.322-.436H15.25c3.314 0 6-2.686 6-6s-2.686-6-6-6h-5.5z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M1.751 10c0-4.42 3.584-8 8-8h5.5c4.416 0 8 3.58 8 8-3.584 8-8 8H9.75l-4.792 3.594c-.58.435-1.408-.016-1.408-.738V18.1c-1.077-.822-1.799-2.072-1.799-3.5V10zm8-6c-3.314 0-6 2.686-6 6s2.686 6 6 6h1.25c.552 0 1 .448 1 1v2.146l3.328-2.496c.38-.285.845-.436 1.322-.436H15.25c3.314 0 6-2.686 6-6s-2.686-6-6-6h-5.5z"/></svg>
                             <span>3</span>
                         </button>
                         <button class="post-action-btn repost">
@@ -688,10 +724,10 @@
                 <div class="chat-item-avatar" style="background-color: #79c0ff;"></div>
                 <div class="chat-item-content">
                     <div class="chat-item-header">
-                        <span class="chat-item-name">0️⃣</span>
+                        <span class="chat-item-name">岩塩</span>
                         <span class="chat-item-time">2時間</span>
                     </div>
-                    <div class="chat-item-lastmsg">😭…</div>
+                    <div class="chat-item-lastmsg">あなたが「なるほどね……!?」楽しみにしてます😭…</div>
                 </div>
             </div>
 
@@ -699,10 +735,10 @@
                 <div class="chat-item-avatar" style="background-color: #ff7b72;"></div>
                 <div class="chat-item-content">
                     <div class="chat-item-header">
-                        <span class="chat-item-name">‼️‼️</span>
+                        <span class="chat-item-name">るなたろう ‼️‼️</span>
                         <span class="chat-item-time">1週間</span>
                     </div>
-                    <div class="chat-item-lastmsg">‼️</div>
+                    <div class="chat-item-lastmsg">フォローありがとうございますっ‼️</div>
                 </div>
             </div>
 
@@ -710,10 +746,10 @@
                 <div class="chat-item-avatar" style="background-color: #d2a8ff;"></div>
                 <div class="chat-item-content">
                     <div class="chat-item-header">
-                        <span class="chat-item-name">#️⃣</span>
+                        <span class="chat-item-name">えりの鍵垢</span>
                         <span class="chat-item-time">2週間</span>
                     </div>
-                    <div class="chat-item-lastmsg">♬…</div>
+                    <div class="chat-item-lastmsg">もう脳みそから羊の家関連の情報記憶消されて…</div>
                 </div>
             </div>
 
@@ -721,7 +757,7 @@
                 <div class="chat-item-avatar" style="background-color: #ffa657;"></div>
                 <div class="chat-item-content">
                     <div class="chat-item-header">
-                        <span class="chat-item-name">✂️</span>
+                        <span class="chat-item-name">めこ✂️</span>
                         <span class="chat-item-time">9週間</span>
                     </div>
                     <div class="chat-item-lastmsg">2の写真をおすすめしました</div>
@@ -732,10 +768,10 @@
                 <div class="chat-item-avatar" style="background-color: #56d364;"></div>
                 <div class="chat-item-content">
                     <div class="chat-item-header">
-                        <span class="chat-item-name">‼️</span>
-                        <span class="chat-item-time">４週間</span>
+                        <span class="chat-item-name">しもがーる ‼️ら</span>
+                        <span class="chat-item-time">14週間</span>
                     </div>
-                    <div class="chat-item-lastmsg">😭</div>
+                    <div class="chat-item-lastmsg">わざわざありがとうございます😭</div>
                 </div>
             </div>
 
@@ -746,7 +782,7 @@
                         <span class="chat-item-name">💚</span>
                         <span class="chat-item-time">15週間</span>
                     </div>
-                    <div class="chat-item-lastmsg">4️⃣</div>
+                    <div class="chat-item-lastmsg">了解だぜ相棒</div>
                 </div>
             </div>
 
@@ -754,10 +790,10 @@
                 <div class="chat-item-avatar" style="background-color: #e3b341;"></div>
                 <div class="chat-item-content">
                     <div class="chat-item-header">
-                        <span class="chat-item-name">ℹ️</span>
+                        <span class="chat-item-name">れを</span>
                         <span class="chat-item-time">17週間</span>
                     </div>
-                    <div class="chat-item-lastmsg">🎶🎶</div>
+                    <div class="chat-item-lastmsg">えへへえへへ…やった喜んでもらえた🧏🎶🎶</div>
                 </div>
             </div>
 
@@ -765,10 +801,10 @@
                 <div class="chat-item-avatar" style="background-color: #8b949e;"></div>
                 <div class="chat-item-content">
                     <div class="chat-item-header">
-                        <span class="chat-item-name">2️⃣</span>
+                        <span class="chat-item-name">鍵穴から覗くもやし</span>
                         <span class="chat-item-time">26週間</span>
                     </div>
-                    <div class="chat-item-lastmsg">↩️</div>
+                    <div class="chat-item-lastmsg">「ｳｫ!嬉しい知らせ！是非今すぐ載せたいとこ…</div>
                 </div>
             </div>
 
@@ -843,7 +879,7 @@
                     </div>
                     <div class="post-actions">
                         <button class="post-action-btn reply">
-                            <svg viewBox="0 0 24 24"><path d="M1.751 10c0-4.42 3.584-8 8-8h5.5c4.416 0 8 3.58 8 8s-3.584 8-8 8H9.75l-4.792 3.594c-.58.435-1.408-.016-1.408-.738V18.1c-1.077-.822-1.799-2.072-1.799-3.5V10zm8-6c-3.314 0-6 2.686-6 6s2.686 6 6 6h1.25c.552 0 1 .448 1 1v2.146l3.328-2.496c.38-.285.845-.436 1.322-.436H15.25c3.314 0 6-2.686 6-6s-2.686-6-6-6h-5.5z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M1.751 10c0-4.42 3.584-8 8-8h5.5c4.416 0 8 3.58 8 8-3.584 8-8 8H9.75l-4.792 3.594c-.58.435-1.408-.016-1.408-.738V18.1c-1.077-.822-1.799-2.072-1.799-3.5V10zm8-6c-3.314 0-6 2.686-6 6s2.686 6 6 6h1.25c.552 0 1 .448 1 1v2.146l3.328-2.496c.38-.285.845-.436 1.322-.436H15.25c3.314 0 6-2.686 6-6s-2.686-6-6-6h-5.5z"/></svg>
                             <span>5</span>
                         </button>
                         <button class="post-action-btn repost">
@@ -872,7 +908,7 @@
         <div id="explore-tab" class="tab-content">
             <div class="sub-header">
                 <div class="explore-header-inner">
-                    <div class="header-avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');"></div>
+                    <div class="header-avatar-small" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');" onclick="openProfile()"></div>
                     <div class="search-wrapper">
                         <svg class="search-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M10.25 3.75c-3.59 0-6.5 2.91-6.5 6.5s2.91 6.5 6.5 6.5c1.79 0 3.41-.71 4.61-1.85l3.88 3.87 1.42-1.42-3.87-3.88c1.14-1.2 1.85-2.82 1.85-4.61 0-3.59-2.91-6.5-6.5-6.5zm0 2c2.49 0 4.5 2.01 4.5 4.5s-2.01 4.5-4.5 4.5-4.5-2.01-4.5-4.5 2.01-4.5 4.5-4.5z"></path></svg>
                         <input type="text" class="search-input" placeholder="Undergoを検索">
@@ -895,19 +931,46 @@
           🔔 通知画面 
         ------------------------------------>
         <div id="notification-tab" class="tab-content">
+            <!-- ❶ 通知用トップヘッダー（左にアイコン、中央に「通知」、右に歯車SVGアイコン） -->
             <div class="sub-header">
-                <span>通知</span>
-                <span style="font-size: 16px; color: #71767b; font-weight: normal;">⚙️</span>
+                <div class="header-left-area">
+                    <div class="header-avatar-small" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');" onclick="openProfile()"></div>
+                    <span>通知</span>
+                </div>
+                <!-- 歯車を絵文字から綺麗なSVGアイコンに変更 -->
+                <button style="background: none; border: none; cursor: pointer; color: #fff; display: flex; align-items: center; padding: 0;">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+                </button>
             </div>
 
+            <!-- ❷ 「すべて」と「@ツイート」の切り替えタブ（個別クリック対応） -->
+            <div class="notification-sub-tabs">
+                <button class="notif-sub-tab active" onclick="switchNotifTab('all', this)">すべて</button>
+                <button class="notif-sub-tab" onclick="switchNotifTab('mentions', this)">@ツイート</button>
+            </div>
+
+            <!-- 通知アイテム1 -->
             <div class="notification-item">
                 <div class="notification-icon-area">
-                    <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#f91880" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#1d9bf0" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
                 </div>
                 <div class="notification-body">
-                    <div class="avatar" style="width: 32px; height: 32px; margin-bottom: 8px; background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7471.jpeg');"></div>
-                    <div class="notif-text"><strong>もやし</strong>さんがあなたの投稿をいいねしました</div>
-                    <div style="color: #71767b; font-size: 14px;">Undergoシステム、起動テスト完了。……さて、始めるか。</div>
+                    <div style="display: flex; gap: 4px; margin-bottom: 8px;">
+                        <div class="avatar" style="width: 28px; height: 28px; background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7471.jpeg');"></div>
+                    </div>
+                    <div class="notif-text"><strong>れを</strong>さんと他2人の新しいポスト通知 · 25分</div>
+                </div>
+            </div>
+
+            <!-- 通知アイテム2 -->
+            <div class="notification-item">
+                <div class="notification-icon-area">
+                    <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#f91880" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </div>
+                <div class="notification-body">
+                    <div class="avatar" style="width: 28px; height: 28px; margin-bottom: 8px; background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7471.jpeg');"></div>
+                    <div class="notif-text"><strong>しもがーる ‼️ら</strong>さんがあなたの投稿をいいねしました</div>
+                    <div style="color: #71767b; font-size: 14px;">可愛くて死んだ</div>
                 </div>
             </div>
         </div>
@@ -977,6 +1040,16 @@
             }
 
             buttonElement.classList.add('active');
+        }
+
+        /* 通知タブ内の「すべて」「@ツイート」切り替え用関数 */
+        function switchNotifTab(subTabName, buttonElement) {
+            const parent = buttonElement.parentElement;
+            parent.querySelectorAll('.notif-sub-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            buttonElement.classList.add('active');
+            // 後々ここに対応するデータの切り替え処理を実装できるよ！
         }
 
         function openProfile() {
