@@ -12,31 +12,31 @@
             background-color: #000;
             color: #fff;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            overflow: hidden; /* ローディング中はスクロールさせない */
+            overflow: hidden;
+            padding-bottom: 55px; /* 下部ナビ分の余白 */
         }
 
-        /* 🚀 起動画面（スプラッシュスクリーン）のスタイル */
+        /* 🚀 起動画面（スプラッシュスクリーン） */
         #splash-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: #000; /* Xアプリみたいな完全な黒 */
+            background-color: #000;
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.6s ease; /* 消えるときのふわっとした演出 */
+            transition: opacity 0.6s ease;
         }
 
-        /* 真ん中の「U」ロゴのデザイン */
         .splash-logo {
             font-size: 64px;
             font-weight: bold;
             color: #fff;
             letter-spacing: -2px;
-            animation: pulse 1.2s infinite alternate; /* 軽く呼吸するように光るアニメーション */
+            animation: pulse 1.2s infinite alternate;
         }
 
         @keyframes pulse {
@@ -44,9 +44,9 @@
             100% { transform: scale(1.05); opacity: 1; text-shadow: 0 0 15px rgba(255,255,255,0.4); }
         }
 
-        /* 🐦 本体のタイムライン画面（最初は隠れている） */
-        #main-content {
-            display: none; /* ローディングが終わるまで非表示 */
+        /* 🐦 アプリ全体の枠組み */
+        .app-container {
+            display: none; /* ローディング後に表示 */
             max-width: 600px;
             margin: 0 auto;
             border-left: 1px solid #2f3336;
@@ -56,8 +56,36 @@
             background-color: #000;
         }
 
-        /* 🧭 X風上部ヘッダー（アイコン ＋ 検索バー・スクロールしても固定） */
+        /* 📄 各タブの画面エリア（初期は非表示） */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block; /* アクティブな画面だけ表示 */
+        }
+
+        /* 🧭 共通ヘッダー（ホーム用） */
         .header {
+            position: sticky;
+            top: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #2f3336;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        .header-logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: -1px;
+        }
+
+        /* 🔍 検索画面用ヘッダー（アイコン ＋ 検索窓） */
+        .explore-header {
             position: sticky;
             top: 0;
             background: rgba(0, 0, 0, 0.85);
@@ -69,8 +97,6 @@
             gap: 12px;
             z-index: 10;
         }
-
-        /* 左上の自分のアイコン */
         .header-avatar {
             width: 32px;
             height: 32px;
@@ -79,16 +105,12 @@
             background-position: center;
             flex-shrink: 0;
         }
-
-        /* 検索バーのラッパー */
         .search-wrapper {
             position: relative;
             flex-grow: 1;
             display: flex;
             align-items: center;
         }
-
-        /* 検索入力欄 */
         .search-input {
             width: 100%;
             background-color: #202327;
@@ -100,12 +122,9 @@
             outline: none;
             box-sizing: border-box;
         }
-
         .search-input::placeholder {
             color: #71767b;
         }
-
-        /* 検索アイコン（虫眼鏡） */
         .search-icon {
             position: absolute;
             left: 12px;
@@ -115,14 +134,13 @@
             pointer-events: none;
         }
 
-        /* 💬 投稿ボックスのスタイル */
+        /* 💬 投稿ボックス（タイムライン用） */
         .post-box {
             padding: 15px 20px;
             border-bottom: 1px solid #2f3336;
             display: flex;
             gap: 15px;
         }
-
         .avatar {
             width: 48px;
             height: 48px;
@@ -132,23 +150,70 @@
             background-size: cover;
             background-position: center;
         }
-
         .post-content .username {
             font-weight: bold;
             font-size: 15px;
             margin-bottom: 4px;
         }
-
         .post-content .userid {
             color: #71767b;
             font-weight: normal;
             font-size: 14px;
         }
-
         .post-content .text {
             color: #e7e9ea;
             font-size: 15px;
             line-height: 1.5;
+        }
+
+        /* 📈 トレンド・ニュース項目（検索タブ用） */
+        .trend-section-title {
+            font-size: 20px;
+            font-weight: bold;
+            padding: 15px 20px 10px 20px;
+            border-bottom: 1px solid #2f3336;
+        }
+        .trend-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #2f3336;
+        }
+        .trend-category {
+            font-size: 13px;
+            color: #71767b;
+            margin-bottom: 3px;
+        }
+        .trend-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* 📱 下部ナビゲーションバー（フッター） */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 600px;
+            background-color: #000;
+            border-top: 1px solid #2f3336;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+        .nav-item {
+            background: none;
+            border: none;
+            color: #71767b;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.2s;
+        }
+        .nav-item.active {
+            color: #fff; /* 選ばれているときは白く光る */
         }
     </style>
 </head>
@@ -159,53 +224,122 @@
         <div class="splash-logo">U</div>
     </div>
 
-    <!-- 📱 Undergo メイン画面（タイムライン） -->
-    <div id="main-content">
-        <!-- 上部ヘッダー（アイコン ＋ 検索窓） -->
-        <div class="header">
-            <div class="header-avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');"></div>
-            <div class="search-wrapper">
-                <svg class="search-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M10.25 3.75c-3.59 0-6.5 2.91-6.5 6.5s2.91 6.5 6.5 6.5c1.79 0 3.41-.71 4.61-1.85l3.88 3.87 1.42-1.42-3.87-3.88c1.14-1.2 1.85-2.82 1.85-4.61 0-3.59-2.91-6.5-6.5-6.5zm0 2c2.49 0 4.5 2.01 4.5 4.5s-2.01 4.5-4.5 4.5-4.5-2.01-4.5-4.5 2.01-4.5 4.5-4.5z"></path></svg>
-                <input type="text" class="search-input" placeholder="検索">
+    <!-- 📱 アプリメイン画面 -->
+    <div class="app-container" id="app-container">
+
+        <!------------------------------------ 
+          🏠 ホーム画面（タイムライン） 
+        ------------------------------------>
+        <div id="home-tab" class="tab-content active">
+            <div class="header">
+                <div class="header-logo">U</div>
+            </div>
+
+            <!-- 投稿1 -->
+            <div class="post-box">
+                <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');"></div>
+                <div class="post-content">
+                    <div class="username">にーよ8号 <span class="userid">@YingDou21485</span></div>
+                    <div class="text">Undergoシステム、起動テスト完了。……さて、始めるか。</div>
+                </div>
+            </div>
+
+            <!-- 投稿2 -->
+            <div class="post-box">
+                <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7471.jpeg');"></div>
+                <div class="post-content">
+                    <div class="username">もやし <span class="userid">@moyashi_create</span></div>
+                    <div class="text">おつかれさま！ここからどう動くかだねー 👀✨</div>
+                </div>
             </div>
         </div>
 
-        <!-- 投稿のサンプル1（にーよ8号） -->
-        <div class="post-box">
-            <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');"></div>
-            <div class="post-content">
-                <div class="username">にーよ8号 <span class="userid">@YingDou21485</span></div>
-                <div class="text">Undergoシステム、起動テスト完了。……さて、始めるか。</div>
+        <!------------------------------------ 
+          🔍 検索（Explore）画面 
+        ------------------------------------>
+        <div id="explore-tab" class="tab-content">
+            <div class="explore-header">
+                <div class="header-avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7440.jpeg');"></div>
+                <div class="search-wrapper">
+                    <svg class="search-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M10.25 3.75c-3.59 0-6.5 2.91-6.5 6.5s2.91 6.5 6.5 6.5c1.79 0 3.41-.71 4.61-1.85l3.88 3.87 1.42-1.42-3.87-3.88c1.14-1.2 1.85-2.82 1.85-4.61 0-3.59-2.91-6.5-6.5-6.5zm0 2c2.49 0 4.5 2.01 4.5 4.5s-2.01 4.5-4.5 4.5-4.5-2.01-4.5-4.5 2.01-4.5 4.5-4.5z"></path></svg>
+                    <input type="text" class="search-input" placeholder="Undergoを検索">
+                </div>
+            </div>
+
+            <div class="trend-section-title">本日のトレンド・ニュース</div>
+
+            <div class="trend-item">
+                <div class="trend-category">国内のトレンド</div>
+                <div class="trend-title">#Undergoシステム</div>
+            </div>
+
+            <div class="trend-item">
+                <div class="trend-category">ニュース · 急上昇</div>
+                <div class="trend-title">未確認の不穏な噂がネットで拡散中</div>
             </div>
         </div>
 
-        <!-- 投稿のサンプル2（もやし） -->
-        <div class="post-box">
-            <div class="avatar" style="background-image: url('https://raw.githubusercontent.com/214-1031dotcom/ARG-/main/IMG_7471.jpeg');"></div>
-            <div class="post-content">
-                <div class="username">もやし <span class="userid">@moyashi_create</span></div>
-                <div class="text">おつかれさま！ここからどう動くかだねー 👀✨</div>
-            </div>
-        </div>
+        <!------------------------------------ 
+          📌 下部ナビゲーションバー（メニュー） 
+        ------------------------------------>
+        <nav class="nav-bar">
+            <!-- ホームボタン -->
+            <button class="nav-item active" onclick="switchTab('home', this)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            </button>
+            <!-- 虫眼鏡（検索）ボタン -->
+            <button class="nav-item" onclick="switchTab('explore', this)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
+            <!-- （おまけの仮ボタンたち） -->
+            <button class="nav-item"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></button>
+            <button class="nav-item"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></button>
+            <button class="nav-item"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></button>
+        </nav>
+
     </div>
 
-    <!-- ⏱️ 起動画面を消してメイン画面に切り替えるプログラム -->
+    <!-- ⏱️ 起動＆タブ切り替えプログラム -->
     <script>
+        // 🚀 起動画面の処理
         window.addEventListener('load', function() {
             setTimeout(function() {
                 const splash = document.getElementById('splash-screen');
-                const main = document.getElementById('main-content');
+                const appContainer = document.getElementById('app-container');
 
                 splash.style.opacity = '0';
                 
                 setTimeout(function() {
                     splash.style.display = 'none';
-                    main.style.display = 'block';
+                    appContainer.style.display = 'block';
                     document.body.style.overflow = 'auto';
                 }, 600);
 
             }, 2000);
         });
+
+        // 🔀 タブを切り替える関数
+        function switchTab(tabName, buttonElement) {
+            // すべてのタブの中身を非表示にする
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // すべてのメニューボタンの選択状態を解除
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // 押されたタブを表示する
+            if (tabName === 'home') {
+                document.getElementById('home-tab').classList.add('active');
+            } else if (tabName === 'explore') {
+                document.getElementById('explore-tab').classList.add('active');
+            }
+
+            // 押されたメニューボタンをアクティブにする
+            buttonElement.classList.add('active');
+        }
     </script>
 
 </body>
