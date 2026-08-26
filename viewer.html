@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マイ資料ビューアー 🩵</title>
+    <style>
+        body {
+            background-color: #f0f7ff;
+            color: #333;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 16px;
+        }
+        h1 {
+            text-align: center;
+            color: #5b92e5;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        /* 写真を綺麗に並べるグリッドレイアウト */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3列に並べるよ */
+            gap: 8px;
+        }
+        .gallery item {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .gallery img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            display: block;
+            border-radius: 8px;
+            border: 2px solid #d4effc;
+        }
+        /* タップして大きく見せる用 */
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        #modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🩵 お絵描き用・資料ビューアー 🩵</h1>
+
+    <!-- ここに写真を入れていくよ！ -->
+    <div class="gallery">
+        <!-- 写真の数だけ下の行を増やしてね -->
+        <item><img src="画像のURLやファイル名.jpg" onclick="openModal(this.src)"></item>
+        <item><img src="画像のURLやファイル名.jpg" onclick="openModal(this.src)"></item>
+        <item><img src="画像のURLやファイル名.jpg" onclick="openModal(this.src)"></item>
+    </div>
+
+    <!-- 拡大表示用モーダル -->
+    <div id="modal" onclick="closeModal()">
+        <img id="modal-img">
+    </div>
+
+    <script>
+        function openModal(src) {
+            document.getElementById('modal-img').src = src;
+            document.getElementById('modal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
