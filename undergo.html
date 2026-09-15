@@ -1007,19 +1007,19 @@
         }
 
         // ❤️ いいねボタンのトグル処理
-        function toggleLike(btn) {
-            const countSpan = btn.querySelector('.like-count');
-            let count = parseInt(countSpan.textContent);
-            
-            if (btn.classList.contains('active')) {
-                btn.classList.remove('active');
-                count -= 1;
-            } else {
-                btn.classList.add('active');
-                count += 1;
-            }
-            countSpan.textContent = count;
-        }
+function toggleLike(btn) {
+    const countSpan = btn.querySelector('.like-count'); // クラス名は実際のHTMLに合わせて調整してください
+    let count = parseInt(countSpan.textContent);
+    
+    if (btn.classList.contains('active')) {
+        btn.classList.remove('active');
+        count -= 1; // すでに押されている場合は解除してカウントを減らす
+    } else {
+        btn.classList.add('active');
+        count += 1; // 押されていない場合はアクティブにしてカウントを増やす
+    }
+    countSpan.textContent = count;
+}
 
         // 🔄 リポストボタンのトグル処理
         function toggleRepost(btn) {
