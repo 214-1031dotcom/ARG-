@@ -1006,25 +1006,27 @@
             document.getElementById('profile-view').style.display = 'none';
         }
 
-        // ❤️ いいねボタンのトグル処理
-function toggleLike(btn) {
-    const countSpan = btn.querySelector('.like-count'); // クラス名は実際のHTMLに合わせて調整してください
-    let count = parseInt(countSpan.textContent);
-    
-    if (btn.classList.contains('active')) {
-        btn.classList.remove('active');
-        count -= 1; // すでに押されている場合は解除してカウントを減らす
-    } else {
-        btn.classList.add('active');
-        count += 1; // 押されていない場合はアクティブにしてカウントを増やす
-    }
-    countSpan.textContent = count;
-}
+     // ❤️ いいねボタンのトグル処理（数字と色を完全に同期）
+        function toggleLike(btn) {
+            const countSpan = btn.querySelector('.like-count');
+            let count = parseInt(countSpan.textContent, 10);
+            
+            if (btn.classList.contains('active')) {
+                // すでにアクティブなら、解除して数を減らす
+                btn.classList.remove('active');
+                count -= 1;
+            } else {
+                // アクティブでなければ、アクティブにして数を増やす
+                btn.classList.add('active');
+                count += 1;
+            }
+            countSpan.textContent = count;
+        }
 
-        // 🔄 リポストボタンのトグル処理
+        // 🔄 リポストボタンのトグル処理（数字と色を完全に同期）
         function toggleRepost(btn) {
             const countSpan = btn.querySelector('.repost-count');
-            let count = parseInt(countSpan.textContent);
+            let count = parseInt(countSpan.textContent, 10);
             
             if (btn.classList.contains('active')) {
                 btn.classList.remove('active');
@@ -1036,7 +1038,7 @@ function toggleLike(btn) {
             countSpan.textContent = count;
         }
 
-        // 🔖 ブックマークボタンのトグル処理（クラス方式に修正！）
+        // 🔖 ブックマークボタンのトグル処理
         function toggleBookmark(btn) {
             if (btn.classList.contains('active')) {
                 btn.classList.remove('active');
@@ -1047,6 +1049,27 @@ function toggleLike(btn) {
 
         // 💬 返信モーダル関連
         let currentReplyBtn = null;
+
+        function openReplyModal(btn) {
+            currentReplyBtn = btn;
+            document.getElementById('reply-text-input').value = '';
+            document.getElementById('reply-modal').style.display = 'flex';
+            document.getElementById('reply-text-input').focus();
+        }
+
+        function closeReplyModal() {
+            document.getElementById('reply-modal').style.display = 'none';
+            currentReplyBtn = null;
+        }
+
+        function submitReply() {
+            const text = document.getElementById('reply-text-input').value.trim();
+            if (text && currentReplyBtn) {
+                const countSpan = currentReplyBtn.querySelector('.reply-count');
+                countSpan.textContent = parseInt(countSpan.textContent, 10) + 1;
+            }
+            closeReplyModal();
+        }
 
         function openReplyModal(btn) {
             currentReplyBtn = btn;
