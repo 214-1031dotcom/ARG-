@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ホーム画面</title>
+    <title>ホーム画面（横スクロール対応）</title>
     <style>
         * {
             box-sizing: border-box;
@@ -21,13 +21,12 @@
             overflow: hidden;
         }
 
-        /* スマホの外枠（プレビュー用） */
+        /* スマホの外枠 */
         .phone-frame {
             width: 100%;
             max-width: 414px;
             height: 100vh;
             max-height: 896px;
-            /* 良さげなエモいグラデーション背景を作成してみたよ */
             background: linear-gradient(135deg, #2c3e50 0%, #1a1a2e 50%, #16213e 100%);
             position: relative;
             display: flex;
@@ -35,13 +34,12 @@
             justify-content: space-between;
             overflow: hidden;
             box-shadow: 0 0 30px rgba(0,0,0,0.5);
-            border-radius: 0;
         }
 
         /* ステータスバー（上部） */
         .status-bar {
             position: relative;
-            z-index: 2;
+            z-index: 10;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -58,19 +56,36 @@
             font-size: 12px;
         }
 
-        /* アプリグリッド画面 */
-        .app-grid-container {
+        /* ↔️ 左右スワイプエリア（コンテナ） */
+        .pages-container {
             position: relative;
             z-index: 2;
             flex: 1;
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox用スクロールバー非表示 */
+        }
+        .pages-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari用スクロールバー非表示 */
+        }
+
+        /* 各ページ */
+        .home-page {
+            min-width: 100%;
+            height: 100%;
             padding: 24px;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-auto-rows: max-content;
             gap: 24px 16px;
+            scroll-snap-align: start;
+            flex-shrink: 0;
         }
 
-        /* アプリのアイコン一つ分 */
+        /* アプリのアイコン */
         .app-item {
             display: flex;
             flex-direction: column;
@@ -163,11 +178,33 @@
             -webkit-box-orient: vertical;
         }
 
+        /* ページネーション・ドット（インジケーター） */
+        .pagination-dots {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            padding-bottom: 8px;
+        }
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.4);
+            transition: background-color 0.3s;
+        }
+        .dot.active {
+            background-color: #fff;
+            width: 16px;
+            border-radius: 3px;
+        }
+
         /* ドック（一番下のエリア） */
         .dock-container {
             position: relative;
-            z-index: 2;
-            padding: 10px 16px 28px 16px;
+            z-index: 10;
+            padding: 10px 16px 24px 16px;
         }
 
         .dock {
@@ -202,47 +239,72 @@
             </div>
         </div>
 
-        <!-- アプリが並ぶメイングリッド -->
-        <div class="app-grid-container">
+        <!-- ↔️ 左右にスワイプできるページコンテナ -->
+        <div class="pages-container" id="pagesContainer" onscroll="updateDots()">
             
-            <!-- undergo (アイコン: U) -->
-            <div class="app-item" onclick="openApp('undergo')">
-                <div class="app-icon" style="background-color: #000; color: #fff;">
-                    <span style="font-size: 26px; font-weight: bold; font-family: sans-serif;">U</span>
-                    <div class="badge">1</div>
+            <!-- 📄 1ページ目 -->
+            <div class="home-page">
+                <!-- undergo -->
+                <div class="app-item" onclick="openApp('undergo')">
+                    <div class="app-icon" style="background-color: #000; color: #fff;">
+                        <span style="font-size: 26px; font-weight: bold; font-family: sans-serif;">U</span>
+                        <div class="badge">1</div>
+                    </div>
+                    <div class="app-name">undergo</div>
                 </div>
-                <div class="app-name">undergo</div>
+
+                <!-- 𝒎𝒂𝒓𝒊𝒂𝒈𝒆 -->
+                <div class="app-item" onclick="openApp('𝒎𝒂𝒓𝒊𝒂𝒈𝒆')">
+                    <div class="app-icon" style="background: linear-gradient(135deg, #8e44ad, #3498db); color: #fff;">
+                        <span style="font-size: 26px; font-weight: bold; font-family: serif; font-style: italic;">M</span>
+                        <div class="badge">1</div>
+                    </div>
+                    <div class="app-name">𝒎𝒂𝒓𝒊𝒂𝒈𝒆</div>
+                </div>
+
+                <!-- Journey -->
+                <div class="app-item" onclick="openApp('Journey')">
+                    <div class="app-icon" style="background-color: #e74c3c;">
+                        <span style="font-size: 28px;">🏳️</span>
+                        <div class="badge">805</div>
+                    </div>
+                    <div class="app-name">Journey</div>
+                </div>
+
+                <!-- ウィジェット -->
+                <div class="widget-item" onclick="openApp('メモ')">
+                    <div class="widget-header">📝 メモ</div>
+                    <div class="widget-content">
+                        &lt;!DOCTYPE html&gt;<br>
+                        &lt;html lang="ja"&gt;<br>
+                        &lt;head&gt;...
+                    </div>
+                    <div style="font-size: 10px; color: rgba(255,255,255,0.5);">18:05</div>
+                </div>
             </div>
 
-            <!-- 𝒎𝒂𝒓𝒊𝒂𝒈𝒆 (アイコン: M ＆ 同じおしゃれフォント) -->
-            <div class="app-item" onclick="openApp('𝒎𝒂𝒓𝒊𝒂𝒈𝒆')">
-                <div class="app-icon" style="background: linear-gradient(135deg, #8e44ad, #3498db); color: #fff;">
-                    <span style="font-size: 26px; font-weight: bold; font-family: serif; font-style: italic;">M</span>
-                    <div class="badge">1</div>
+            <!-- 📄 2ページ目（追加アプリ用） -->
+            <div class="home-page">
+                <div class="app-item" onclick="openApp('サブアプリ1')">
+                    <div class="app-icon" style="background-color: #e67e22; color: #fff;">
+                        <span style="font-size: 24px;">⭐</span>
+                    </div>
+                    <div class="app-name">ツール</div>
                 </div>
-                <div class="app-name">𝒎𝒂𝒓𝒊𝒂𝒈𝒆</div>
+                <div class="app-item" onclick="openApp('サブアプリ2')">
+                    <div class="app-icon" style="background-color: #1abc9c; color: #fff;">
+                        <span style="font-size: 24px;">💬</span>
+                    </div>
+                    <div class="app-name">チャット</div>
+                </div>
             </div>
 
-            <!-- Journey (赤ベースに 🏳️ アイコン) -->
-            <div class="app-item" onclick="openApp('Journey')">
-                <div class="app-icon" style="background-color: #e74c3c;">
-                    <span style="font-size: 28px;">🏳️</span>
-                    <div class="badge">805</div>
-                </div>
-                <div class="app-name">Journey</div>
-            </div>
+        </div>
 
-            <!-- ウィジェット（メモ風・ダークガラスモーフィズム） -->
-            <div class="widget-item" onclick="openApp('メモ')">
-                <div class="widget-header">📝 メモ</div>
-                <div class="widget-content">
-                    &lt;!DOCTYPE html&gt;<br>
-                    &lt;html lang="ja"&gt;<br>
-                    &lt;head&gt;...
-                </div>
-                <div style="font-size: 10px; color: rgba(255,255,255,0.5);">18:05</div>
-            </div>
-
+        <!-- ページネーション（ドット） -->
+        <div class="pagination-dots">
+            <div class="dot active" id="dot-0"></div>
+            <div class="dot" id="dot-1"></div>
         </div>
 
         <!-- 下部ドックエリア -->
@@ -264,6 +326,22 @@
             } else {
                 alert(appName + ' がタップされました！');
             }
+        }
+
+        // スクロール位置に合わせて下のドットを光らせる処理
+        function updateDots() {
+            const container = document.getElementById('pagesContainer');
+            const scrollLeft = container.scrollLeft;
+            const pageWidth = container.clientWidth;
+            const activePageIndex = Math.round(scrollLeft / pageWidth);
+
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                if (index === activePageIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
         }
     </script>
 </body>
