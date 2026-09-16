@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ホーム画面（横スクロール対応）</title>
+    <title>God-like OS Home Screen (All-in-One)</title>
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            user-select: none;
         }
 
         body {
-            background-color: #111;
+            background-color: #000;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -33,7 +34,31 @@
             flex-direction: column;
             justify-content: space-between;
             overflow: hidden;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+        }
+
+        /* 🌙 画面スリープ（真っ暗カバー） */
+        .sleep-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 13px;
+            letter-spacing: 2px;
+        }
+        .phone-frame.is-sleep .sleep-screen {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         /* ステータスバー（上部） */
@@ -54,6 +79,23 @@
             gap: 6px;
             align-items: center;
             font-size: 12px;
+        }
+
+        /* センサー許可ボタン（初回用） */
+        .sensor-btn {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            cursor: pointer;
         }
 
         /* ↔️ 左右スワイプエリア（コンテナ） */
@@ -228,14 +270,20 @@
 </head>
 <body>
 
-    <div class="phone-frame">
+    <div class="phone-frame" id="phoneFrame" ondblclick="toggleSleep()">
+        
+        <!-- 🌙 スリープ画面のカバー ＆ タップで復帰用 -->
+        <div class="sleep-screen" id="sleepScreen">Tap to Wake</div>
+
+        <!-- 初回センサー有効化ボタン（スマホ実機用） -->
+        <button class="sensor-btn" id="sensorBtn" onclick="requestSensors()">センサーを有効化</button>
 
         <!-- ステータスバー -->
         <div class="status-bar">
-            <span>18:35</span>
+            <span id="real-time">00:00</span>
             <div class="status-icons">
                 <span>📶</span>
-                <span>🔋 81%</span>
+                <span id="real-battery">🔋 81%</span>
             </div>
         </div>
 
@@ -244,7 +292,7 @@
             
             <!-- 📄 1ページ目 -->
             <div class="home-page">
-                <!-- undergo (アイコン: U / 通常フォント) -->
+                <!-- undergo (アイコン: U) -->
                 <div class="app-item" onclick="openApp('undergo')">
                     <div class="app-icon" style="background-color: #000; color: #fff;">
                         <span style="font-size: 26px; font-weight: bold; font-family: sans-serif;">U</span>
@@ -309,7 +357,7 @@
 
         </div>
 
-        <!-- ページネーション（ドット） -->
+        <!-- ページネーション・ドット -->
         <div class="pagination-dots">
             <div class="dot active" id="dot-0"></div>
             <div class="dot" id="dot-1"></div>
@@ -328,7 +376,75 @@
     </div>
 
     <script>
+        // ⏰ 1. リアルタイム時計
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('real-time').textContent = `${hours}:${minutes}`;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // 🔋 2. バッテリー残量連動
+        if ('navigator' in window && 'getBattery' in navigator) {
+            navigator.getBattery().then(function(battery) {
+                function updateBattery() {
+                    const level = Math.round(battery.level * 100);
+                    const charging = battery.charging;
+                    document.getElementById('real-battery').textContent = charging ? `⚡ ${level}%` : `🔋 ${level}%`;
+                }
+                updateBattery();
+                battery.addEventListener('levelchange', updateBattery);
+                battery.addEventListener('chargingchange', updateBattery);
+            });
+        }
+
+        // 📱 3. スリープ＆復帰ギミック（ダブルタップ、またはスマホを伏せる）
+        function toggleSleep() {
+            const frame = document.getElementById('phoneFrame');
+            frame.classList.toggle('is-sleep');
+        }
+
+        // 🔄 4. ジャイロセンサー（スマホをパタンと裏返すとスリープ、起こすと起きる）
+        function requestSensors() {
+            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                DeviceOrientationEvent.requestPermission().then(response => {
+                    if (response === 'granted') {
+                        initOrientation();
+                        document.getElementById('sensorBtn').style.display = 'none';
+                    }
+                }).catch(console.error);
+            } else {
+                initOrientation();
+                document.getElementById('sensorBtn').style.display = 'none';
+            }
+        }
+
+        function initOrientation() {
+            window.addEventListener('deviceorientation', (event) => {
+                const beta = event.beta;  // 前後の傾き (-180 〜 180)
+                const gamma = event.gamma; // 左右の傾き (-90 〜 90)
+                const frame = document.getElementById('phoneFrame');
+
+                // 例：スマホを上向きから下向き（画面を伏せる状態：betaがほぼ0やマイナス、あるいは大きく傾いたときなど）
+                // 画面を机にパタンと伏せた状態を検知 (betaが平らになる約0度付近、または垂直に近く裏返ったときなど)
+                if (beta !== null) {
+                    // 画面をピタッと伏せた（上向きから下向きに大きく倒した）判定の一例
+                    if (beta < -60 || beta > 160) { 
+                        frame.classList.add('is-sleep'); // スリープ
+                    } else if (beta > 30 && beta < 80) {
+                        frame.classList.remove('is-sleep'); // 起き上がる
+                    }
+                }
+            });
+        }
+
+        // アプリ起動
         function openApp(appName) {
+            const frame = document.getElementById('phoneFrame');
+            if (frame.classList.contains('is-sleep')) return; // 寝てる時は反応しない
+
             if (appName === 'undergo') {
                 alert('undergoアプリを開きます！');
             } else {
@@ -336,7 +452,7 @@
             }
         }
 
-        // スクロール位置に合わせて下のドットを光らせる処理
+        // ↔️ ページネーション連動
         function updateDots() {
             const container = document.getElementById('pagesContainer');
             const scrollLeft = container.scrollLeft;
