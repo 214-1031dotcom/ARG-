@@ -19,15 +19,17 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            min-height: 100dvh;
             overflow: hidden;
         }
 
-        /* スマホの外枠 */
+        /* スマホの外枠（高さを少しコンパクトにして下部ツールバー対策） */
         .phone-frame {
             width: 100%;
             max-width: 414px;
             height: 100vh;
-            max-height: 896px;
+            height: 100dvh;
+            max-height: 840px; /* 少し縮めて下のブラウザバーへの被りを軽減 */
             background: linear-gradient(135deg, #2c3e50 0%, #1a1a2e 50%, #16213e 100%);
             position: relative;
             display: flex;
@@ -61,30 +63,10 @@
             pointer-events: auto;
         }
 
-        /* ステータスバー（上部） */
-        .status-bar {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 24px 0 24px;
-            color: #fff;
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        .status-icons {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-            font-size: 12px;
-        }
-
         /* センサー許可ボタン（初回用） */
         .sensor-btn {
             position: absolute;
-            top: 50px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 100;
@@ -109,6 +91,7 @@
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
+            align-content: center;
         }
         .pages-container::-webkit-scrollbar {
             display: none;
@@ -118,7 +101,7 @@
         .home-page {
             min-width: 100%;
             height: 100%;
-            padding: 24px;
+            padding: 30px 24px 10px 24px;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-auto-rows: max-content;
@@ -186,40 +169,6 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        /* ウィジェット（メモ風） */
-        .widget-item {
-            grid-column: span 2;
-            grid-row: span 2;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 22px;
-            padding: 14px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            cursor: pointer;
-        }
-        .widget-header {
-            font-size: 12px;
-            font-weight: bold;
-            color: rgba(255, 255, 255, 0.7);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .widget-content {
-            font-size: 12px;
-            color: #fff;
-            font-family: monospace;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-        }
-
         /* ページネーション・ドット */
         .pagination-dots {
             position: relative;
@@ -227,7 +176,7 @@
             display: flex;
             justify-content: center;
             gap: 6px;
-            padding-bottom: 8px;
+            padding-bottom: 6px;
         }
         .dot {
             width: 6px;
@@ -246,7 +195,7 @@
         .dock-container {
             position: relative;
             z-index: 10;
-            padding: 10px 16px 24px 16px;
+            padding: 6px 16px 16px 16px;
         }
 
         .dock {
@@ -278,15 +227,6 @@
         <!-- 初回センサー有効化ボタン（スマホ実機用） -->
         <button class="sensor-btn" id="sensorBtn" onclick="requestSensors()">センサーを有効化</button>
 
-        <!-- ステータスバー -->
-        <div class="status-bar">
-            <span id="real-time">00:00</span>
-            <div class="status-icons">
-                <span>📶</span>
-                <span id="real-battery">🔋 81%</span>
-            </div>
-        </div>
-
         <!-- ↔️ 左右にスワイプできるページコンテナ -->
         <div class="pages-container" id="pagesContainer" onscroll="updateDots()">
             
@@ -301,7 +241,7 @@
                     <div class="app-name">undergo</div>
                 </div>
 
-                <!-- 𝒎𝒂𝒓𝒊𝒂𝒈𝒆 (アイコン: M / 通常フォント) -->
+                <!-- 𝒎𝒂𝒓𝒊𝒂𝒈𝒆 (アイコン: M) -->
                 <div class="app-item" onclick="openApp('𝒎𝒂𝒓𝒊𝒂𝒈𝒆')">
                     <div class="app-icon" style="background-color: #fff; color: #333;">
                         <span style="font-size: 26px; font-weight: bold; font-family: sans-serif;">M</span>
@@ -319,17 +259,6 @@
                         <div class="badge">805</div>
                     </div>
                     <div class="app-name">Journey</div>
-                </div>
-
-                <!-- ウィジェット -->
-                <div class="widget-item" onclick="openApp('メモ')">
-                    <div class="widget-header">📝 メモ</div>
-                    <div class="widget-content">
-                        &lt;!DOCTYPE html&gt;<br>
-                        &lt;html lang="ja"&gt;<br>
-                        &lt;head&gt;...
-                    </div>
-                    <div style="font-size: 10px; color: rgba(255,255,255,0.5);">18:05</div>
                 </div>
             </div>
 
@@ -376,37 +305,13 @@
     </div>
 
     <script>
-        // ⏰ 1. リアルタイム時計
-        function updateClock() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('real-time').textContent = `${hours}:${minutes}`;
-        }
-        updateClock();
-        setInterval(updateClock, 1000);
-
-        // 🔋 2. バッテリー残量連動
-        if ('navigator' in window && 'getBattery' in navigator) {
-            navigator.getBattery().then(function(battery) {
-                function updateBattery() {
-                    const level = Math.round(battery.level * 100);
-                    const charging = battery.charging;
-                    document.getElementById('real-battery').textContent = charging ? `⚡ ${level}%` : `🔋 ${level}%`;
-                }
-                updateBattery();
-                battery.addEventListener('levelchange', updateBattery);
-                battery.addEventListener('chargingchange', updateBattery);
-            });
-        }
-
         // 📱 3. スリープ＆復帰ギミック（ダブルタップ、またはスマホを伏せる）
         function toggleSleep() {
             const frame = document.getElementById('phoneFrame');
             frame.classList.toggle('is-sleep');
         }
 
-        // 🔄 4. ジャイロセンサー（スマホをパタンと裏返すとスリープ、起こすと起きる）
+        // 🔄 4. ジャイロセンサー
         function requestSensors() {
             if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
                 DeviceOrientationEvent.requestPermission().then(response => {
@@ -423,18 +328,14 @@
 
         function initOrientation() {
             window.addEventListener('deviceorientation', (event) => {
-                const beta = event.beta;  // 前後の傾き (-180 〜 180)
-                const gamma = event.gamma; // 左右の傾き (-90 〜 90)
+                const beta = event.beta;  
                 const frame = document.getElementById('phoneFrame');
 
-                // 例：スマホを上向きから下向き（画面を伏せる状態：betaがほぼ0やマイナス、あるいは大きく傾いたときなど）
-                // 画面を机にパタンと伏せた状態を検知 (betaが平らになる約0度付近、または垂直に近く裏返ったときなど)
                 if (beta !== null) {
-                    // 画面をピタッと伏せた（上向きから下向きに大きく倒した）判定の一例
-                    if (beta < -60 || beta > 160) { 
-                        frame.classList.add('is-sleep'); // スリープ
+                    if (beta < -60 || beta > 160) {  
+                        frame.classList.add('is-sleep'); 
                     } else if (beta > 30 && beta < 80) {
-                        frame.classList.remove('is-sleep'); // 起き上がる
+                        frame.classList.remove('is-sleep'); 
                     }
                 }
             });
@@ -443,13 +344,8 @@
         // アプリ起動
         function openApp(appName) {
             const frame = document.getElementById('phoneFrame');
-            if (frame.classList.contains('is-sleep')) return; // 寝てる時は反応しない
-
-            if (appName === 'undergo') {
-                alert('undergoアプリを開きます！');
-            } else {
-                alert(appName + ' がタップされました！');
-            }
+            if (frame.classList.contains('is-sleep')) return; 
+            alert(appName + ' がタップされました！');
         }
 
         // ↔️ ページネーション連動
