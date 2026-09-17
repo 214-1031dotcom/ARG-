@@ -65,21 +65,6 @@
             pointer-events: none;
         }
 
-        .search-btn {
-            background-color: #f8f9fa;
-            border: 1px solid #f8f9fa;
-            border-radius: 4px;
-            color: #3c4043;
-            font-size: 14px;
-            padding: 10px 16px;
-            cursor: pointer;
-            margin-top: 5px;
-        }
-        .search-btn:hover {
-            border: 1px solid #dadce0;
-            box-shadow: 0 1px 1px rgba(0,0,0,.1);
-            color: #202124;
-        }
         .footer-version {
             position: absolute;
             bottom: 20px;
@@ -96,16 +81,13 @@
 
     <div class="search-wrapper">
         <svg class="search-icon" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
-        <input type="text" id="searchInput" class="search-input" placeholder="キーワードを入力して検索 (例: にーよ8号)">
+        <input type="text" id="searchInput" class="search-input" placeholder="キーワードを入力して検索 (例: にーよ8号)" autofocus>
     </div>
-
-    <button class="search-btn" id="searchBtn">Mariage 検索</button>
 
     <div class="footer-version">Mariage Search Engine (v2.1.0)</div>
 
     <script>
         const input = document.getElementById('searchInput');
-        const btn = document.getElementById('searchBtn');
 
         function doSearch() {
             const query = input.value.trim();
@@ -114,7 +96,6 @@
             }
         }
 
-        btn.addEventListener('click', doSearch);
         input.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 doSearch();
