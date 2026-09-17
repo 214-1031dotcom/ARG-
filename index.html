@@ -23,13 +23,13 @@
             overflow: hidden;
         }
 
-        /* スマホの外枠（高さを少しコンパクトにして下部ツールバー対策） */
+        /* スマホの外枠 */
         .phone-frame {
             width: 100%;
             max-width: 414px;
             height: 100vh;
             height: 100dvh;
-            max-height: 840px; /* 少し縮めて下のブラウザバーへの被りを軽減 */
+            max-height: 840px;
             background: linear-gradient(135deg, #2c3e50 0%, #1a1a2e 50%, #16213e 100%);
             position: relative;
             display: flex;
@@ -221,10 +221,10 @@
 
     <div class="phone-frame" id="phoneFrame" ondblclick="toggleSleep()">
         
-        <!-- 🌙 スリープ画面のカバー ＆ タップで復帰用 -->
+        <!-- 🌙 スリープ画面のカバー -->
         <div class="sleep-screen" id="sleepScreen">Tap to Wake</div>
 
-        <!-- 初回センサー有効化ボタン（スマホ実機用） -->
+        <!-- 初回センサー有効化ボタン -->
         <button class="sensor-btn" id="sensorBtn" onclick="requestSensors()">センサーを有効化</button>
 
         <!-- ↔️ 左右にスワイプできるページコンテナ -->
@@ -232,7 +232,7 @@
             
             <!-- 📄 1ページ目 -->
             <div class="home-page">
-                <!-- undergo (アイコン: U) -->
+                <!-- undergo -->
                 <div class="app-item" onclick="openApp('undergo')">
                     <div class="app-icon" style="background-color: #000; color: #fff;">
                         <span style="font-size: 26px; font-weight: bold; font-family: sans-serif;">U</span>
@@ -241,7 +241,7 @@
                     <div class="app-name">undergo</div>
                 </div>
 
-                <!-- Mariage (アイコン: M) -->
+                <!-- Mariage -->
                 <div class="app-item" onclick="openApp('Mariage')">
                     <div class="app-icon" style="background-color: #fff; color: #333;">
                         <span style="font-size: 26px; font-weight: bold; font-family: sans-serif;">M</span>
@@ -250,7 +250,7 @@
                     <div class="app-name">Mariage</div>
                 </div>
 
-                <!-- Journey (YouTube風の赤背景 ＋ 白旗) -->
+                <!-- Journey -->
                 <div class="app-item" onclick="openApp('Journey')">
                     <div class="app-icon" style="background-color: #fff; display: flex; justify-content: center; align-items: center;">
                         <div style="width: 48px; height: 34px; background-color: #ff0000; border-radius: 10px; display: flex; justify-content: center; align-items: center;">
@@ -305,13 +305,13 @@
     </div>
 
     <script>
-        // 📱 3. スリープ＆復帰ギミック（ダブルタップ、またはスマホを伏せる）
+        // 🌙 スリープ切り替え
         function toggleSleep() {
             const frame = document.getElementById('phoneFrame');
             frame.classList.toggle('is-sleep');
         }
 
-        // 🔄 4. ジャイロセンサー
+        // 🔄 ジャイロセンサー
         function requestSensors() {
             if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
                 DeviceOrientationEvent.requestPermission().then(response => {
@@ -341,11 +341,20 @@
             });
         }
 
-        // アプリ起動
+        // 🚀 アプリ起動（各ページへのリンク紐付け）
         function openApp(appName) {
             const frame = document.getElementById('phoneFrame');
             if (frame.classList.contains('is-sleep')) return; 
-            alert(appName + ' がタップされました！');
+
+            if (appName === 'Mariage') {
+                window.location.href = 'mariage.html';
+            } else if (appName === 'undergo') {
+                window.location.href = 'undergo.html';
+            } else if (appName === 'Journey') {
+                window.location.href = 'journey.html';
+            } else {
+                alert(appName + ' がタップされました！');
+            }
         }
 
         // ↔️ ページネーション連動
