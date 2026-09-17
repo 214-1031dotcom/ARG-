@@ -250,11 +250,15 @@
                     <div class="app-name">Mariage</div>
                 </div>
 
-                <!-- Journey -->
+                <!-- Journey (YouTube風の赤背景 ＋ 白旗SVGイラスト) -->
                 <div class="app-item" onclick="openApp('Journey')">
                     <div class="app-icon" style="background-color: #fff; display: flex; justify-content: center; align-items: center;">
                         <div style="width: 48px; height: 34px; background-color: #ff0000; border-radius: 10px; display: flex; justify-content: center; align-items: center;">
-                            <span style="font-size: 20px;">🏳️</span>
+                            <!-- 🚩 白旗のSVGイラスト -->
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 3V21" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                                <path d="M6 4H18L15 9L18 14H6V4Z" fill="white"/>
+                            </svg>
                         </div>
                         <div class="badge">805</div>
                     </div>
@@ -341,13 +345,13 @@
             });
         }
 
-        // 🚀 アプリ起動（各ページへのリンク紐付け）
+        // 🚀 アプリ起動
         function openApp(appName) {
             const frame = document.getElementById('phoneFrame');
             if (frame.classList.contains('is-sleep')) return; 
 
             if (appName === 'Mariage') {
-                window.location.href = 'Mariage.html';
+                window.location.href = 'mariage.html';
             } else if (appName === 'undergo') {
                 window.location.href = 'undergo.html';
             } else if (appName === 'Journey') {
