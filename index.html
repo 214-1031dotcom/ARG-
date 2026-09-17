@@ -57,13 +57,96 @@
             color: rgba(255, 255, 255, 0.3);
             font-size: 13px;
             letter-spacing: 2px;
+            cursor: pointer;
         }
         .phone-frame.is-sleep .sleep-screen {
             opacity: 1;
             pointer-events: auto;
         }
 
-        /* センサー許可ボタン（初回用） */
+        /* 🚀 アプリ起動時のスプラッシュ画面 */
+        .splash-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .splash-screen.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .splash-icon {
+            width: 90px;
+            height: 90px;
+            border-radius: 22px;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: scale(0.7);
+            animation: splashPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes splashPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* 📺 アプリの中身（Journey等の全画面ビュー） */
+        .app-view {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0f0f0f;
+            z-index: 400;
+            display: none;
+            flex-direction: column;
+            color: #fff;
+        }
+        .app-view.active {
+            display: flex;
+        }
+        .app-view-header {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .close-app-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 14px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .app-view-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* センサー許可ボタン */
         .sensor-btn {
             position: absolute;
             top: 20px;
@@ -80,7 +163,7 @@
             cursor: pointer;
         }
 
-        /* ↔️ 左右スワイプエリア（コンテナ） */
+        /* ↔️ 左右スワイプエリア */
         .pages-container {
             position: relative;
             z-index: 2;
@@ -219,10 +302,33 @@
 </head>
 <body>
 
-    <div class="phone-frame" id="phoneFrame" ondblclick="toggleSleep()">
+    <div class="phone-frame" id="phoneFrame">
         
-        <!-- 🌙 スリープ画面のカバー -->
-        <div class="sleep-screen" id="sleepScreen">Tap to Wake</div>
+        <!-- 🌙 スリープ画面のカバー（クリックで起きる） -->
+        <div class="sleep-screen" id="sleepScreen" onclick="toggleSleep()">Tap to Wake</div>
+
+        <!-- 🚀 アプリ起動時のスプラッシュ画面 -->
+        <div class="splash-screen" id="splashScreen">
+            <div class="splash-icon" id="splashIconContent">
+                <!-- ここに開いたアプリのアイコンが入る -->
+            </div>
+        </div>
+
+        <!-- 📺 Journeyアプリ専用の全画面ビュー -->
+        <div class="app-view" id="journeyView">
+            <div class="app-view-header">
+                <span>▶ Journey</span>
+                <button class="close-app-btn" onclick="closeApp()">ホームに戻る</button>
+            </div>
+            <div class="app-view-body">
+                <div style="font-size: 48px; margin-bottom: 16px;">📺</div>
+                <h2 style="margin-bottom: 8px;">Journeyショート動画フィード</h2>
+                <p style="font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 24px;">ここにYouTubeもどきの動画コンテンツが広がります！</p>
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 16px; width: 100%;">
+                    <p style="font-size: 14px; font-weight: bold;">Vtuber作ったんやがデザイン評価してくれ</p>
+                </div>
+            </div>
+        </div>
 
         <!-- 初回センサー有効化ボタン -->
         <button class="sensor-btn" id="sensorBtn" onclick="requestSensors()">センサーを有効化</button>
@@ -233,7 +339,7 @@
             <!-- 📄 1ページ目 -->
             <div class="home-page">
                 <!-- undergo -->
-                <div class="app-item" onclick="openApp('undergo')">
+                <div class="app-item" onclick="openApp('undergo', this)">
                     <div class="app-icon" style="background-color: #000; color: #fff;">
                         <span style="font-size: 26px; font-weight: bold; font-family: sans-serif;">U</span>
                         <div class="badge">1</div>
@@ -241,17 +347,17 @@
                     <div class="app-name">undergo</div>
                 </div>
 
-                <!-- Mariage -->
-                <div class="app-item" onclick="openApp('Mariage')">
+                <!-- 𝒎𝒂𝒓𝒊𝒂𝒈𝒆 -->
+                <div class="app-item" onclick="openApp('𝒎𝒂𝒓𝒊𝒂𝒈𝒆', this)">
                     <div class="app-icon" style="background-color: #fff; color: #333;">
                         <span style="font-size: 26px; font-weight: bold; font-family: sans-serif;">M</span>
                         <div class="badge">1</div>
                     </div>
-                    <div class="app-name">Mariage</div>
+                    <div class="app-name">𝒎𝒂𝒓𝒊𝒂𝒈𝒆</div>
                 </div>
 
                 <!-- Journey (YouTube風の赤背景 ＋ 白旗SVGイラスト) -->
-                <div class="app-item" onclick="openApp('Journey')">
+                <div class="app-item" onclick="openApp('Journey', this)">
                     <div class="app-icon" style="background-color: #fff; display: flex; justify-content: center; align-items: center;">
                         <div style="width: 48px; height: 34px; background-color: #ff0000; border-radius: 10px; display: flex; justify-content: center; align-items: center;">
                             <!-- 🚩 白旗のSVGイラスト -->
@@ -268,19 +374,19 @@
 
             <!-- 📄 2ページ目 -->
             <div class="home-page">
-                <div class="app-item" onclick="openApp('ツール')">
+                <div class="app-item" onclick="openApp('ツール', this)">
                     <div class="app-icon" style="background-color: #e67e22; color: #fff;">
                         <span style="font-size: 24px;">⭐</span>
                     </div>
                     <div class="app-name">ツール</div>
                 </div>
-                <div class="app-item" onclick="openApp('チャット')">
+                <div class="app-item" onclick="openApp('チャット', this)">
                     <div class="app-icon" style="background-color: #1abc9c; color: #fff;">
                         <span style="font-size: 24px;">💬</span>
                     </div>
                     <div class="app-name">チャット</div>
                 </div>
-                <div class="app-item" onclick="openApp('設定')">
+                <div class="app-item" onclick="openApp('設定', this)">
                     <div class="app-icon" style="background-color: #7f8c8d; color: #fff;">
                         <span style="font-size: 24px;">⚙️</span>
                     </div>
@@ -299,23 +405,54 @@
         <!-- 下部ドックエリア -->
         <div class="dock-container">
             <div class="dock">
-                <div class="app-icon" style="background-color: rgba(46, 204, 113, 0.8);" onclick="openApp('電話')">📞</div>
-                <div class="app-icon" style="background-color: rgba(52, 152, 219, 0.8);" onclick="openApp('ブラウザ')">🧭</div>
-                <div class="app-icon" style="background-color: rgba(241, 196, 15, 0.8);" onclick="openApp('トーク')">💬</div>
-                <div class="app-icon" style="background-color: rgba(155, 89, 182, 0.8);" onclick="openApp('ミュージック')">🎵</div>
+                <div class="app-icon" style="background-color: rgba(46, 204, 113, 0.8);" onclick="openApp('電話', this)">📞</div>
+                <div class="app-icon" style="background-color: rgba(52, 152, 219, 0.8);" onclick="openApp('ブラウザ', this)">🧭</div>
+                <div class="app-icon" style="background-color: rgba(241, 196, 15, 0.8);" onclick="openApp('トーク', this)">💬</div>
+                <div class="app-icon" style="background-color: rgba(155, 89, 182, 0.8);" onclick="openApp('ミュージック', this)">🎵</div>
             </div>
         </div>
 
     </div>
 
     <script>
-        // 🌙 スリープ切り替え
+        // 🚀 アプリ起動アニメーション ＆ 画面切り替え
+        function openApp(appName, element) {
+            const frame = document.getElementById('phoneFrame');
+            if (frame.classList.contains('is-sleep')) return; 
+
+            // タップされたアイコンの見た目を取得してスプラッシュ画面にコピーする
+            const iconContent = element.querySelector('.app-icon').innerHTML;
+            const splashIcon = document.getElementById('splashIconContent');
+            splashIcon.innerHTML = iconContent;
+
+            // スプラッシュ画面をポッと出す
+            const splash = document.getElementById('splashScreen');
+            splash.classList.add('active');
+
+            // 0.6秒後にスプラッシュを消してアプリ画面を開く
+            setTimeout(() => {
+                splash.classList.remove('active');
+                
+                if (appName === 'Journey') {
+                    document.getElementById('journeyView').classList.add('active');
+                } else {
+                    alert(appName + ' が起動しました！');
+                }
+            }, 600);
+        }
+
+        // アプリを閉じてホームに戻る
+        function closeApp() {
+            document.getElementById('journeyView').classList.remove('active');
+        }
+
+        // 🌙 スリープのオンオフ
         function toggleSleep() {
             const frame = document.getElementById('phoneFrame');
             frame.classList.toggle('is-sleep');
         }
 
-        // 🔄 ジャイロセンサー
+        // 🔄 センサー
         function requestSensors() {
             if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
                 DeviceOrientationEvent.requestPermission().then(response => {
@@ -334,7 +471,6 @@
             window.addEventListener('deviceorientation', (event) => {
                 const beta = event.beta;  
                 const frame = document.getElementById('phoneFrame');
-
                 if (beta !== null) {
                     if (beta < -60 || beta > 160) {  
                         frame.classList.add('is-sleep'); 
@@ -343,22 +479,6 @@
                     }
                 }
             });
-        }
-
-        // 🚀 アプリ起動
-        function openApp(appName) {
-            const frame = document.getElementById('phoneFrame');
-            if (frame.classList.contains('is-sleep')) return; 
-
-            if (appName === 'Mariage') {
-                window.location.href = 'Mariage.html';
-            } else if (appName === 'undergo') {
-                window.location.href = 'undergo.html';
-            } else if (appName === 'Journey') {
-                window.location.href = 'journey.html'; // ←ここがJourney用！1回タップですぐ飛ぶ最新版
-            } else {
-                alert(appName + ' がタップされました！');
-            }
         }
 
         // ↔️ ページネーション連動
