@@ -306,7 +306,7 @@
         <!-- 🌙 スリープ画面のカバー -->
         <div class="sleep-screen" id="sleepScreen">Tap to Wake</div>
 
-        <!-- 🚀 アプリ起動時のスプラッシュ画面（ポッと出る演出） -->
+        <!-- 🚀 アプリ起動時のスプラッシュ画面 -->
         <div class="splash-screen" id="splashScreen">
             <div class="splash-icon" id="splashIconContent">
                 <!-- ここに開いたアプリのアイコンが入る -->
@@ -329,7 +329,7 @@
             </div>
         </div>
 
-        <!-- 初回センサー有効化ボタン（スマホ実機用） -->
+        <!-- 初回センサー有効化ボタン -->
         <button class="sensor-btn" id="sensorBtn" onclick="requestSensors()">センサーを有効化</button>
 
         <!-- ↔️ 左右にスワイプできるページコンテナ -->
@@ -355,11 +355,15 @@
                     <div class="app-name">𝒎𝒂𝒓𝒊𝒂𝒈𝒆</div>
                 </div>
 
-                <!-- Journey -->
+                <!-- Journey (YouTube風の赤背景 ＋ 白旗SVGイラスト) -->
                 <div class="app-item" onclick="openApp('Journey', this)">
                     <div class="app-icon" style="background-color: #fff; display: flex; justify-content: center; align-items: center;">
                         <div style="width: 48px; height: 34px; background-color: #ff0000; border-radius: 10px; display: flex; justify-content: center; align-items: center;">
-                            <span style="font-size: 20px;">🏳️</span>
+                            <!-- 🚩 白旗のSVGイラスト -->
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 3V21" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                                <path d="M6 4H18L15 9L18 14H6V4Z" fill="white"/>
+                            </svg>
                         </div>
                         <div class="badge">805</div>
                     </div>
@@ -438,6 +442,7 @@
 
         // アプリを閉じてホームに戻る
         function closeApp() {
+            document.getElementById('journeyView').classList.remove('app-view active'); // 念のため修正
             document.getElementById('journeyView').classList.remove('active');
         }
 
