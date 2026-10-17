@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MANY Base App</title>
+    <title>MANY Messenger</title>
     <style>
         * {
             box-sizing: border-box;
@@ -37,7 +37,7 @@
             box-shadow: 0 0 40px rgba(0,0,0,0.8);
         }
 
-        /* ステータスバー */
+        /* ステータスバー風 */
         .status-bar {
             background-color: #fff;
             padding: 10px 20px;
@@ -208,7 +208,7 @@
             margin-bottom: 2px;
         }
 
-        /* --- 個別チャットルーム画面 --- */
+        /* --- 個別チャット画面 --- */
         .chat-room-header {
             padding: 10px 16px;
             display: flex;
@@ -232,7 +232,7 @@
 
         .chat-messages {
             flex: 1;
-            background-color: #b2c7d9;
+            background-color: #b2c7d9; /* LINE風の水色背景 */
             padding: 16px;
             overflow-y: auto;
             display: flex;
@@ -267,7 +267,7 @@
         }
 
         .message-row.my-message .msg-bubble {
-            background-color: #8fdb8f;
+            background-color: #8fdb8f; /* 自分のメッセージの緑色 */
             color: #000;
             border-top-right-radius: 4px;
         }
@@ -277,6 +277,13 @@
             color: rgba(0,0,0,0.5);
             margin-bottom: 2px;
             white-space: nowrap;
+        }
+
+        /* スタンプ風メッセージ */
+        .stamp-bubble {
+            font-size: 40px;
+            background: none !important;
+            padding: 0 !important;
         }
 
         /* 入力エリア */
@@ -319,10 +326,10 @@
         </div>
 
         <div class="screen-container">
-            <!-- 💬 トーク一覧画面 -->
+            <!-- 💬 トーク一覧画面 (ホーム) -->
             <div class="view active" id="listView">
                 <div class="list-header">
-                    <h1>MANY</h1>
+                    <h1>トーク</h1>
                     <div style="font-size: 20px; display: flex; gap: 16px;">
                         <span>➕</span>
                     </div>
@@ -331,16 +338,42 @@
                     <input type="text" class="search-input" placeholder="🔍 検索">
                 </div>
                 <div class="chat-list">
-                    <!-- サンプルチャット項目（ここを増減・書き換え可能） -->
-                    <div class="chat-item" onclick="openChat('サンプルユーザー', '👤')">
-                        <div class="avatar" style="background-color: #eee;">👤</div>
+                    <!-- チャット1: ママ（サンプル） -->
+                    <div class="chat-item" onclick="openChat('ママ', '👩')">
+                        <div class="avatar" style="background-color: #ffcccb;">👩</div>
                         <div class="chat-info">
-                            <div class="chat-name">サンプルユーザー</div>
-                            <div class="chat-last-message">ここに最新のメッセージが入ります</div>
+                            <div class="chat-name">ママ</div>
+                            <div class="chat-last-message">実質無料…だって！！</div>
                         </div>
                         <div class="chat-meta">
-                            <span class="chat-time">12:00</span>
-                            <span class="badge">1</span>
+                            <span class="chat-time">14:35</span>
+                            <span class="badge">2</span>
+                        </div>
+                    </div>
+
+                    <!-- チャット2: MANY STORE -->
+                    <div class="chat-item" onclick="openChat('MANY STORE', '🛍️')">
+                        <div class="avatar" style="background-color: #06c755; color: #fff; font-weight: bold;">M</div>
+                        <div class="chat-info">
+                            <div class="chat-name">MANY STORE</div>
+                            <div class="chat-last-message">スタンプを買うとポイント5倍還元！</div>
+                        </div>
+                        <div class="chat-meta">
+                            <span class="chat-time">11:50</span>
+                            <span class="badge">12</span>
+                        </div>
+                    </div>
+
+                    <!-- チャット3: 友だちグループ -->
+                    <div class="chat-item" onclick="openChat('ごとお一族 (5)', '🐶')">
+                        <div class="avatar" style="background-color: #ffe4b5;">🐶</div>
+                        <div class="chat-info">
+                            <div class="chat-name">ごとお一族 (5)</div>
+                            <div class="chat-last-message">ままがスタンプを送信しました</div>
+                        </div>
+                        <div class="chat-meta">
+                            <span class="chat-time">11:44</span>
+                            <span class="badge">5</span>
                         </div>
                     </div>
                 </div>
@@ -370,16 +403,36 @@
             <div class="view" id="chatView">
                 <div class="chat-room-header">
                     <button class="back-btn" onclick="closeChat()">〈</button>
-                    <div class="chat-room-title" id="roomTitle">チャット</div>
+                    <div class="chat-room-title" id="roomTitle">ママ</div>
                 </div>
 
                 <div class="chat-messages" id="messageContainer">
                     <div class="message-row">
-                        <div class="avatar" style="width: 36px; height: 36px; font-size: 16px;">👤</div>
+                        <div class="avatar" style="width: 36px; height: 36px; font-size: 16px;">👩</div>
+                        <div>
+                            <div style="font-size: 12px; margin-bottom: 2px;">ママ</div>
+                            <div style="display: flex; align-items: flex-end; gap: 4px;">
+                                <div class="msg-bubble">送金したよ！</div>
+                                <span class="msg-time">14:35</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message-row my-message">
+                        <div>
+                            <div style="display: flex; align-items: flex-end; gap: 4px; flex-direction: row-reverse;">
+                                <div class="msg-bubble">ええアツイ！！！！</div>
+                                <span class="msg-time">14:35</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message-row">
+                        <div class="avatar" style="width: 36px; height: 36px; font-size: 16px;">👩</div>
                         <div>
                             <div style="display: flex; align-items: flex-end; gap: 4px;">
-                                <div class="msg-bubble">こんにちは！</div>
-                                <span class="msg-time">12:00</span>
+                                <div class="msg-bubble stamp-bubble">🥳🎉</div>
+                                <span class="msg-time">14:35</span>
                             </div>
                         </div>
                     </div>
