@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MANY Base App</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* スマホの外枠 */
+        .phone-frame {
+            width: 100%;
+            max-width: 414px;
+            height: 100vh;
+            max-height: 840px;
+            background-color: #fff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+        }
+
+        /* ステータスバー */
+        .status-bar {
+            background-color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: #000;
+            z-index: 10;
+        }
+
+        /* 画面コンテナ */
+        .screen-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .view {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+            transform: translateX(100%);
+            z-index: 1;
+        }
+
+        .view.active {
+            transform: translateX(0);
+            z-index: 2;
+        }
+
+        /* --- トーク一覧画面 --- */
+        .list-header {
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .list-header h1 {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .search-box {
+            padding: 8px 16px;
+            background-color: #fff;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 12px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .chat-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .chat-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .chat-item:active {
+            background-color: #f9f9f9;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .chat-info {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .chat-name {
+            font-size: 15px;
+            font-weight: bold;
+            color: #111;
+            margin-bottom: 4px;
+        }
+
+        .chat-last-message {
+            font-size: 13px;
+            color: #777;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-left: 8px;
+        }
+
+        .chat-time {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .badge {
+            background-color: #06c755;
+            color: #fff;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        /* 下部タブバー */
+        .tab-bar {
+            height: 60px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #fff;
+            z-index: 10;
+        }
+
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #777;
+            font-size: 10px;
+            cursor: pointer;
+        }
+
+        .tab-item.active {
+            color: #06c755;
+        }
+
+        .tab-icon {
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+
+        /* --- 個別チャットルーム画面 --- */
+        .chat-room-header {
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            background-color: #fff;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            margin-right: 12px;
+        }
+
+        .chat-room-title {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .chat-messages {
+            flex: 1;
+            background-color: #b2c7d9;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .message-row.my-message {
+            flex-direction: row-reverse;
+        }
+
+        .msg-bubble {
+            max-width: 70%;
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.4;
+            position: relative;
+            word-break: break-all;
+        }
+
+        .message-row:not(.my-message) .msg-bubble {
+            background-color: #fff;
+            color: #000;
+            border-top-left-radius: 4px;
+        }
+
+        .message-row.my-message .msg-bubble {
+            background-color: #8fdb8f;
+            color: #000;
+            border-top-right-radius: 4px;
+        }
+
+        .msg-time {
+            font-size: 10px;
+            color: rgba(0,0,0,0.5);
+            margin-bottom: 2px;
+            white-space: nowrap;
+        }
+
+        /* 入力エリア */
+        .chat-input-area {
+            padding: 10px;
+            background-color: #f7f7f7;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .send-btn {
+            background-color: #06c755;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-frame">
+        <!-- ステータスバー -->
+        <div class="status-bar">
+            <span>14:57</span>
+            <span>📶 🔋 88%</span>
+        </div>
+
+        <div class="screen-container">
+            <!-- 💬 トーク一覧画面 -->
+            <div class="view active" id="listView">
+                <div class="list-header">
+                    <h1>MANY</h1>
+                    <div style="font-size: 20px; display: flex; gap: 16px;">
+                        <span>➕</span>
+                    </div>
+                </div>
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="🔍 検索">
+                </div>
+                <div class="chat-list">
+                    <!-- サンプルチャット項目（ここを増減・書き換え可能） -->
+                    <div class="chat-item" onclick="openChat('サンプルユーザー', '👤')">
+                        <div class="avatar" style="background-color: #eee;">👤</div>
+                        <div class="chat-info">
+                            <div class="chat-name">サンプルユーザー</div>
+                            <div class="chat-last-message">ここに最新のメッセージが入ります</div>
+                        </div>
+                        <div class="chat-meta">
+                            <span class="chat-time">12:00</span>
+                            <span class="badge">1</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 下部タブバー -->
+                <div class="tab-bar">
+                    <div class="tab-item">
+                        <span class="tab-icon">🏠</span>
+                        <span>ホーム</span>
+                    </div>
+                    <div class="tab-item active">
+                        <span class="tab-icon">💬</span>
+                        <span>トーク</span>
+                    </div>
+                    <div class="tab-item">
+                        <span class="tab-icon">🛍️</span>
+                        <span>ショップ</span>
+                    </div>
+                    <div class="tab-item">
+                        <span class="tab-icon">📰</span>
+                        <span>ニュース</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 💬 個別チャットルーム画面 -->
+            <div class="view" id="chatView">
+                <div class="chat-room-header">
+                    <button class="back-btn" onclick="closeChat()">〈</button>
+                    <div class="chat-room-title" id="roomTitle">チャット</div>
+                </div>
+
+                <div class="chat-messages" id="messageContainer">
+                    <div class="message-row">
+                        <div class="avatar" style="width: 36px; height: 36px; font-size: 16px;">👤</div>
+                        <div>
+                            <div style="display: flex; align-items: flex-end; gap: 4px;">
+                                <div class="msg-bubble">こんにちは！</div>
+                                <span class="msg-time">12:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 入力フォーム -->
+                <div class="chat-input-area">
+                    <input type="text" id="msgInput" placeholder="メッセージを入力..." onkeypress="handleKeyPress(event)">
+                    <button class="send-btn" onclick="sendMessage()">送信</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openChat(name, icon) {
+            document.getElementById('roomTitle').innerText = name;
+            document.getElementById('chatView').classList.add('active');
+        }
+
+        function closeChat() {
+            document.getElementById('chatView').classList.remove('active');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('msgInput');
+            const text = input.value.trim();
+            if(!text) return;
+
+            const container = document.getElementById('messageContainer');
+            
+            const row = document.createElement('div');
+            row.className = 'message-row my-message';
+            row.innerHTML = `
+                <div>
+                    <div style="display: flex; align-items: flex-end; gap: 4px; flex-direction: row-reverse;">
+                        <div class="msg-bubble">${escapeHtml(text)}</div>
+                        <span class="msg-time">今</span>
+                    </div>
+                </div>
+            `;
+            container.appendChild(row);
+            input.value = '';
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+        }
+    </script>
+</body>
+</html>
