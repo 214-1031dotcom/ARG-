@@ -101,51 +101,6 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* 📺 アプリの中身（Journey等の全画面ビュー） */
-        .app-view {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #0f0f0f;
-            z-index: 400;
-            display: none;
-            flex-direction: column;
-            color: #fff;
-        }
-        .app-view.active {
-            display: flex;
-        }
-        .app-view-header {
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            font-size: 16px;
-            font-weight: bold;
-        }
-        .close-app-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: #fff;
-            padding: 6px 12px;
-            border-radius: 14px;
-            font-size: 12px;
-            cursor: pointer;
-        }
-        .app-view-body {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
         /* センサー許可ボタン */
         .sensor-btn {
             position: absolute;
@@ -309,32 +264,14 @@
 
         <!-- 🚀 アプリ起動時のスプラッシュ画面 -->
         <div class="splash-screen" id="splashScreen">
-            <div class="splash-icon" id="splashIconContent">
-                <!-- ここに開いたアプリのアイコンが入る -->
-            </div>
-        </div>
-
-        <!-- 📺 Journeyアプリ専用の全画面ビュー -->
-        <div class="app-view" id="journeyView">
-            <div class="app-view-header">
-                <span>▶ Journey</span>
-                <button class="close-app-btn" onclick="closeApp()">ホームに戻る</button>
-            </div>
-            <div class="app-view-body">
-                <div style="font-size: 48px; margin-bottom: 16px;">📺</div>
-                <h2 style="margin-bottom: 8px;">Journeyショート動画フィード</h2>
-                <p style="font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 24px;">ここにYouTubeもどきの動画コンテンツが広がります！</p>
-                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 16px; width: 100%;">
-                    <p style="font-size: 14px; font-weight: bold;">Vtuber作ったんやがデザイン評価してくれ</p>
-                </div>
-            </div>
+            <div class="splash-icon" id="splashIconContent"></div>
         </div>
 
         <!-- 初回センサー有効化ボタン -->
         <button class="sensor-btn" id="sensorBtn" onclick="requestSensors()">センサーを有効化</button>
 
         <!-- ↔️ 左右にスワイプできるページコンテナ -->
-        <div class="pages-container" id="pagesContainer" onscroll="updateDots()">
+        <pages-container class="pages-container" id="pagesContainer" onscroll="updateDots()">
             
             <!-- 📄 1ページ目 -->
             <div class="home-page">
@@ -356,11 +293,10 @@
                     <div class="app-name">Mariage</div>
                 </div>
 
-                <!-- Journey (YouTube風の赤背景 ＋ 白旗SVGイラスト) -->
+                <!-- Journey -->
                 <div class="app-item" onclick="openApp('Journey', this)">
                     <div class="app-icon" style="background-color: #fff; display: flex; justify-content: center; align-items: center;">
                         <div style="width: 48px; height: 34px; background-color: #ff0000; border-radius: 10px; display: flex; justify-content: center; align-items: center;">
-                            <!-- 🚩 白旗のSVGイラスト -->
                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M6 3V21" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
                                 <path d="M6 4H18L15 9L18 14H6V4Z" fill="white"/>
@@ -394,7 +330,7 @@
                 </div>
             </div>
 
-        </div>
+        </pages-container>
 
         <!-- ページネーション・ドット -->
         <div class="pagination-dots">
@@ -415,6 +351,13 @@
     </div>
 
     <script>
+        // 各アプリのリンク先定義（GitHubのURLなど）
+        const appUrls = {
+            'Journey': 'https://214-1031dotcom.github.io/ARG-/journey.html',       // または GitHubリポジトリのURL
+            'undergo': 'https://214-1031dotcom.github.io/ARG-/undergo.html',
+            'Mariage': 'https://214-1031dotcom.github.io/ARG-/Mariage.html'
+        };
+
         // 🚀 アプリ起動アニメーション ＆ 画面切り替え
         function openApp(appName, element) {
             const frame = document.getElementById('phoneFrame');
@@ -429,21 +372,17 @@
             const splash = document.getElementById('splashScreen');
             splash.classList.add('active');
 
-            // 0.6秒後にスプラッシュを消してアプリ画面を開く
+            // 0.6秒後にスプラッシュを消して各ページへ遷移
             setTimeout(() => {
                 splash.classList.remove('active');
                 
-                if (appName === 'Journey') {
-                    document.getElementById('journeyView').classList.add('active');
+                if (appUrls[appName]) {
+                    // GitHubなどの実URLへジャンプする場合
+                    window.location.href = appUrls[appName];
                 } else {
                     alert(appName + ' が起動しました！');
                 }
             }, 600);
-        }
-
-        // アプリを閉じてホームに戻る
-        function closeApp() {
-            document.getElementById('journeyView').classList.remove('active');
         }
 
         // 🌙 スリープのオンオフ
